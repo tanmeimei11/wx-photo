@@ -63,7 +63,7 @@
   </view>
 
 </template>
-<style lang="less" src="./index.scss">
+<style lang="less" src="index.scss">
 </style>
-<script src="./index.js">
+<script src="index.js">
 </script>
