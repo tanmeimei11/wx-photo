@@ -8,9 +8,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.7.2",
-	"appid": "touristappid",
-	"projectname": "wx-promos",
+	"libVersion": "1.6.0",
+	"appid": "wxaf5f744f73d14d55",
+	"projectname": "wx-photos",
 	"condition": {
 		"search": {
 			"current": -1,

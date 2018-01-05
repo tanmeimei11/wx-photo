@@ -1,6 +1,6 @@
 // 本地
 import wepy from 'wepy'
-let mockConfig = require('../mock/mockConfig')
+import mockConfig from '../mock/mockConfig'
 var config = require('./config')
 var isMock = config.isMock || false
 var DOMAIN = config.DOMAIN || ''
@@ -14,6 +14,7 @@ var LOG = console.log || (() => {})
  */
 var wxPromisify = (fn) => {
   return function (obj = {}, isCheckLogin) {
+    isCheckLogin = false
     return new Promise((resolve, reject) => {
       obj.isCheckLogin = isCheckLogin
       obj.success = function (res) {
@@ -36,17 +37,19 @@ var wxPromisify = (fn) => {
  */
 var requestBefore = (option, token) => {
   !option.data && (option.data = {})
+
   !/^http/.test(option.url) && (option.url = DOMAIN + option.url)
   // 添加必要的辅助字断
-  var deviceInfo = getApp().getDeviceInfo()
+  // var deviceInfo = getApp().getDeviceInfo()
+  var deviceInfo = {}
   console.log(deviceInfo)
   var cookieObj = {
-    'tg_auth': token,
-    '_v': config._v,
-    'wxv': deviceInfo.version,
-    '_s': `${deviceInfo.platform.toLowerCase()}_wxminiprogram`,
-    '_sys': deviceInfo.system.toLowerCase(),
-    '_gps': deviceInfo.gps || ''
+    // 'tg_auth': token,
+    // '_v': config._v,
+    // 'wxv': deviceInfo.version,
+    // '_s': `${deviceInfo.platform.toLowerCase()}_wxminiprogram`,
+    // '_sys': deviceInfo.system.toLowerCase(),
+    // '_gps': deviceInfo.gps || ''
   }
   option.data = {
     ...option.data,
@@ -80,11 +83,13 @@ var request = (option) => {
   }
   isCheckPromise.then((token) => {
     // var token = '05b81ab2f8f6c6d1458a0f59b22e8c9b'
-    if (token || option.isCheckLogin) {
+    if (token || !option.isCheckLogin) {
       LOG('get token', token)
       requestBefore(option, token)
       if (isMock) {
+        console.log(option.url, mockConfig[option.url])
         option.success(require('../mock/' + mockConfig[option.url]))
+        console.log(require('../mock/' + mockConfig[option.url]))
         return
       }
       LOG('start request option:', option)
@@ -180,5 +185,5 @@ module.exports = {
   DOMAIN,
   isMock,
   wxPromisify,
-  requestPromisify: wxPromisify(request)
+  request: wxPromisify(request)
 }

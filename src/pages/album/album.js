@@ -1,93 +1,35 @@
 import wepy from 'wepy'
-import List from '../../components/list'
-import Panel from '@/components/panel' // alias example
-import Counter from 'counter' // alias example
-import Group from '../../components/group'
-import Toast from 'wepy-com-toast'
-import testMixin from '../../mixins/test'
-import { requestPromisify } from '../../utils/login'
+import PhotoItem from '../../components/album/photoItem'
+import {
+  request
+} from '../../utils/login'
 
 export default class Index extends wepy.page {
+  // 配置
   config = {
-    navigationBarTitleText: 'test'
+    navigationBarTitleText: '第一次聚会'
   }
+  // 组件
   components = {
-    panel: Panel,
-    counter1: Counter,
-    counter2: Counter,
-    list: List,
-    group: Group,
-    toast: Toast
+    photoItem: PhotoItem
   }
 
-  mixins = [testMixin]
-
+  // data
   data = {
-    mynum: 20,
-    userInfo: {
-      nickName: '加载中...'
-    },
-    normalTitle: '原始标题',
-    setTimeoutTitle: '标题三秒后会被修改',
-    count: 0,
-    netrst: '',
-    groupList: [
-      {
-        id: 1,
-        name: '点击改变',
-        list: [
-          {
-            childid: '1.1',
-            childname: '子项，点我改变'
-          }, {
-            childid: '1.2',
-            childname: '子项，点我改变'
-          }, {
-            childid: '1.3',
-            childname: '子项，点我改变'
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: '点击改变',
-        list: [
-          {
-            childid: '2.1',
-            childname: '子项，点我改变'
-          }, {
-            childid: '2.2',
-            childname: '子项，点我改变'
-          }, {
-            childid: '2.3',
-            childname: '子项，点我改变'
-          }
-        ]
-      },
-      {
-        id: 3,
-        name: '点击改变',
-        list: [
-          {
-            childid: '3.1',
-            childname: '子项，点我改变'
-          }
-        ]
-      }
-    ]
+    photoList: []
   }
 
   computed = {
-    now () {
+    now() {
       return +new Date()
     }
   }
 
   methods = {
-    plus () {
+    plus() {
       this.mynum++
     },
-    toast () {
+    toast() {
       let promise = this.$invoke('toast', 'show', {
         title: '自定义标题',
         img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
@@ -97,10 +39,10 @@ export default class Index extends wepy.page {
         console.log('toast done')
       })
     },
-    tap () {
+    tap() {
       console.log('do noting from ' + this.$name)
     },
-    communicate () {
+    communicate() {
       console.log(this.$name + ' tap')
 
       this.$invoke('counter2', 'minus', 45, 6)
@@ -108,7 +50,7 @@ export default class Index extends wepy.page {
 
       this.$broadcast('index-broadcast', 1, 3, 4)
     },
-    request () {
+    request() {
       let self = this
       let i = 10
       let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
@@ -122,7 +64,7 @@ export default class Index extends wepy.page {
         })
       }
     },
-    counterEmit (...args) {
+    counterEmit(...args) {
       let $event = args[args.length - 1]
       console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
     }
@@ -136,21 +78,31 @@ export default class Index extends wepy.page {
   }
 
   onLoad() {
-    requestPromisify()
-    let self = this
-    this.$parent.getUserInfo(function (userInfo) {
-      if (userInfo) {
-        self.userInfo = userInfo
-      }
-      self.normalTitle = '标题已被修改'
-
-      self.setTimeoutTitle = '标题三秒后会被修改'
-      setTimeout(() => {
-        self.setTimeoutTitle = '到三秒了'
-        self.$apply()
-      }, 3000)
-
-      self.$apply()
+    getPhotoList.then(res => {
+      this.photoList = res.data.list
     })
+    // this.$parent.getUserInfo(function (userInfo) {
+    //   if (userInfo) {
+    //     self.userInfo = userInfo
+    //   }
+    //   self.normalTitle = '标题已被修改'
+
+    //   self.setTimeoutTitle = '标题三秒后会被修改'
+    //   setTimeout(() => {
+    //     self.setTimeoutTitle = '到三秒了'
+    //     self.$apply()
+    //   }, 3000)
+
+    //   self.$apply()
+    // })
   }
+
+  var getPhotoList = async function () {
+    var res = await request({
+      url: '/gg/gallery/photolist',
+      data: {}
+    })
+
+    return res
   }
+}
