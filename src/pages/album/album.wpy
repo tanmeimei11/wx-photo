@@ -1,0 +1,13 @@
+
+<template>
+  <view class="container" >
+    <repeat>
+      <photoItem></photoItem>
+    </repeat>
+  </view>
+</template>
+<style lang="less" src="./album.scss">
+
+</style>
+<script src="./album.js">
+</script>

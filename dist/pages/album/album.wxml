@@ -1,0 +1,43 @@
+
+  <view class="container">
+    <block>
+      
+  <view class="photo-item">
+    <!-- <image src="http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2" /> -->
+    <!-- avatar -->
+    <view class="s-avatar-wrap">
+      <image class="s-avatar" mode="aspectFill" src="http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2"/>
+
+      <view class="s-name-wrap">
+        <view class="name">啦啦啦啦啦啦啦啦啦啦啦啦啦啦</view>
+        <view class="time">7分钟前</view>
+      </view>
+
+      <view class="s-operate">123</view>
+    </view>
+    <!-- photos -->
+      <scroll-view class="s-photos-wrap p-{{$photoItem$images.length}}" scroll-x>
+     <image mode="aspectFill"  wx:for="{{$photoItem$images}}" wx:for-index="idx" wx:for-item="item" src="{{item}}" wx:key="idx"/>
+  </scroll-view>
+  <!-- bars -->
+  <view class="s-bars-wrap">
+     <view class="s-down">123</view>
+     <view class="icons-wrap">
+       <view class="s-like iconfont icon-bofang"/>
+       <view class="s-comment">123</view>
+       <view class="s-print">123</view>
+     </view>
+  </view>
+    <!-- comment -->
+    <view class="s-comment-wrap"/>
+    <!-- <text class="id">{{grouplist.id}}. </text>
+    <text class="name" bindtap="tap">{{grouplist.name}}</text>
+    <view>
+      <repeat for="{{grouplist.list}}" item="item">
+        <groupitem v-bind:gitem.once="item"></groupitem>
+      </repeat>
+    </view> -->
+  </view>
+
+    </block>
+  </view>

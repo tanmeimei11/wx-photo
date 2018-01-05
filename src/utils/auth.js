@@ -1,4 +1,4 @@
-var wxPromisify = require('common.js').wxPromisify
+var wxPromisify = require('./common.js').wxPromisify
 
 /**
  * 方法promise化
