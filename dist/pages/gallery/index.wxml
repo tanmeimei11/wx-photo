@@ -1,0 +1,63 @@
+
+  <view class="container">
+    <view class="top">
+      <image class="background" src="http://inimg02.jiuyan.info/in/2018/01/04/618F6A80-57E3-EE9F-4A25-5DFC1C210943.jpg"/>
+      <view class="info">
+        <view class="avatar"/>
+        <view class="name">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</view>
+        <view class="infotxt">
+          <text class="member">成员 38 | </text>
+          <text class="act">活动 38 | </text>
+          <text class="pic">图片 38</text>
+        </view>
+        <view class="btn">申请加入</view>
+      </view>
+    </view>
+    <view class="gallery">
+      <view class="item">
+        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
+        <text class="num">11 张</text>
+        <view class="preview p1">
+          <view/>
+        </view>
+      </view>
+      <view class="item">
+        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
+        <text class="num">11</text>
+        <view class="preview p2">
+          <view/>
+          <view/>
+        </view>
+      </view>
+      <view class="item">
+        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
+        <text class="num">11</text>
+        <view class="preview p3">
+          <view/>
+          <view/>
+          <view/>
+        </view>
+      </view>
+      <view class="item">
+        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
+        <text class="num">11</text>
+        <view class="preview p4">
+          <view/>
+          <view/>
+          <view/>
+          <view/>
+        </view>
+      </view>
+      <view class="item">
+        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
+        <text class="num">11</text>
+        <view class="preview p5">
+          <view/>
+          <view/>
+          <view/>
+          <view/>
+          <view/>
+        </view>
+      </view>
+    </view>
+  </view>

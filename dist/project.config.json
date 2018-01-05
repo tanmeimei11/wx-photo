@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.7.2",
-	"appid": "touristappid",
+	"appid": "wxaf5f744f73d14d55",
 	"projectname": "wx-promos",
 	"condition": {
 		"search": {
@@ -21,12 +21,18 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "index",
 					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "gallery",
+					"pathName": "pages/gallery/index",
 					"query": ""
 				}
 			]
