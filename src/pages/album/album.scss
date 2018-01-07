@@ -1,4 +1,8 @@
 @import '../../utils/font.scss';
+.container {
+  padding-bottom: 130rpx;
+}
+
 .userinfo {
   display: flex;
   flex-direction: column;

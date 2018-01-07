@@ -6,6 +6,7 @@
     </repeat>
 
     <previewPhoto :photos="previewPhotos" :index="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}"></previewPhoto>  
+    <publishPhoto></publishPhoto>
   </view>
 </template>
 <style lang="less" src="./album.scss">

@@ -5,7 +5,7 @@ module.exports = {
   data: {
     has_next: false, // 是否还有下一页
     list: [{
-      is_zan: true, // 是否点赞
+      is_zan: false, // 是否点赞
       photo_id: '1123244', // 图片id
       fmt_time: '8分钟', // 发图距离现在时间
       photo: [{
@@ -30,7 +30,7 @@ module.exports = {
 
       ]
     }, {
-      is_zan: true, // 是否点赞
+      is_zan: false, // 是否点赞
       photo_id: '1123244', // 图片id
       fmt_time: '8分钟', // 发图距离现在时间
       photo: [{
@@ -60,7 +60,7 @@ module.exports = {
 
       ]
     }, {
-      is_zan: true, // 是否点赞
+      is_zan: false, // 是否点赞
       photo_id: '1123244', // 图片id
       fmt_time: '8分钟', // 发图距离现在时间
       photo: [{

@@ -15,20 +15,27 @@
       <view class="s-operate">123</view>
     </view>
     <!-- photos -->
-      <scroll-view class="s-photos-wrap p-{{item.photo.length}}" scroll-x>
-     <image mode="aspectFill"  wx:for="{{item.photo}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
+      <scroll-view class="s-photos-wrap p-{{item.photos.length}}" scroll-x>
+     <image mode="aspectFill"  wx:for="{{item.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
   </scroll-view>
   <!-- bars -->
   <view class="s-bars-wrap">
-     <view class="s-down">123</view>
+     <view class="s-down" bindtap="$photoItem$downUrl" data-com-index="{{index}}">123</view>
      <view class="icons-wrap">
-       <view class="s-like iconfont icon-bofang"/>
+       <view class="s-like iconfont {{item.is_zan ? 'icon-kefu disable':''}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}">12312</view>
        <view class="s-comment">123</view>
        <view class="s-print">123</view>
      </view>
   </view>
-    <!-- comment -->
-    <view class="s-comment-wrap"/>
+   <view class="s-operate-wrap">
+     <!-- zan -->
+     <view class="s-zan-wrap">
+     
+     </view>
+     <!-- comment -->
+      <view class="s-comment-wrap"/>
+     </view>
+   
     <!-- <text class="id">{{grouplist.id}}. </text>
     <text class="name" bindtap="tap">{{grouplist.name}}</text>
     <view>
@@ -52,4 +59,13 @@
   <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$index +1}}/{{$previewPhoto$photos.length}}</view>
 </swiper>
   
+    
+<view class="c-publish-photo">
+  <!-- <view class="s-publish-btn" bindtap="chooseImage"> -->
+  <view class="s-publish-btn" bindtap="$publishPhoto$pushlish">
+    上传照片
+  </view>
+</view>
+  
+
   </view>

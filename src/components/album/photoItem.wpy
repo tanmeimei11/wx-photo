@@ -15,20 +15,27 @@
       <view class="s-operate">123</view>
     </view>
     <!-- photos -->
-      <scroll-view  class="s-photos-wrap p-{{photoItem.photo.length}}"  scroll-x >
-     <image  mode="aspectFill"  wx:for="{{photoItem.photo}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="clickImage" data-index="{{idx}}"></image>
+      <scroll-view  class="s-photos-wrap p-{{photoItem.photos.length}}"  scroll-x >
+     <image  mode="aspectFill"  wx:for="{{photoItem.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="clickImage" data-index="{{idx}}"></image>
   </scroll-view>
   <!-- bars -->
   <view class="s-bars-wrap">
-     <view class="s-down">123</view>
+     <view class="s-down" bindtap="downUrl">123</view>
      <view class="icons-wrap">
-       <view class="s-like iconfont icon-bofang"></view>
+       <view class="s-like iconfont {{photoItem.is_zan ? 'icon-kefu disable':''}}" bindtap="clickZan">12312</view>
        <view class="s-comment">123</view>
        <view class="s-print">123</view>
      </view>
   </view>
-    <!-- comment -->
-    <view class="s-comment-wrap"></view>
+   <view class="s-operate-wrap">
+     <!-- zan -->
+     <view class="s-zan-wrap">
+     
+     </view>
+     <!-- comment -->
+      <view class="s-comment-wrap"></view>
+     </view>
+   
     <!-- <text class="id">{{grouplist.id}}. </text>
     <text class="name" @tap="tap">{{grouplist.name}}</text>
     <view>
@@ -40,6 +47,11 @@
 </template>
 <style type="less">
 .photo-item {
+  &:last-child {
+    .s-bars-wrap {
+      border: none;
+    }
+  }
   .s-avatar-wrap {
     display: flex;
     align-items: center;
@@ -99,6 +111,7 @@
       }
     }
   }
+
   .s-bars-wrap {
     margin: 0 34rpx;
     height: 105rpx;
@@ -119,22 +132,38 @@
 </style>
 <script>
 import wepy from 'wepy';
+import { request } from '../../utils/login.js';
+import { downInternetUrl } from '../../utils/api.js';
 export default class PhotoItem extends wepy.component {
   props = {
     photoItem: []
   };
   data = {
-    images: [
-      // 'http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2',
-      'http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2'
-    ]
+    zanClass: ''
   };
-
+  watch = {};
   methods = {
     clickImage(e) {
       var _photoIdx = e.target.dataset.index
-      console.log(this.photoItem.photo, _photoIdx)
-      this.$emit('changeCurPhotos', this.photoItem.photo, _photoIdx)
+      console.log(this.photoItem.photos, _photoIdx)
+      this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
+    },
+    clickZan() {
+      if (this.photoItem.is_zan) {
+      }
+      request({
+        url: '/gg/photo/zan',
+        data: {
+          pid: this.photoItem.photo_id,
+          action: this.photoItem.is_zan ? 'cancel' : 'zan'
+        }
+      }).then(res => {
+        this.photoItem.is_zan = !this.photoItem.is_zan
+        this.$apply()
+      })
+    },
+    downUrl(url) {
+      downInternetUrl(this.photoItem.photos[0].url)
     },
     tap() {},
     downImage() {}

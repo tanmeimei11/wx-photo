@@ -1,0 +1,95 @@
+<template>
+<view class="c-publish-photo">
+  <!-- <view class="s-publish-btn" bindtap="chooseImage"> -->
+  <view class="s-publish-btn" bindtap="pushlish">
+    上传照片
+  </view>
+</view>
+  
+</template>
+<style  type="less">
+.c-publish-photo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 750rpx;
+  height: 128rpx;
+  box-sizing: border-box;
+  padding: 20rpx 34rpx;
+  background-color: #fff;
+  .s-publish-btn {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    color: #fff;
+  }
+}
+</style>
+<script>
+import { wxPromisify } from '../../utils/common.js';
+import wepy from 'wepy';
+import { uploadImageToQiniu } from '../../utils/api.js';
+import { request } from '../../utils/login.js';
+export default class PreviewPhoto extends wepy.component {
+  data = {
+    images: []
+  };
+  methods = {
+    chooseImage: async function() {
+      wxPromisify(wx.chooseImage)({
+        count: 9,
+        success: function(res) {}
+      })
+        .then(res => {
+          var tempFilePaths = res.tempFilePaths
+          wx.showLoading({
+            title: '正在上传'
+          })
+          console.log(tempFilePaths)
+          return this.loadImages(tempFilePaths)
+        })
+        .then(() => {
+          wx.hideLoading()
+          console.log(this.images)
+        })
+    }
+  };
+
+  pushlish() {
+    request({
+      url: '/gg/publish/photo',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        param: JSON.stringify(this.images)
+      }
+    })
+  }
+  loadImages(files) {
+    var len = files.length
+    var _num = 0
+    var _load = file => {
+      console.log(_num, len, file)
+      return uploadImageToQiniu(file).then(res => {
+        this.images.push(res)
+        this.$apply()
+        if (_num >= len - 1 || this.images.length >= 9) {
+          return 'succ';
+        }
+        return _load(files[++_num])
+      })
+    };
+    return _load(files[_num]).then(() => {
+      console.log('------all images upload succ-----')
+      this.pushlish()
+    })
+  }
+}
+</script>
