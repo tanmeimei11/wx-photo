@@ -1,0 +1,63 @@
+<template>
+<!-- 预览图片 -->
+<swiper class="c-main-swiper" bindchange="swiperChange" current="{{index}}" data-idx="{{photos}}">
+  {{photos}}
+  <block wx:for="{{photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+    <swiper-item bindtap="closeSwiper">
+      <view class="slide-image" style="background-image:url({{item.url}})"></view>
+    </swiper-item>
+  </block>
+  <view class="swiper-index" wx:if="{{photos.length >1}}">{{index +1}}/{{photos.length}}</view>
+</swiper>
+</template>
+<style>
+.c-main-swiper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #000;
+}
+
+.c-main-swiper swiper-item .slide-image {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.swiper-index {
+  position: absolute;
+  top: 56rpx;
+  left: 0;
+  width: 100%;
+  font-size: 40rpx;
+  color: #fff;
+  text-align: center;
+}
+</style>
+<script>
+import wepy from 'wepy';
+export default class PreviewPhoto extends wepy.component {
+  props = {
+    photos: {
+      type: Array,
+      default: []
+    },
+    index: 0
+  };
+  data = {};
+  methods = {
+    swiperChange() {},
+    downImage() {}
+  };
+  watch = {
+    photos(newValue, oldValue) {
+      console.log(`num value: ${oldValue} -> ${newValue}`)
+    }
+  };
+}
+</script>

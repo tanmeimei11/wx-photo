@@ -1,9 +1,11 @@
 
 <template>
   <view class="container" >
-    <repeat>
-      <photoItem></photoItem>
+    <repeat for="{{photoList}}" key="index" index="index" item="item">
+       <photoItem :photoItem="item" @changeCurPhotos.user="changeCurPhotos"></photoItem>
     </repeat>
+
+    <previewPhoto :photos="previewPhotos" :index="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}"></previewPhoto>  
   </view>
 </template>
 <style lang="less" src="./album.scss">

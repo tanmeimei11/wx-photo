@@ -1,0 +1,28 @@
+
+.c-main-swiper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #000;
+}
+
+.c-main-swiper swiper-item .slide-image {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.swiper-index {
+  position: absolute;
+  top: 56rpx;
+  left: 0;
+  width: 100%;
+  font-size: 40rpx;
+  color: #fff;
+  text-align: center;
+}
