@@ -3,55 +3,57 @@
     <!-- <image src="http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2" /> -->
     <!-- avatar -->
     <view class="s-avatar-wrap">
-      <image 
-      class="s-avatar"   
-      mode="aspectFill" 
-      src="{{photoItem.user.avatar}}"></image>
+      <image class="s-avatar" mode="aspectFill" src="{{photoItem.user.avatar}}"></image>
 
       <view class="s-name-wrap">
         <view class="name">{{photoItem.user.name}}</view>
         <view class="time">{{photoItem.fmt_time}}</view>
       </view>
-      <view class="s-operate">123</view>
+      <view class="s-operate" wx:if="{{photoItem.has_auth}}" bindtap="delPhoto"></view>
     </view>
     <!-- photos -->
-      <scroll-view  class="s-photos-wrap p-{{photoItem.photos.length}}"  scroll-x >
-     <image  mode="aspectFill"  wx:for="{{photoItem.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="clickImage" data-index="{{idx}}"></image>
-  </scroll-view>
-  <!-- bars -->
-  <view class="s-bars-wrap">
-     <view class="s-down" bindtap="downUrl">123</view>
-     <view class="icons-wrap">
-       <view class="s-like iconfont {{photoItem.is_zan ? 'icon-kefu disable':''}}" bindtap="clickZan">12312</view>
-       <view class="s-comment">123</view>
-       <view class="s-print">123</view>
-     </view>
-  </view>
-   <view class="s-operate-wrap">
-     <!-- zan -->
-     <view class="s-zan-wrap">
-     
-     </view>
-     <!-- comment -->
-      <view class="s-comment-wrap"></view>
-     </view>
-   
-    <!-- <text class="id">{{grouplist.id}}. </text>
-    <text class="name" @tap="tap">{{grouplist.name}}</text>
-    <view>
-      <repeat for="{{grouplist.list}}" item="item">
-        <groupitem :gitem="item"></groupitem>
-      </repeat>
-    </view> -->
+    <scroll-view class="s-photos-wrap p-{{photoItem.photos.length}}" scroll-x>
+      <image mode="aspectFill" wx:for="{{photoItem.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx"
+        bindtap="clickImage" data-index="{{idx}}"></image>
+    </scroll-view>
+    <!-- bars -->
+    <view class="s-bars-wrap">
+      <view class="s-down iconfont icon-zan" bindtap="downUrl"></view>
+      <view class="icons-wrap">
+        <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-zan':'icon-zan-color'}}" bindtap="clickZan"></view>
+        <view class="s-comment iconfont  icon-zan"></view>
+        <view class="s-print iconfont icon-zan" ></view>
+      </view>
+    </view>
+    <view class="s-operate-wrap">
+      <!-- zan -->
+      <view class="s-zan-wrap" wx:if="{{photoItem.zan_list && photoItem.zan_list.length}}">
+        <view class="zan-icon iconfont  icon-zan"></view>
+        <view class="s-zanavatar-wrap">
+          <image class="s-avatar" wx:for="{{photoItem.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"></image>
+        </view>
+      </view>
+      <!-- comment -->
+      <!-- <view class="s-comment-wrap">
+        <view class="comment-icon iconfont icon-kefu"></view>
+        <view class="s-comment-item-wrap">
+          <view class="comment-item">
+            <image class="s-avatar" mode="aspectFill" src="{{photoItem.user.avatar}}"></image>
+            <view class="comment">
+              132412341231132412341231132412341231
+            </view>
+          </view>
+        </view>
+      </view> -->
+    </view>
+     <!-- line -->
+    <view class="photo-line"></view>
   </view>
 </template>
 <style type="less">
 .photo-item {
-  &:last-child {
-    .s-bars-wrap {
-      border: none;
-    }
-  }
+  width: 750rpx;
+  overflow: hidden;
   .s-avatar-wrap {
     display: flex;
     align-items: center;
@@ -111,22 +113,95 @@
       }
     }
   }
-
   .s-bars-wrap {
     margin: 0 34rpx;
     height: 105rpx;
     box-sizing: border-box;
-    border-bottom: 1rpx solid #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .iconfont {
+      color: #333;
+      font-size: 40rpx;
+    }
     .icons-wrap {
       width: 280rpx;
       display: flex;
-
       align-items: center;
       justify-content: space-between;
     }
+    .icon-zan-color {
+      width: 40rpx;
+      height: 40rpx;
+      background-image: url("http://inimg02.jiuyan.info/in/2018/01/07/75CD22E0-9ABE-A583-FA79-D3CAFFCA479D.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+  }
+  .s-operate-wrap {
+    margin: 0 34rpx 34rpx;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #fafafa;
+
+    .s-zan-wrap {
+      .iconfont {
+        font-size: 28rpx;
+        color: #333;
+      }
+    }
+
+    .s-zan-wrap,
+    .s-comment-wrap {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      padding: 24rpx;
+    }
+    .zan-icon,
+    .comment-icon {
+      width: 68rpx;
+      height: 68rpx;
+    }
+    .s-zanavatar-wrap,
+    .s-comment-item-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1;
+      .s-avatar {
+        width: 68rpx;
+        height: 68rpx;
+        border-radius: 50%;
+        margin: 5rpx;
+      }
+    }
+    .s-zan-wrap + .s-comment-wrap {
+      border-top: 1rpx solid #e0e0e0;
+    }
+    .comment-item {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      image {
+        width: 68rpx;
+        height: 68rpx;
+      }
+      .comment {
+        width: 200rpx;
+        overflow: hidden;
+        word-wrap: break-word;
+        height: 300rpx;
+      }
+    }
+  }
+  .photo-line {
+    width: 683rpx;
+    height: 1rpx;
+    margin: 0 auto;
+    background-color: #e0e0e0;
   }
 }
 </style>
@@ -136,10 +211,11 @@ import { request } from '../../utils/login.js';
 import { downInternetUrl } from '../../utils/api.js';
 export default class PhotoItem extends wepy.component {
   props = {
-    photoItem: []
+    photoItem: [],
+    photoIndex: Number
   };
   data = {
-    zanClass: ''
+    image: [1, 2, 3, 4, 5, 6, 7]
   };
   watch = {};
   methods = {
@@ -149,8 +225,6 @@ export default class PhotoItem extends wepy.component {
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
     clickZan() {
-      if (this.photoItem.is_zan) {
-      }
       request({
         url: '/gg/photo/zan',
         data: {
@@ -162,8 +236,21 @@ export default class PhotoItem extends wepy.component {
         this.$apply()
       })
     },
+    delPhoto() {
+      console.log('www')
+      request({
+        url: '/gg/photo/del',
+        data: {
+          pid: this.photoItem.photo_id
+        }
+      }).then(res => {
+        this.$emit('deletPhoto', this.photoIndex)
+        this.$apply()
+      })
+    },
     downUrl(url) {
-      downInternetUrl(this.photoItem.photos[0].url)
+      console.log(this.index)
+      await downInternetUrl(this.photoItem.photos[0].url)
     },
     tap() {},
     downImage() {}

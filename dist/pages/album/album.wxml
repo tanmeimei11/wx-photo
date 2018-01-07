@@ -12,37 +12,44 @@
         <view class="name">{{item.user.name}}</view>
         <view class="time">{{item.fmt_time}}</view>
       </view>
-      <view class="s-operate">123</view>
+      <view class="s-operate"  wx:if="{{item.has_auth}}" bindtap="$photoItem$delPhoto" data-com-index="{{index}}"/>
     </view>
     <!-- photos -->
-      <scroll-view class="s-photos-wrap p-{{item.photos.length}}" scroll-x>
-     <image mode="aspectFill"  wx:for="{{item.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
-  </scroll-view>
-  <!-- bars -->
-  <view class="s-bars-wrap">
-     <view class="s-down" bindtap="$photoItem$downUrl" data-com-index="{{index}}">123</view>
-     <view class="icons-wrap">
-       <view class="s-like iconfont {{item.is_zan ? 'icon-kefu disable':''}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}">12312</view>
-       <view class="s-comment">123</view>
-       <view class="s-print">123</view>
-     </view>
-  </view>
-   <view class="s-operate-wrap">
-     <!-- zan -->
-     <view class="s-zan-wrap">
-     
-     </view>
-     <!-- comment -->
-      <view class="s-comment-wrap"/>
-     </view>
-   
-    <!-- <text class="id">{{grouplist.id}}. </text>
-    <text class="name" bindtap="tap">{{grouplist.name}}</text>
-    <view>
-      <repeat for="{{grouplist.list}}" item="item">
-        <groupitem v-bind:gitem.once="item"></groupitem>
-      </repeat>
-    </view> -->
+    <scroll-view class="s-photos-wrap p-{{item.photos.length}}" scroll-x>
+      <image mode="aspectFill"  wx:for="{{item.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
+    </scroll-view>
+    <!-- bars -->
+    <view class="s-bars-wrap">
+      <view class="s-down iconfont icon-zan" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
+      <view class="icons-wrap">
+        <view class="s-like iconfont {{!item.is_zan ? 'icon-zan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
+        <view class="s-comment iconfont  icon-zan"/>
+        <view class="s-print iconfont icon-zan"/>
+      </view>
+    </view>
+    <view class="s-operate-wrap">
+      <!-- zan -->
+      <view class="s-zan-wrap" wx:if="{{item.zan_list && item.zan_list.length}}">
+        <view class="zan-icon iconfont  icon-zan"/>
+        <view class="s-zanavatar-wrap">
+          <image class="s-avatar" wx:for="{{item.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"/>
+        </view>
+      </view>
+      <!-- comment -->
+      <!-- <view class="s-comment-wrap">
+        <view class="comment-icon iconfont icon-kefu"></view>
+        <view class="s-comment-item-wrap">
+          <view class="comment-item">
+            <image class="s-avatar" mode="aspectFill" src="{{photoItem.user.avatar}}"></image>
+            <view class="comment">
+              132412341231132412341231132412341231
+            </view>
+          </view>
+        </view>
+      </view> -->
+    </view>
+     <!-- line -->
+    <view class="photo-line"/>
   </view>
 
     </block>
@@ -61,8 +68,7 @@
   
     
 <view class="c-publish-photo">
-  <!-- <view class="s-publish-btn" bindtap="chooseImage"> -->
-  <view class="s-publish-btn" bindtap="$publishPhoto$pushlish">
+  <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
     上传照片
   </view>
 </view>

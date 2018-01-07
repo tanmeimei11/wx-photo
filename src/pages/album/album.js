@@ -39,6 +39,11 @@ export default class Index extends wepy.page {
       console.log(photos, idx)
       this.previewPhotos = photos
       this.previewPhotosIdx = idx
+    },
+    deletPhoto(idx) {
+      console.log(idx)
+      this.photoList.splice(idx, 1)
+      this.$apply()
     }
   }
 

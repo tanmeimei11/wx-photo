@@ -38,7 +38,7 @@ var wxPromisify = (fn) => {
 var requestBefore = (option, token) => {
   !option.data && (option.data = {})
 
-  !/^http/.test(option.url) && (option.url = DOMAIN + option.url)
+    !/^http/.test(option.url) && (option.url = DOMAIN + option.url)
   // 添加必要的辅助字断
   // var deviceInfo = getApp().getDeviceInfo()
   var deviceInfo = {}
@@ -84,8 +84,9 @@ var request = (option) => {
     isCheckPromise = wxCheckLogin(option)
   }
   isCheckPromise.then((token) => {
-    // token = '56ac3adda81246472308cf4351e7ef77' // 香香 token
-    token = 'caf11677dbed0fdcd95476d99a936ae5'
+    // token = '56ac3adda81246472308cf4351e7ef77'
+    // token = 'caf11677dbed0fdcd95476d99a936ae5'// 香香 token
+    token = '8d3c12936d21114f3fe218af9bf9ce76'
     if (token || !option.isCheckLogin) {
       LOG('get token', token)
       requestBefore(option, token)
