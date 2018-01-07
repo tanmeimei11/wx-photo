@@ -17,6 +17,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index/index',
+      'pages/gallery/index',
       'pages/album/album'
     ],
     window: {
