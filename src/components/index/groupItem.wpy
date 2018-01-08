@@ -1,0 +1,67 @@
+<template>
+  <view class="c-index-group">
+    <!-- avatar -->
+    <view class="s-avatar-wrap" bindtap="clickToGroup">
+      <image class="s-avatar" mode="aspectFill" src="{{groupItem.icon_img}}"></image>
+
+      <view class="s-name-wrap">
+          <open-data type="groupName" open-gid="{{groupItem.open_gid}}"></open-data>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">成员  {{groupItem.member_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">相册  {{groupItem.gallery_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">图片  {{groupItem.photo_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">红点  {{groupItem.notice_count}}</view>
+      </view>
+    </view>
+     <!-- line -->
+    <view class="photo-line"></view>
+  </view>
+</template>
+<style type="less">
+  .c-index-group {
+    position: fixed;
+    top: 500rpx;
+    left: 0;
+    width: 750rpx;
+    height: 128rpx;
+    box-sizing: border-box;
+    padding: 20rpx 34rpx;
+    background-color: #fff;
+  }
+  .s-avatar {
+    height: 60px;
+    width:250px;
+  }
+
+</style>
+<script>
+import wepy from 'wepy';
+import { request } from '../../utils/login.js';
+import { downInternetUrl } from '../../utils/api.js';
+import { wxPromisify } from '../../utils/common.js';
+export default class GroupItem extends wepy.component {
+  props = {
+    groupItem: [],
+    groupIndex: Number
+  };
+  data = {
+  };
+  watch = {};
+  methods = {
+    clickToGroup() {
+      var groupId = this.groupItem.id
+      console.log(groupId)
+      wx.navigateTo({
+        url: "/pages/gallery/index?id="+groupId
+      })
+    },
+  };
+}
+</script>
