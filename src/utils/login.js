@@ -38,32 +38,34 @@ var wxPromisify = (fn) => {
 var requestBefore = (option, token) => {
   !option.data && (option.data = {})
 
-  !/^http/.test(option.url) && (option.url = DOMAIN + option.url)
+    !/^http/.test(option.url) && (option.url = DOMAIN + option.url)
   // 添加必要的辅助字断
   // var deviceInfo = getApp().getDeviceInfo()
   var deviceInfo = {}
   var cookieObj = {
-    // 'tg_auth': token,
+    'tg_auth': token
     // '_v': config._v,
     // 'wxv': deviceInfo.version,
     // '_s': `${deviceInfo.platform.toLowerCase()}_wxminiprogram`,
     // '_sys': deviceInfo.system.toLowerCase(),
     // '_gps': deviceInfo.gps || ''
   }
-  option.data = {
-    ...option.data,
-    ...cookieObj
+  // option.data = {
+  //   ...option.data,
+  //   ...cookieObj
+  // }
+  if (!option.header) {
+    option.header = {}
   }
-  option.header = {
-    'Cookie': Object.keys(cookieObj).map((key) => {
-      return `${key}=${cookieObj[key]}`
-    }).join(';')
-  }
+  option.header.Cookie = Object.keys(cookieObj).map((key) => {
+    return `${key}=${cookieObj[key]}`
+  }).join(';')
+  // 支付网关必须
   // 支付网关必须加上必要字段_token
   if (/payment\/signature/.test(option.url)) {
     option.data._token = token
   }
-  (option.method !== 'POST') && (option.data.privateKey = token)
+  option.data.privateKey = token
   // 请求带上来源
   option.data.from = wx.getStorageSync('from')
 }
@@ -81,7 +83,9 @@ var request = (option) => {
     isCheckPromise = wxCheckLogin(option)
   }
   isCheckPromise.then((token) => {
-    // var token = '05b81ab2f8f6c6d1458a0f59b22e8c9b'
+    // token = '56ac3adda81246472308cf4351e7ef77'
+    // token = 'caf11677dbed0fdcd95476d99a936ae5'// 香香 token
+    token = '8d3c12936d21114f3fe218af9bf9ce76'
     if (token || !option.isCheckLogin) {
       LOG('get token', token)
       requestBefore(option, token)
@@ -90,7 +94,8 @@ var request = (option) => {
         return
       }
       LOG('start request option:', option)
-      wepy.request(option)
+      console.log(option)
+      // wepy.request(option)
       wx.request(option)
     } else {
       LOG('未登陆...')

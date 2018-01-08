@@ -1,5 +1,7 @@
 import wepy from 'wepy'
 import PhotoItem from '../../components/album/photoItem'
+import PreviewPhoto from '../../components/album/previewPhoto'
+import publishPhoto from '../../components/album/publishPhoto'
 import {
   request
 } from '../../utils/login'
@@ -11,12 +13,16 @@ export default class Index extends wepy.page {
   }
   // 组件
   components = {
-    photoItem: PhotoItem
+    photoItem: PhotoItem,
+    previewPhoto: PreviewPhoto,
+    publishPhoto: publishPhoto
   }
 
   // data
   data = {
-    photoList: []
+    photoList: [],
+    previewPhotos: [], // 预览照片
+    previewPhotosIdx: 0 // 预览照片开始位置
   }
 
   computed = {
@@ -26,47 +32,18 @@ export default class Index extends wepy.page {
   }
 
   methods = {
-    plus() {
-      this.mynum++
+    clearCurPhotos() {
+      this.previewPhotos = []
     },
-    toast() {
-      let promise = this.$invoke('toast', 'show', {
-        title: '自定义标题',
-        img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-      })
-
-      promise.then((d) => {
-        console.log('toast done')
-      })
+    changeCurPhotos(photos, idx) {
+      console.log(photos, idx)
+      this.previewPhotos = photos
+      this.previewPhotosIdx = idx
     },
-    tap() {
-      console.log('do noting from ' + this.$name)
-    },
-    communicate() {
-      console.log(this.$name + ' tap')
-
-      this.$invoke('counter2', 'minus', 45, 6)
-      this.$invoke('counter1', 'plus', 45, 6)
-
-      this.$broadcast('index-broadcast', 1, 3, 4)
-    },
-    request() {
-      let self = this
-      let i = 10
-      let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-      while (i--) {
-        wepy.request({
-          url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-          success: function (d) {
-            self.netrst += d.data + '.'
-            self.$apply()
-          }
-        })
-      }
-    },
-    counterEmit(...args) {
-      let $event = args[args.length - 1]
-      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+    deletPhoto(idx) {
+      console.log(idx)
+      this.photoList.splice(idx, 1)
+      this.$apply()
     }
   }
 
@@ -76,33 +53,36 @@ export default class Index extends wepy.page {
       console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
     }
   }
-
   onLoad() {
-    getPhotoList.then(res => {
-      this.photoList = res.data.list
-    })
-    // this.$parent.getUserInfo(function (userInfo) {
-    //   if (userInfo) {
-    //     self.userInfo = userInfo
-    //   }
-    //   self.normalTitle = '标题已被修改'
-
-    //   self.setTimeoutTitle = '标题三秒后会被修改'
-    //   setTimeout(() => {
-    //     self.setTimeoutTitle = '到三秒了'
-    //     self.$apply()
-    //   }, 3000)
-
-    //   self.$apply()
-    // })
+    this.loadingIn('加载中')
+    this.getList()
   }
-
-  var getPhotoList = async function () {
+  loadingIn(text) {
+    wx.showLoading({
+      title: text
+    })
+  }
+  loadingOut() {
+    wx.hideLoading()
+  }
+  async getList() {
     var res = await request({
       url: '/gg/gallery/photolist',
-      data: {}
+      data: {
+        gallery_id: 1,
+        cursor: 0
+      }
     })
 
-    return res
+    if (res && res.data) {
+      console.log(res.data.list)
+      this.photoList = res.data.list
+      this.$apply()
+      this.loadingOut()
+    }
+  }
+
+  onPageScroll() {
+
   }
 }
