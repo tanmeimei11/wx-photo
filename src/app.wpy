@@ -16,16 +16,12 @@ import 'wepy-async-function';
 
 export default class extends wepy.app {
   config = {
-<<<<<<< HEAD
-    pages: ['pages/index/index', 'pages/gallery/index', 'pages/album/album'],
-=======
     pages: [
       'pages/index/index',
       'pages/gallery/index',
       'pages/setting/setting',
       'pages/album/album'
     ],
->>>>>>> 580d0102cd76e5ac3be268ce4e82a28e5fb3a81f
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
