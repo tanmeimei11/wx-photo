@@ -17,17 +17,20 @@
     </scroll-view>
     <!-- bars -->
     <view class="s-bars-wrap">
-      <view class="s-down iconfont icon-xiazai" bindtap="downUrl"></view>
+      <view class="s-down iconfont icon-xiazai-sigel" bindtap="downUrl"></view>
       <view class="icons-wrap">
         <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
-        <view class="s-comment iconfont icon-pinglun"></view>
+        <view class="s-comment iconfont icon-pinglun-miaobian"></view>
         <view class="s-print iconfont icon-dayinji" ></view>
       </view>
     </view>
     <view class="s-operate-wrap">
       <!-- zan -->
       <view class="s-zan-wrap" wx:if="{{photoItem.zan_list && photoItem.zan_list.length}}">
-        <view class="zan-icon iconfont icon-dianzan_xiaoxin"></view>
+        <view class="zan-icon ">
+          <view class="iconfont icon-dianzan_xiaoxin"></view>
+          <view class="zan-icon-num">12</view>
+        </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{photoItem.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"></image>
         </view>
@@ -163,6 +166,12 @@
     .comment-icon {
       width: 68rpx;
       height: 68rpx;
+      font-size: 28rpx;
+      color: #b0b0b0 !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     .s-zanavatar-wrap,
     .s-comment-item-wrap {
@@ -225,17 +234,35 @@ export default class PhotoItem extends wepy.component {
       console.log(this.photoItem.photos, _photoIdx)
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
-    clickZan() {
-      request({
+    async clickZan() {
+      var res = await request({
         url: '/gg/photo/zan',
         data: {
           pid: this.photoItem.photo_id,
           action: this.photoItem.is_zan ? 'cancel' : 'zan'
         }
-      }).then(res => {
+      })
+
+      if (res.succ) {
         this.photoItem.is_zan = !this.photoItem.is_zan
         this.$apply()
+      }
+      var zanListRes = await request({
+        url: '/gg/photo/zan_list',
+        data: {
+          pid: this.photoItem.photo_id
+        }
       })
+
+      if (zanListRes.succ && zanListRes.data) {
+        console.log(zanListRes)
+        this.$emit(
+          'changeZanList',
+          this.photoIndex,
+          this.photoItem.photo_id,
+          zanListRes.data
+        )
+      }
     },
     async delPhoto() {
       var res = await wxPromisify(wx.showActionSheet)({

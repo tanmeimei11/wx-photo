@@ -90,6 +90,7 @@ var request = (option) => {
       LOG('get token', token)
       requestBefore(option, token)
       if (isMock) {
+        console.log('option', option)
         option.success(require('../mock/' + mockConfig[option.url]))
         return
       }
