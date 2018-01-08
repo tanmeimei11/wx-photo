@@ -1,6 +1,6 @@
 <template>
 <!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="swiperChange" current="{{index}}" data-idx="{{photos}}">
+<swiper class="c-main-swiper" bindchange="swiperChange" current="{{index}}" data-idx="{{photos}}" @tap.stop="clearSwiper">
   {{photos}}
   <block wx:for="{{photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
     <swiper-item bindtap="closeSwiper">
@@ -43,16 +43,18 @@
 import wepy from 'wepy';
 export default class PreviewPhoto extends wepy.component {
   props = {
-    photos: {
-      type: Array,
-      default: []
-    },
+    photos: Array,
     index: 0
   };
   data = {};
   methods = {
     swiperChange() {},
-    downImage() {}
+    downImage() {},
+    clearSwiper() {
+      console.log(this.photos)
+      console.log('clearCurPhotos')
+      // this.$emit('clearCurPhotos')
+    }
   };
   watch = {
     photos(newValue, oldValue) {

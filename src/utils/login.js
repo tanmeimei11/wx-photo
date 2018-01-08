@@ -85,8 +85,8 @@ var request = (option) => {
   }
   isCheckPromise.then((token) => {
     // token = '56ac3adda81246472308cf4351e7ef77'
-    // token = 'caf11677dbed0fdcd95476d99a936ae5'// 香香 token
-    token = '8d3c12936d21114f3fe218af9bf9ce76'
+    token = 'caf11677dbed0fdcd95476d99a936ae5' // 香香 token
+    // token = '8d3c12936d21114f3fe218af9bf9ce76'
     if (token || !option.isCheckLogin) {
       LOG('get token', token)
       requestBefore(option, token)
