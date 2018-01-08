@@ -42,7 +42,6 @@ var requestBefore = (option, token) => {
   // 添加必要的辅助字断
   // var deviceInfo = getApp().getDeviceInfo()
   var deviceInfo = {}
-  console.log(deviceInfo)
   var cookieObj = {
     'tg_auth': token
     // '_v': config._v,
@@ -91,9 +90,7 @@ var request = (option) => {
       LOG('get token', token)
       requestBefore(option, token)
       if (isMock) {
-        console.log(option.url, mockConfig[option.url])
         option.success(require('../mock/' + mockConfig[option.url]))
-        console.log(require('../mock/' + mockConfig[option.url]))
         return
       }
       LOG('start request option:', option)

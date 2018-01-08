@@ -1,17 +1,34 @@
 import wepy from 'wepy';
+import {request} from '../../utils/login'
 
 export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '群活动相册'
+    }
 
     data = {
-        motto: 'Hello World',
-        userInfo: {}
+        groupInfo: {}
     };
     methods = {
-        bindViewTap () {
-            console.log('button clicked');
+        changeBg () {
+            wx.chooseImage({
+                count: 1,
+                success: function(res) {
+                    console.log(res)
+                }
+            })
         }
     };
     onLoad() {
-        console.log('onLoad');
+        request({
+            url: '/gg/group/info',
+            data: {
+                group_id: 0
+            }
+        }).then((res) =>{
+            this.groupInfo = res
+            this.$apply()
+            console.log(this.groupInfo)
+        })
     };
 }
