@@ -1,4 +1,5 @@
 <style lang="less">
+@import "./utils/font.scss";
 .container {
   height: 100%;
   display: flex;
@@ -10,8 +11,8 @@
 </style>
 
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
+import wepy from 'wepy';
+import 'wepy-async-function';
 
 export default class extends wepy.app {
   config = {
@@ -27,16 +28,16 @@ export default class extends wepy.app {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
     }
-  }
+  };
 
   globalData = {
     getDeviceInfo: {
       a: 1
     },
     userInfo: null
-  }
+  };
 
-  constructor () {
+  constructor() {
     super()
     this.use('requestfix')
   }
@@ -45,7 +46,7 @@ export default class extends wepy.app {
     this.testAsync()
   }
 
-  sleep (s) {
+  sleep(s) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve('promise resolved')
@@ -53,7 +54,7 @@ export default class extends wepy.app {
     })
   }
 
-  async testAsync () {
+  async testAsync() {
     const data = await this.sleep(3)
     console.log(data)
   }
@@ -64,7 +65,7 @@ export default class extends wepy.app {
       return this.globalData.userInfo
     }
     wepy.getUserInfo({
-      success (res) {
+      success(res) {
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }

@@ -40,7 +40,8 @@ const uploadImageToQiniu = async file => {
  */
 const downInternetUrl = async function (urls) {
   wx.showLoading({
-    title: '正在下载'
+    title: '正在下载',
+    mask: true
   })
   if (typeof urls === 'string') {
     urls = [urls]
@@ -52,7 +53,8 @@ const downInternetUrl = async function (urls) {
   wx.hideLoading()
   wx.showToast({
     title: '下载成功',
-    duration: 2000
+    duration: 2000,
+    mask: true
   })
 }
 

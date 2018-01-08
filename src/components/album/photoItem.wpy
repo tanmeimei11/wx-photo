@@ -1,6 +1,5 @@
 <template>
   <view class="photo-item">
-    <!-- <image src="http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2" /> -->
     <!-- avatar -->
     <view class="s-avatar-wrap">
       <image class="s-avatar" mode="aspectFill" src="{{photoItem.user.avatar}}"></image>
@@ -9,7 +8,7 @@
         <view class="name">{{photoItem.user.name}}</view>
         <view class="time">{{photoItem.fmt_time}}</view>
       </view>
-      <view class="s-operate" wx:if="{{photoItem.has_auth}}" bindtap="delPhoto"></view>
+      <view class="s-operate iconfont icon-more-gray" wx:if="{{photoItem.has_auth}}" bindtap="delPhoto"></view>
     </view>
     <!-- photos -->
     <scroll-view class="s-photos-wrap p-{{photoItem.photos.length}}" scroll-x>
@@ -18,17 +17,20 @@
     </scroll-view>
     <!-- bars -->
     <view class="s-bars-wrap">
-      <view class="s-down iconfont icon-zan" bindtap="downUrl"></view>
+      <view class="s-down iconfont icon-xiazai-sigel" bindtap="downUrl"></view>
       <view class="icons-wrap">
-        <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-zan':'icon-zan-color'}}" bindtap="clickZan"></view>
-        <view class="s-comment iconfont  icon-zan"></view>
-        <view class="s-print iconfont icon-zan" ></view>
+        <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
+        <view class="s-comment iconfont icon-pinglun-miaobian"></view>
+        <view class="s-print iconfont icon-dayinji" ></view>
       </view>
     </view>
     <view class="s-operate-wrap">
       <!-- zan -->
       <view class="s-zan-wrap" wx:if="{{photoItem.zan_list && photoItem.zan_list.length}}">
-        <view class="zan-icon iconfont  icon-zan"></view>
+        <view class="zan-icon ">
+          <view class="iconfont icon-dianzan_xiaoxin"></view>
+          <view class="zan-icon-num">12</view>
+        </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{photoItem.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"></image>
         </view>
@@ -87,6 +89,7 @@
       color: #b0b0b0;
     }
     .s-operate {
+      font-size: 40rpx;
     }
   }
   .s-photos-wrap {
@@ -163,6 +166,12 @@
     .comment-icon {
       width: 68rpx;
       height: 68rpx;
+      font-size: 28rpx;
+      color: #b0b0b0 !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     .s-zanavatar-wrap,
     .s-comment-item-wrap {
@@ -209,6 +218,7 @@
 import wepy from 'wepy';
 import { request } from '../../utils/login.js';
 import { downInternetUrl } from '../../utils/api.js';
+import { wxPromisify } from '../../utils/common.js';
 export default class PhotoItem extends wepy.component {
   props = {
     photoItem: [],
@@ -224,33 +234,64 @@ export default class PhotoItem extends wepy.component {
       console.log(this.photoItem.photos, _photoIdx)
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
-    clickZan() {
-      request({
+    async clickZan() {
+      var res = await request({
         url: '/gg/photo/zan',
         data: {
           pid: this.photoItem.photo_id,
           action: this.photoItem.is_zan ? 'cancel' : 'zan'
         }
-      }).then(res => {
+      })
+
+      if (res.succ) {
         this.photoItem.is_zan = !this.photoItem.is_zan
         this.$apply()
-      })
-    },
-    delPhoto() {
-      console.log('www')
-      request({
-        url: '/gg/photo/del',
+      }
+      var zanListRes = await request({
+        url: '/gg/photo/zan_list',
         data: {
           pid: this.photoItem.photo_id
         }
-      }).then(res => {
-        this.$emit('deletPhoto', this.photoIndex)
-        this.$apply()
       })
+
+      if (zanListRes.succ && zanListRes.data) {
+        console.log(zanListRes)
+        this.$emit(
+          'changeZanList',
+          this.photoIndex,
+          this.photoItem.photo_id,
+          zanListRes.data
+        )
+      }
+    },
+    async delPhoto() {
+      var res = await wxPromisify(wx.showActionSheet)({
+        itemList: ['删除'],
+        itemColor: '#FF5E51'
+      })
+      if (res.tapIndex === 0) {
+        request({
+          url: '/gg/photo/del',
+          data: {
+            pid: this.photoItem.photo_id
+          }
+        }).then(res => {
+          this.$emit('deletPhoto', this.photoIndex)
+          this.$apply()
+          console.log(this)
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+            mask: true
+          })
+        })
+      }
     },
     async downUrl(url) {
-      console.log(this.index)
-      await downInternetUrl(this.photoItem.photos[0].url)
+      var _urls = this.photoItem.photos.map(photo => {
+        return photo.url
+      })
+      await downInternetUrl(_urls)
     },
     tap() {},
     downImage() {}
