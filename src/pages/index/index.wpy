@@ -1,9 +1,21 @@
 
 <template>
   <view class="container">
+  <shareOrCreateGroup></shareOrCreateGroup>
+
+    <block wx:if="{{groupList.length != 0}}">
+    <repeat for="{{groupList}}" key="index" index="index" item="item">
+       <groupItem :groupItem="item" :groupIndex="index" ></groupItem>
+    </repeat>
+    </block>
+    <block wx:if="{{groupList.length == 0}}" >
+      <view class="empty"></view>
+    </block>
   </view>
 </template>
 <style lang="less" src="./index.scss">
 </style>
+
 <script src="./index.js">
 </script>
+

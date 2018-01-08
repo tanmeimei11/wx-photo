@@ -1,0 +1,46 @@
+<template>
+<view class="c-publish-photo">
+  <button class="s-publish-btn" open-type="share">创建群活动相册</button>
+</view>
+  
+</template>
+<style  type="less">
+.c-publish-photo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  height: 128rpx;
+  box-sizing: border-box;
+  padding: 20rpx 34rpx;
+  background-color: #fff;
+  .s-publish-btn {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    color: #fff;
+  }
+}
+</style>
+<script>
+import wepy from 'wepy';
+import { wxPromisify } from '../../utils/common.js';
+import { uploadImageToQiniu } from '../../utils/api.js';
+import { request } from '../../utils/login.js';
+export default class ShareOrCreateGroupClass extends wepy.component {
+  data = {
+    images: []
+  };
+  methods = {
+
+  };
+  
+
+
+}
+</script>
