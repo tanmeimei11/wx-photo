@@ -132,7 +132,6 @@ var _class = function () {
   }, {
     key: '$initAPI',
     value: function $initAPI(wepy, noPromiseAPI) {
-
       var self = this;
       var noPromiseMethods = {
         stopRecord: true,
