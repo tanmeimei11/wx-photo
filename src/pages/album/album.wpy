@@ -1,17 +1,20 @@
 
 <template>
   <view class="container" >
+    <!-- 照片列表 -->
     <block wx:if="{{photoList.length != 0}}">
     <repeat for="{{photoList}}" key="index" index="index" item="item">
-       <photoItem :photoItem="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto"></photoItem>
+       <photoItem :photoItem="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto" @changeZanList.user="changeZanList"></photoItem>
     </repeat>
     </block>
+    <!-- 空态页 -->
     <block wx:if="{{photoList.length == 0}}" >
       <view class="empty"></view>
     </block>
-
+    <!-- 预览照片 -->
     <previewPhoto :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
-    <publishPhoto @publishPhoto.user="publishPhoto"></publishPhoto>
+    <!-- 发布照片 -->
+    <publishPhoto @publishPhoto.user="publishPhoto" @galleryId.sync="galleryId" :publishAfterInfo.sync="publishAfterInfo"></publishPhoto>
   </view>
 </template>
 <style lang="less" src="./album.scss">

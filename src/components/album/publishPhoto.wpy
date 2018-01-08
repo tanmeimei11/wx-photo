@@ -3,6 +3,7 @@
   <view class="s-publish-btn" bindtap="chooseImage">
     上传照片
   </view>
+  <view class="publish-info" wx:if="{{publishAfterInfo}}"></view>
 </view>
   
 </template>
@@ -35,10 +36,16 @@ import { wxPromisify } from '../../utils/common.js';
 import { uploadImageToQiniu } from '../../utils/api.js';
 import { request } from '../../utils/login.js';
 export default class PreviewPhoto extends wepy.component {
+  props = {
+    galleryId: '',
+    publishAfterInfo: {}
+  };
   data = {
-    images: []
+    images: [],
+    publishAfterInfo: null
   };
   methods = {
+    chooseImageBefore: async function() {},
     chooseImage: async function() {
       try {
         var chooseRes = await wxPromisify(wx.chooseImage)({
@@ -69,16 +76,28 @@ export default class PreviewPhoto extends wepy.component {
       },
       data: {
         param: JSON.stringify(this.images),
-        gallery_id: 1
+        gallery_id: this.galleryId
       }
     })
-
+    console.log(res)
     if (res.succ && res.data) {
       wx.hideLoading()
+      console.log(res.data.photo_info)
       this.$emit('publishPhoto', res.data.photo_info)
     }
   }
-
+  async pushlishAfter() {
+    var newsRes = await request({
+      url: '/gg/group/news',
+      data: {
+        gallery_id: this.galleryId
+      }
+    })
+    if (newsRes.succ && newsRes.data) {
+      this.publishAfterInfo = newsRes.data
+      // this.$emit('showPublishBubal', newsRes.data)
+    }
+  }
   async loadImages(files) {
     var _load = async file => {
       var res = await uploadImageToQiniu(file)
@@ -90,6 +109,7 @@ export default class PreviewPhoto extends wepy.component {
     var _len = files.length
     for (var i = 0; i < _len; i++) {
       await _load(files[i])
+      console.log('upload finish')
     }
     this.pushlish()
   }

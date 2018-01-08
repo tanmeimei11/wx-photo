@@ -21,12 +21,17 @@ export default class Index extends wepy.page {
 
   // data
   data = {
+    galleryId: '123', // 相册id
+
     photoList: [],
     previewPhotos: [], // 预览照片
     previewPhotosIdx: 0, // 预览照片开始位置
 
     curCursor: 0,
-    isGetList: false
+    isGetList: false,
+    isGetListFinish: false,
+
+    publishAfterInfo: null // 发布照片之后气泡信息
   }
 
   computed = {
@@ -41,17 +46,26 @@ export default class Index extends wepy.page {
       this.previewPhotosIdx = 0
     },
     changeCurPhotos(photos, idx) {
-      console.log(photos, idx)
       this.previewPhotos = photos
       this.previewPhotosIdx = idx
     },
     deletPhoto(idx) {
-      console.log(idx)
       this.photoList.splice(idx, 1)
       this.$apply()
     },
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
+      this.$apply()
+    },
+    changeZanList(idx, photoId, zanlist) {
+      var _photo = this.photoList[idx]
+      if (_photo.photo_id === photoId) {
+        _photo.zan_list = zanlist
+      }
+      this.$apply()
+    },
+    showPublishBubal(data) {
+      this.publishAfterInfo = data
       this.$apply()
     }
   }
@@ -76,7 +90,7 @@ export default class Index extends wepy.page {
     wx.hideLoading()
   }
   async getList() {
-    if (this.isGetList) {
+    if (this.isGetList || this.isGetListFinish) {
       return
     }
     this.isGetList = true
@@ -88,16 +102,15 @@ export default class Index extends wepy.page {
       }
     })
     if (res && res.data) {
-      console.log(res.data.list)
       this.photoList.push.apply(this.photoList, res.data.list)
       this.curCursor = res.data.cursor
-      this.$apply()
       this.loadingOut()
       this.isGetList = false
+      this.isGetListFinish = res.data.has_next
+      this.$apply()
     }
   }
   async onReachBottom(e) {
-    console.log(e)
     await this.getList()
   }
 }
