@@ -22,7 +22,7 @@ export default class Index extends wepy.page {
   // data
   data = {
     galleryId: '123', // 相册id
-    galleryAuth: 2, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
+    galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
 
     photoList: [],
     previewPhotos: [], // 预览照片
@@ -57,14 +57,15 @@ export default class Index extends wepy.page {
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
       this.$apply()
-    },
-    changeZanList(idx, photoId, zanlist) {
-      var _photo = this.photoList[idx]
-      if (_photo.photo_id === photoId) {
-        _photo.zan_list = zanlist
-      }
-      this.$apply()
     }
+    // changeZanList(idx, photoId, zanlist) {
+    //   var _photo = this.photoList[idx]
+    //   console.log(photoId, _photo.photo_id, zanlist)
+    //   if (_photo.photo_id === photoId) {
+    //     this.photoList[idx].zan_list = zanlist
+    //   }
+    //   this.$apply()
+    // }
   }
 
   events = {
@@ -75,8 +76,8 @@ export default class Index extends wepy.page {
   }
   async onLoad() {
     try {
-      await this.getGalleryAuth()
       this.loadingIn('加载中')
+      await this.getGalleryAuth()
       console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
         this.getList()

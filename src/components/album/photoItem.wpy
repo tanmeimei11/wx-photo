@@ -29,7 +29,7 @@
       <view class="s-zan-wrap" wx:if="{{photoItem.zan_list && photoItem.zan_list.length}}">
         <view class="zan-icon ">
           <view class="iconfont icon-dianzan_xiaoxin"></view>
-          <view class="zan-icon-num">12</view>
+          <view class="zan-icon-num">{{photoItem.zan_list.length}}</view>
         </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{photoItem.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"></image>
@@ -243,10 +243,6 @@ export default class PhotoItem extends wepy.component {
         }
       })
 
-      if (res.succ) {
-        this.photoItem.is_zan = !this.photoItem.is_zan
-        this.$apply()
-      }
       var zanListRes = await request({
         url: '/gg/photo/zan_list',
         data: {
@@ -254,14 +250,10 @@ export default class PhotoItem extends wepy.component {
         }
       })
 
-      if (zanListRes.succ && zanListRes.data) {
-        console.log(zanListRes)
-        this.$emit(
-          'changeZanList',
-          this.photoIndex,
-          this.photoItem.photo_id,
-          zanListRes.data
-        )
+      if (res.succ && zanListRes.succ && zanListRes.data) {
+        this.photoItem.is_zan = !this.photoItem.is_zan
+        this.photoItem.zan_list = zanListRes.data
+        this.$apply()
       }
     },
     async delPhoto() {

@@ -33,7 +33,7 @@
       <view class="s-zan-wrap" wx:if="{{item.zan_list && item.zan_list.length}}">
         <view class="zan-icon ">
           <view class="iconfont icon-dianzan_xiaoxin"/>
-          <view class="zan-icon-num">12</view>
+          <view class="zan-icon-num">{{item.zan_list.length}}</view>
         </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{item.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"/>
@@ -59,8 +59,12 @@
     </block>
     </block>
     <!-- 空态页 -->
-    <block wx:if="{{photoList.length == 0}}">
+    <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
       <view class="empty"/>
+    </block>
+    <!-- 隐私 -->
+    <block wx:if="{{galleryAuth == 0}}">
+      <view class="empty private"/>
     </block>
     <!-- 预览照片 -->
     
@@ -77,7 +81,7 @@
   
     <!-- 发布照片 -->
     
-<view class="c-publish-photo" wx:if="{{galleryAuth}}">
+<view class="c-publish-photo" wx:if="{{galleryAuth > 1}}">
   <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
     上传照片
   </view>
