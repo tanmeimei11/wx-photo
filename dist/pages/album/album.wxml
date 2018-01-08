@@ -24,7 +24,7 @@
       <view class="s-down iconfont icon-xiazai-sigel" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
       <view class="icons-wrap">
         <view class="s-like iconfont {{!item.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
-        <view class="s-comment iconfont icon-pinglun-miaobian"/>
+        <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
         <view class="s-print iconfont icon-dayinji"/>
       </view>
     </view>

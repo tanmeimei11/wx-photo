@@ -20,7 +20,7 @@
       <view class="s-down iconfont icon-xiazai-sigel" bindtap="downUrl"></view>
       <view class="icons-wrap">
         <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
-        <view class="s-comment iconfont icon-pinglun-miaobian"></view>
+        <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
         <view class="s-print iconfont icon-dayinji" ></view>
       </view>
     </view>
@@ -128,7 +128,8 @@
       font-size: 40rpx;
     }
     .icons-wrap {
-      width: 280rpx;
+      /* width: 280rpx; */
+      width: 150rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;

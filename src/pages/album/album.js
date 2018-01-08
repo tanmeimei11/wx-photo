@@ -21,7 +21,7 @@ export default class Index extends wepy.page {
 
   // data
   data = {
-    galleryId: '123', // 相册id
+    galleryId: '1', // 相册id
     galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
 
     photoList: [],
@@ -31,14 +31,6 @@ export default class Index extends wepy.page {
     curCursor: 0,
     isGetList: false,
     isGetListFinish: false
-
-    // publishAfterInfo: null // 发布照片之后气泡信息
-  }
-
-  computed = {
-    now() {
-      return +new Date()
-    }
   }
 
   methods = {
@@ -58,14 +50,6 @@ export default class Index extends wepy.page {
       this.photoList.splice(0, 0, obj)
       this.$apply()
     }
-    // changeZanList(idx, photoId, zanlist) {
-    //   var _photo = this.photoList[idx]
-    //   console.log(photoId, _photo.photo_id, zanlist)
-    //   if (_photo.photo_id === photoId) {
-    //     this.photoList[idx].zan_list = zanlist
-    //   }
-    //   this.$apply()
-    // }
   }
 
   events = {
@@ -107,10 +91,11 @@ export default class Index extends wepy.page {
       }
     })
     if (res && res.data) {
-      if (res.data.can_publish) {
+      this.galleryAuth = 2
+      if (!res.data.can_publish) {
         this.galleryAuth = 1
       }
-      if (res.data.can_view_photo) {
+      if (!res.data.can_view_photo) {
         this.galleryAuth = 0
       }
       this.loadingOut()
@@ -125,7 +110,7 @@ export default class Index extends wepy.page {
     var res = await request({
       url: '/gg/gallery/photolist',
       data: {
-        gallery_id: 1,
+        gallery_id: this.galleryId,
         cursor: 0
       }
     })
