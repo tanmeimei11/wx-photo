@@ -1,0 +1,88 @@
+
+  <view class="container">
+    <!-- 照片列表 -->
+    <block  wx:if="{{photoList.length != 0}}">
+    <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+       
+  <view class="photo-item">
+    <!-- avatar -->
+    <view class="s-avatar-wrap">
+      <image class="s-avatar" mode="aspectFill" src="{{item.user.avatar}}"/>
+
+      <view class="s-name-wrap">
+        <view class="name">{{item.user.name}}</view>
+        <view class="time">{{item.fmt_time}}</view>
+      </view>
+      <view class="s-operate iconfont icon-more-gray"  wx:if="{{item.has_auth}}" bindtap="$photoItem$delPhoto" data-com-index="{{index}}"/>
+    </view>
+    <!-- photos -->
+    <scroll-view class="s-photos-wrap p-{{item.photos.length}}" scroll-x>
+      <image mode="aspectFill"  wx:for="{{item.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
+    </scroll-view>
+    <!-- bars -->
+    <view class="s-bars-wrap">
+      <view class="s-down iconfont icon-xiazai-sigel" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
+      <view class="icons-wrap">
+        <view class="s-like iconfont {{!item.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
+        <view class="s-comment iconfont icon-pinglun-miaobian"/>
+        <view class="s-print iconfont icon-dayinji"/>
+      </view>
+    </view>
+    <view class="s-operate-wrap">
+      <!-- zan -->
+      <view class="s-zan-wrap" wx:if="{{item.zan_list && item.zan_list.length}}">
+        <view class="zan-icon ">
+          <view class="iconfont icon-dianzan_xiaoxin"/>
+          <view class="zan-icon-num">12</view>
+        </view>
+        <view class="s-zanavatar-wrap">
+          <image class="s-avatar" wx:for="{{item.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"/>
+        </view>
+      </view>
+      <!-- comment -->
+      <!-- <view class="s-comment-wrap">
+        <view class="comment-icon iconfont icon-kefu"></view>
+        <view class="s-comment-item-wrap">
+          <view class="comment-item">
+            <image class="s-avatar" mode="aspectFill" src="{{photoItem.user.avatar}}"></image>
+            <view class="comment">
+              132412341231132412341231132412341231
+            </view>
+          </view>
+        </view>
+      </view> -->
+    </view>
+     <!-- line -->
+    <view class="photo-line"/>
+  </view>
+
+    </block>
+    </block>
+    <!-- 空态页 -->
+    <block wx:if="{{photoList.length == 0}}">
+      <view class="empty"/>
+    </block>
+    <!-- 预览照片 -->
+    
+<!-- 预览图片 -->
+<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
+  <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+    <swiper-item bindtap="$previewPhoto$closeSwiper">
+      <view class="slide-image" style="background-image:url({{item.url}})"/>
+    </swiper-item>
+  </block>
+  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
+  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
+</swiper>
+  
+    <!-- 发布照片 -->
+    
+<view class="c-publish-photo">
+  <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
+    上传照片
+  </view>
+  <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo}}"/>
+</view>
+  
+
+  </view>

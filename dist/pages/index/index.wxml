@@ -1,0 +1,43 @@
+
+  <view class="container">
+  
+<view class="c-publish-photo">
+  <button class="s-publish-btn" open-type="share">创建群活动相册</button>
+</view>
+  
+
+
+    <block  wx:if="{{groupList.length != 0}}">
+    <block wx:for="{{groupList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+       
+  <view class="c-index-group">
+    <!-- avatar -->
+    <view class="s-avatar-wrap" bindtap="$groupItem$clickToGroup" data-com-index="{{index}}">
+      <image class="s-avatar" mode="aspectFill" src="{{item.icon_img}}"/>
+
+      <view class="s-name-wrap">
+          <open-data type="groupName" open-gid="{{item.open_gid}}"/>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">成员  {{item.member_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">相册  {{item.gallery_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">图片  {{item.photo_count}}</view>
+      </view>
+      <view class="s-name-wrap">
+        <view class="time">红点  {{item.notice_count}}</view>
+      </view>
+    </view>
+     <!-- line -->
+    <view class="photo-line"/>
+  </view>
+
+    </block>
+    </block>
+    <block  wx:if="{{groupList.length == 0}}">
+      <view class="empty"/>
+    </block>
+  </view>
