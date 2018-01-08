@@ -10,7 +10,7 @@
     height: 320rpx;
     display: block;
     background-image: url(http://inimg02.jiuyan.info/in/2018/01/04/618F6A80-57E3-EE9F-4A25-5DFC1C210943.jpg);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -26,6 +26,7 @@
     .avatar{
       width: 140rpx;
       height: 140rpx;
+      border-radius: 6rpx;
       position: absolute;
       top: -108rpx;
       left: 52rpx;
@@ -67,6 +68,10 @@
 
 .gallery{
   padding: 36rpx 17rpx 0;
+  .item:after{
+    content: '';
+    position: absolute;
+  }
   .item{
     width: 324rpx;
     height: 310rpx;
@@ -104,6 +109,12 @@
         background-position: center;
         position: absolute;
       }
+    }
+    .preview.p0{
+      background-image: url(http://inimg07.jiuyan.info/in/2018/01/05/45B27708-1761-B3F3-C4DA-A5C9338FD0D7.png);
+      background-size: 312rpx 153rpx;
+      background-repeat: no-repeat;
+      background-position: center;
     }
     .preview.p1 view{
       margin: 6rpx;
