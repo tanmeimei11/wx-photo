@@ -77,11 +77,28 @@
   
     <!-- 发布照片 -->
     
-<view class="c-publish-photo">
+<view class="c-publish-photo" wx:if="{{galleryAuth}}">
   <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
     上传照片
   </view>
-  <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo}}"/>
+  <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo && $publishPhoto$publishAfterInfo.is_show}}" bindtap="$publishPhoto$readTips">
+    <view class="s-avatar-wrap">
+      <view class="s-avatar">
+        <image src="{{$publishPhoto$publishAfterInfo.avatar}}"/>
+        <view class="s-avatar-qun"/>
+      </view>
+      <view class="s-name">
+        {{$publishPhoto$publishAfterInfo.inviter_name}} 
+      </view>
+      <view class="s-name">
+       {{$publishPhoto$publishAfterInfo.invite_action}}
+      </view>
+    </view>
+   
+     <view class="s-text">
+       {{$publishPhoto$publishAfterInfo.txt}}
+    </view>
+  </view>
 </view>
   
 

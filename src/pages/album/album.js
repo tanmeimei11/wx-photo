@@ -22,6 +22,7 @@ export default class Index extends wepy.page {
   // data
   data = {
     galleryId: '123', // 相册id
+    galleryAuth: 2, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
 
     photoList: [],
     previewPhotos: [], // 预览照片
@@ -29,9 +30,9 @@ export default class Index extends wepy.page {
 
     curCursor: 0,
     isGetList: false,
-    isGetListFinish: false,
+    isGetListFinish: false
 
-    publishAfterInfo: null // 发布照片之后气泡信息
+    // publishAfterInfo: null // 发布照片之后气泡信息
   }
 
   computed = {
@@ -63,10 +64,6 @@ export default class Index extends wepy.page {
         _photo.zan_list = zanlist
       }
       this.$apply()
-    },
-    showPublishBubal(data) {
-      this.publishAfterInfo = data
-      this.$apply()
     }
   }
 
@@ -76,9 +73,21 @@ export default class Index extends wepy.page {
       console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
     }
   }
-  onLoad() {
-    this.loadingIn('加载中')
-    this.getList()
+  async onLoad() {
+    try {
+      await this.getGalleryAuth()
+      this.loadingIn('加载中')
+      console.log(this.galleryAuth)
+      if (this.galleryAuth !== 0) {
+        this.getList()
+      }
+    } catch (e) {
+      this.loadingOut()
+      wx.showToast({
+        title: '加载失败',
+        icon: 'loading'
+      })
+    }
   }
   loadingIn(text) {
     wx.showLoading({
@@ -88,6 +97,24 @@ export default class Index extends wepy.page {
   }
   loadingOut() {
     wx.hideLoading()
+  }
+  async getGalleryAuth() {
+    var res = await request({
+      url: '/gg/gallery/info',
+      data: {
+        gallery_id: this.galleryId
+      }
+    })
+    if (res && res.data) {
+      if (res.data.can_publish) {
+        this.galleryAuth = 1
+      }
+      if (res.data.can_view_photo) {
+        this.galleryAuth = 0
+      }
+      this.loadingOut()
+      this.$apply()
+    }
   }
   async getList() {
     if (this.isGetList || this.isGetListFinish) {

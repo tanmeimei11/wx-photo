@@ -3,7 +3,24 @@
   <view class="s-publish-btn" bindtap="chooseImage">
     上传照片
   </view>
-  <view class="publish-info" wx:if="{{publishAfterInfo}}"></view>
+  <view class="publish-info" wx:if="{{publishAfterInfo && publishAfterInfo.is_show}}" @tap.atop="readTips">
+    <view class="s-avatar-wrap">
+      <view class="s-avatar">
+        <image src="{{publishAfterInfo.avatar}}"></image>
+        <view class="s-avatar-qun"></view>
+      </view>
+      <view class="s-name">
+        {{publishAfterInfo.inviter_name}} 
+      </view>
+      <view class="s-name">
+       {{publishAfterInfo.invite_action}}
+      </view>
+    </view>
+   
+     <view class="s-text">
+       {{publishAfterInfo.txt}}
+    </view>
+  </view>
 </view>
   
 </template>
@@ -28,27 +45,87 @@
     font-size: 32rpx;
     color: #fff;
   }
+  .publish-info {
+    width: 454rpx;
+    height: 245rpx;
+    overflow: hidden;
+    position: absolute;
+    top: -245rpx;
+    right: 32rpx;
+    background: url("http://inimg02.jiuyan.info/in/2018/01/08/1A424013-5A89-71C3-E246-E87841C1F119.png")
+      no-repeat;
+    background-size: 484rpx 224rpx;
+    background-position: center bottom;
+    color: #333;
+    font-size: 28rpx;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    .s-avatar-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-start;
+      margin-top: 20rpx;
+      font-size: 24rpx;
+      color: #666666;
+    }
+    .s-avatar-qun {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 26rpx;
+      height: 26rpx;
+      background: url("http://inimg07.jiuyan.info/in/2018/01/08/8E5D491B-F8ED-4E63-DCFE-3BA0CAA5D9C2.png")
+        no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .s-avatar + .s-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 170rpx;
+      margin-left: 0rpx;
+    }
+    .s-name {
+      height: 60rpx;
+      white-space: nowrap;
+      line-height: 60rpx;
+      margin-left: 10rpx;
+    }
+    .s-avatar {
+      margin-right: 20px;
+      margin-left: 10rpx;
+      position: relative;
+      width: 90rpx;
+      height: 90rpx;
+      image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    .s-text {
+      margin: 10px 0 0 10rpx;
+    }
+  }
 }
 </style>
 <script>
 import wepy from 'wepy';
-import { wxPromisify } from '../../utils/common.js';
 import { uploadImageToQiniu } from '../../utils/api.js';
 import { request } from '../../utils/login.js';
 export default class PreviewPhoto extends wepy.component {
   props = {
-    galleryId: '',
-    publishAfterInfo: {}
+    galleryId: String
   };
   data = {
     images: [],
     publishAfterInfo: null
   };
   methods = {
-    chooseImageBefore: async function() {},
     chooseImage: async function() {
       try {
-        var chooseRes = await wxPromisify(wx.chooseImage)({
+        var chooseRes = await wepy.chooseImage({
           count: 9
         })
         var tempFilePaths = chooseRes.tempFilePaths
@@ -60,6 +137,18 @@ export default class PreviewPhoto extends wepy.component {
       } catch (e) {
         console.log(e)
       }
+    },
+    readTips: async function() {
+      await request({
+        url: '/gg/group/news_read',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          gallery_id: this.galleryId
+        }
+      })
     }
   };
 
@@ -79,12 +168,11 @@ export default class PreviewPhoto extends wepy.component {
         gallery_id: this.galleryId
       }
     })
-    console.log(res)
     if (res.succ && res.data) {
       wx.hideLoading()
-      console.log(res.data.photo_info)
       this.$emit('publishPhoto', res.data.photo_info)
     }
+    await this.pushlishAfter()
   }
   async pushlishAfter() {
     var newsRes = await request({
@@ -95,13 +183,12 @@ export default class PreviewPhoto extends wepy.component {
     })
     if (newsRes.succ && newsRes.data) {
       this.publishAfterInfo = newsRes.data
-      // this.$emit('showPublishBubal', newsRes.data)
+      this.$apply()
     }
   }
   async loadImages(files) {
     var _load = async file => {
       var res = await uploadImageToQiniu(file)
-      console.log(this)
       this.images.push(res)
       this.$apply()
     };
