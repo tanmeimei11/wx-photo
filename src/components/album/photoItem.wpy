@@ -232,7 +232,6 @@ export default class PhotoItem extends wepy.component {
   methods = {
     clickImage(e) {
       var _photoIdx = e.target.dataset.index
-      console.log(this.photoItem.photos, _photoIdx)
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
     async clickZan() {
@@ -271,7 +270,6 @@ export default class PhotoItem extends wepy.component {
         }).then(res => {
           this.$emit('deletPhoto', this.photoIndex)
           this.$apply()
-          console.log(this)
           wx.showToast({
             title: '删除成功',
             icon: 'success',

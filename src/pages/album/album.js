@@ -52,17 +52,11 @@ export default class Index extends wepy.page {
     }
   }
 
-  events = {
-    'index-emit': (...args) => {
-      let $event = args[args.length - 1]
-      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-    }
-  }
+  events = {}
   async onLoad() {
     try {
       this.loadingIn('加载中')
       await this.getGalleryAuth()
-      console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
         this.getList()
       }

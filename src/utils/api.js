@@ -21,12 +21,13 @@ const uploadImageToQiniu = async file => {
     filePath: file,
     name: 'file',
     formData: {
-      key: tokenRes.data.key,
-      token: tokenRes.data.token
+      key: tokenRes.data.data.key,
+      token: tokenRes.data.data.token
     }
   }
   var uploadRes = await wxPromisify(wx.uploadFile)(uploadData)
   var _res = JSON.parse(uploadRes)
+  console.log(_res)
   return {
     // url: `${qnResUrl}${res.key}`,
     hash: _res.hash,

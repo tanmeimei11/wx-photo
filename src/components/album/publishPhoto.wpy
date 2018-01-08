@@ -170,7 +170,7 @@ export default class PreviewPhoto extends wepy.component {
     })
     if (res.succ && res.data) {
       wx.hideLoading()
-      this.$emit('publishPhoto', res.data.photo_info)
+      this.$emit('publishPhoto', res.data)
     }
     await this.pushlishAfter()
   }
@@ -196,7 +196,6 @@ export default class PreviewPhoto extends wepy.component {
     var _len = files.length
     for (var i = 0; i < _len; i++) {
       await _load(files[i])
-      console.log('upload finish')
     }
     this.pushlish()
   }
