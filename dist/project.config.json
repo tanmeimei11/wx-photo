@@ -42,7 +42,8 @@
 				{
 					"id": -1,
 					"name": "setting",
-					"pathName": "pages/setting/setting"
+					"pathName": "pages/setting/setting",
+					"query": ""
 				}
 			]
 		}

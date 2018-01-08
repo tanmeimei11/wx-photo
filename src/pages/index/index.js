@@ -11,6 +11,6 @@ export default class Index extends wepy.page {
     methods = {
     }
     onLoad() {
-      console.log(1)
+      console.log(111)
     }
 }
