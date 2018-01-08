@@ -3,7 +3,7 @@
   <view class="container">
   </view>
 </template>
-<style lang="less" src="./index.scss">
+<style lang="less" src="./setting.scss">
 </style>
-<script src="./index.js">
+<script src="./setting.js">
 </script>

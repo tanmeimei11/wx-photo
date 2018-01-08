@@ -3,7 +3,7 @@ import {request} from '../../utils/login'
 
 export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '群工具首页'
+      navigationBarTitleText: '设置'
     }
 
     data = {
