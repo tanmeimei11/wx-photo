@@ -248,7 +248,7 @@ export default class PhotoItem extends wepy.component {
         this.$apply()
       })
     },
-    downUrl(url) {
+    async downUrl(url) {
       console.log(this.index)
       await downInternetUrl(this.photoItem.photos[0].url)
     },

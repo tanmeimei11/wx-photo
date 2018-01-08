@@ -9,7 +9,8 @@ import {
 export default class Index extends wepy.page {
   // 配置
   config = {
-    navigationBarTitleText: '第一次聚会'
+    navigationBarTitleText: '第一次聚会',
+    onReachBottomDistance: '100'
   }
   // 组件
   components = {
@@ -22,7 +23,10 @@ export default class Index extends wepy.page {
   data = {
     photoList: [],
     previewPhotos: [], // 预览照片
-    previewPhotosIdx: 0 // 预览照片开始位置
+    previewPhotosIdx: 0, // 预览照片开始位置
+
+    curCursor: 0,
+    isGetList: false
   }
 
   computed = {
@@ -43,6 +47,10 @@ export default class Index extends wepy.page {
     deletPhoto(idx) {
       console.log(idx)
       this.photoList.splice(idx, 1)
+      this.$apply()
+    },
+    publishPhoto(obj) {
+      this.photoList.splice(0, 0, obj)
       this.$apply()
     }
   }
@@ -66,6 +74,10 @@ export default class Index extends wepy.page {
     wx.hideLoading()
   }
   async getList() {
+    if (this.isGetList) {
+      return
+    }
+    this.isGetList = true
     var res = await request({
       url: '/gg/gallery/photolist',
       data: {
@@ -73,16 +85,17 @@ export default class Index extends wepy.page {
         cursor: 0
       }
     })
-
     if (res && res.data) {
       console.log(res.data.list)
-      this.photoList = res.data.list
+      this.photoList.push.apply(this.photoList, res.data.list)
+      this.curCursor = res.data.cursor
       this.$apply()
       this.loadingOut()
+      this.isGetList = false
     }
   }
-
-  onPageScroll() {
-
+  async onReachBottom(e) {
+    console.log(e)
+    await this.getList()
   }
 }

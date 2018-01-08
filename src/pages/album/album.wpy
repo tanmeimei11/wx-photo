@@ -5,8 +5,8 @@
        <photoItem :photoItem="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto"></photoItem>
     </repeat>
 
-    <previewPhoto :photos="previewPhotos" :index="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}"></previewPhoto>  
-    <publishPhoto></publishPhoto>
+    <previewPhoto :photos.sync="previewPhotos" :index.sync="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+    <publishPhoto @publishPhoto.user="publishPhoto"></publishPhoto>
   </view>
 </template>
 <style lang="less" src="./album.scss">

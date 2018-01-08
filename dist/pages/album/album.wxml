@@ -56,7 +56,7 @@
 
     
 <!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$index}}" data-idx="{{$previewPhoto$photos}}" wx:if="{{previewPhotos.length != 0}}">
+<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$index}}" data-idx="{{$previewPhoto$photos}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
   {{$previewPhoto$photos}}
   <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
     <swiper-item bindtap="$previewPhoto$closeSwiper">

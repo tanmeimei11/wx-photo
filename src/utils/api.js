@@ -1,4 +1,6 @@
-import wepy from 'wepy'
+import {
+  wxPromisify
+} from './common.js'
 import {
   qnTokenUrl,
   qnUploadUrl
@@ -10,7 +12,7 @@ import {
  * @param {*} file
  */
 const uploadImageToQiniu = async file => {
-  var tokenRes = await wepy.request({
+  var tokenRes = await wxPromisify(wx.request)({
     url: qnTokenUrl
   })
 
@@ -23,7 +25,7 @@ const uploadImageToQiniu = async file => {
       token: tokenRes.data.token
     }
   }
-  var uploadRes = await wepy.uploadFile(uploadData)
+  var uploadRes = await wxPromisify(wx.uploadFile)(uploadData)
   var _res = JSON.parse(uploadRes)
   return {
     // url: `${qnResUrl}${res.key}`,
@@ -59,13 +61,13 @@ const downInternetUrl = async function (urls) {
  */
 const downSigleUrl = async function (url) {
   try {
-    await wepy.authorize({
+    await wxPromisify(wx.authorize)({
       scope: 'scope.writePhotosAlbum'
     })
-    var _downRes = await wepy.downloadFile({
+    var _downRes = await wxPromisify(wx.downloadFile)({
       url: url
     })
-    await wepy.saveImageToPhotosAlbum({
+    await wxPromisify(wx.saveImageToPhotosAlbum)({
       filePath: _downRes.tempFilePath
     })
   } catch (e) {}
