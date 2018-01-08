@@ -1,11 +1,16 @@
 
 <template>
   <view class="container" >
+    <block wx:if="{{photoList.length != 0}}">
     <repeat for="{{photoList}}" key="index" index="index" item="item">
        <photoItem :photoItem="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto"></photoItem>
     </repeat>
+    </block>
+    <block wx:if="{{photoList.length == 0}}" >
+      <view class="empty"></view>
+    </block>
 
-    <previewPhoto :photos.sync="previewPhotos" :index.sync="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+    <previewPhoto :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
     <publishPhoto @publishPhoto.user="publishPhoto"></publishPhoto>
   </view>
 </template>

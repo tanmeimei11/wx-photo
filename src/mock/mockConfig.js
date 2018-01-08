@@ -7,6 +7,7 @@ module.exports = {
   [`${DOMAIN}/gg/group/gallerylist`]: 'gallerylist',
   [`${DOMAIN}/gg/index/grouplist`]: 'grouplist',
   [`${DOMAIN}/gg/photo/del`]: 'delPhoto',
-  [`${DOMAIN}/gg/photo/zan`]: 'zanPhoto'
+  [`${DOMAIN}/gg/photo/zan`]: 'zanPhoto',
+  [`${DOMAIN}/gg/publish/photo`]: 'publishPhoto'
 }
 console.log(module.export)

@@ -46,7 +46,8 @@ export default class PreviewPhoto extends wepy.component {
         })
         var tempFilePaths = chooseRes.tempFilePaths
         wx.showLoading({
-          title: '正在上传'
+          title: '正在上传',
+          mask: true
         })
         await this.loadImages(tempFilePaths)
       } catch (e) {
@@ -57,7 +58,8 @@ export default class PreviewPhoto extends wepy.component {
 
   async pushlish() {
     wx.showLoading({
-      title: '正在发布'
+      title: '正在发布',
+      mask: true
     })
     var res = await request({
       url: '/gg/publish/photo',
@@ -73,7 +75,7 @@ export default class PreviewPhoto extends wepy.component {
 
     if (res.succ && res.data) {
       wx.hideLoading()
-      this.$emit('publishPhoto', res.data)
+      this.$emit('publishPhoto', res.data.photo_info)
     }
   }
 

@@ -1,9 +1,9 @@
 
   <view class="container">
+    <block  wx:if="{{photoList.length != 0}}">
     <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
        
   <view class="photo-item">
-    <!-- <image src="http://wd4.jiuyan.info/2015/04/22/ACEE75F2-8C6A-70FD-6A65-4F61950053C8.jpg?v=2" /> -->
     <!-- avatar -->
     <view class="s-avatar-wrap">
       <image class="s-avatar" mode="aspectFill" src="{{item.user.avatar}}"/>
@@ -12,7 +12,7 @@
         <view class="name">{{item.user.name}}</view>
         <view class="time">{{item.fmt_time}}</view>
       </view>
-      <view class="s-operate"  wx:if="{{item.has_auth}}" bindtap="$photoItem$delPhoto" data-com-index="{{index}}"/>
+      <view class="s-operate iconfont icon-more-gray"  wx:if="{{item.has_auth}}" bindtap="$photoItem$delPhoto" data-com-index="{{index}}"/>
     </view>
     <!-- photos -->
     <scroll-view class="s-photos-wrap p-{{item.photos.length}}" scroll-x>
@@ -20,17 +20,17 @@
     </scroll-view>
     <!-- bars -->
     <view class="s-bars-wrap">
-      <view class="s-down iconfont icon-zan" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
+      <view class="s-down iconfont icon-xiazai" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
       <view class="icons-wrap">
-        <view class="s-like iconfont {{!item.is_zan ? 'icon-zan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
-        <view class="s-comment iconfont  icon-zan"/>
-        <view class="s-print iconfont icon-zan"/>
+        <view class="s-like iconfont {{!item.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
+        <view class="s-comment iconfont icon-pinglun"/>
+        <view class="s-print iconfont icon-dayinji"/>
       </view>
     </view>
     <view class="s-operate-wrap">
       <!-- zan -->
       <view class="s-zan-wrap" wx:if="{{item.zan_list && item.zan_list.length}}">
-        <view class="zan-icon iconfont  icon-zan"/>
+        <view class="zan-icon iconfont icon-dianzan_xiaoxin"/>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{item.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"/>
         </view>
@@ -53,17 +53,21 @@
   </view>
 
     </block>
+    </block>
+    <block wx:if="{{photoList.length == 0}}">
+      <view class="empty"/>
+    </block>
 
     
 <!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$index}}" data-idx="{{$previewPhoto$photos}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
-  {{$previewPhoto$photos}}
+<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
   <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
     <swiper-item bindtap="$previewPhoto$closeSwiper">
       <view class="slide-image" style="background-image:url({{item.url}})"/>
     </swiper-item>
   </block>
-  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$index +1}}/{{$previewPhoto$photos.length}}</view>
+  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
+  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
 </swiper>
   
     

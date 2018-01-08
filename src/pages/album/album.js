@@ -38,6 +38,7 @@ export default class Index extends wepy.page {
   methods = {
     clearCurPhotos() {
       this.previewPhotos = []
+      this.previewPhotosIdx = 0
     },
     changeCurPhotos(photos, idx) {
       console.log(photos, idx)
@@ -67,7 +68,8 @@ export default class Index extends wepy.page {
   }
   loadingIn(text) {
     wx.showLoading({
-      title: text
+      title: text,
+      mask: true
     })
   }
   loadingOut() {

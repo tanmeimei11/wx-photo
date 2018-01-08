@@ -1,20 +1,15 @@
-@import '../../utils/font.scss';
 .container {
   padding-bottom: 130rpx;
+  position: relative;
 }
 
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
+.empty {
+  width: 480rpx;
+  height: 263rpx;
+  position: absolute;
+  left: 135rpx;
+  top: 260rpx;
+  background: url('https://inimg02.jiuyan.info/in/2018/01/08/9150A80F-EE3A-58E5-5BFD-534951B7C028.png') no-repeat;
+  background-size: contain;
+  background-position: 50%;
 }
