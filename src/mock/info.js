@@ -1,4 +1,5 @@
 module.exports = {
+  data:{
     msg: "",
     code: "200003",
     succ: true,
@@ -14,3 +15,4 @@ module.exports = {
     },
     timestamp: "1515046666"
   }
+}

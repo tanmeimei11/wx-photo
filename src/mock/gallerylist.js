@@ -1,35 +1,108 @@
 module.exports = {
-  msg: '',
-  code: '200003',
-  succ: true,
-  data: {
-    has_next: false, // 是否还有下一页
-    list: [{
-      is_zan: true, // 是否点赞
-      photo_id: '1123244', // 图片id
-      fmt_time: '8分钟', // 发图距离现在时间
-      photo: [{
-        url: 'https://inimg07.jiuyan.info/aW4vMjAxNy8xMC8yNi85NUQ1RDk2NS1FMjE1LTYwREQtQkIxRS0wQkYxQjlDOTUxM0QuanBn', // 用于展示的图片列表
-        origin_url: 'https://inimg07.jiuyan.info/aW4vMjAxNy8xMC8yNi85NUQ1RDk2NS1FMjE1LTYwREQtQkIxRS0wQkYxQjlDOTUxM0QuanBn', // 原图
-        photo_id: '1123244', // 图片id
-        album_id: '2233' // 多图相片中某张图片的id
-      }],
-      user: {
-        name: '王小虎',
-        avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-        user_id: '1283' // 图片作者id
-      },
-      zan_list: [{
-        avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-        user_id: '1283'
-      },
-      {
-        avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-        user_id: '1283'
-      }
-
+  data:{
+    msg: "",
+    code: "200003",
+    succ: true,
+    data: {
+      has_next: false,
+      galleries: [
+        {
+          name: "北京一游",
+          id: "533223",
+          photos: [
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            },
+            {
+              middle_url: "http://inimg05.jiuyan.info/in/2017/10/18/65D1BD2B-2FEF-5A53-1EE5-4171B98CAB17.jpeg",
+              id: "1954111"
+            },
+            {
+              middle_url: "https://inimg02.jiuyan.info/in/2017/10/18/C4E4C5C2-DC66-7625-997A-E91208B16DEC.jpg",
+              id: "1366521"
+            },
+            {
+              middle_url: "http://inimg02.jiuyan.info/in/2015/08/13/999D6165-C074-7176-B939-3A26C28C19C9.jpg",
+              id: "17151541"
+            },
+            {
+              middle_url: "https://inimg07.jiuyan.info/aW4vMjAxNy8xMC8yNi82QThENzE4My1GQTVELTI4REEtRjE1RC02RDhFOTY2RkNFM0IuanBn",
+              id: "1851154"
+            }
+          ],
+          photo_count: "566"
+        },
+        {
+          name: "北京一游",
+          id: "533223",
+          photos: [
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            },
+            {
+              middle_url: "http://inimg05.jiuyan.info/in/2017/10/18/65D1BD2B-2FEF-5A53-1EE5-4171B98CAB17.jpeg",
+              id: "1954111"
+            },
+            {
+              middle_url: "https://inimg02.jiuyan.info/in/2017/10/18/C4E4C5C2-DC66-7625-997A-E91208B16DEC.jpg",
+              id: "1366521"
+            }
+          ],
+          photo_count: "66"
+        },
+        {
+          name: "北京一游",
+          id: "533223",
+          photos: [
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            },
+            {
+              middle_url: "http://inimg05.jiuyan.info/in/2017/10/18/65D1BD2B-2FEF-5A53-1EE5-4171B98CAB17.jpeg",
+              id: "1954111"
+            },
+            {
+              middle_url: "https://inimg02.jiuyan.info/in/2017/10/18/C4E4C5C2-DC66-7625-997A-E91208B16DEC.jpg",
+              id: "1366521"
+            },
+            {
+              middle_url: "https://inimg02.jiuyan.info/in/2017/10/18/C4E4C5C2-DC66-7625-997A-E91208B16DEC.jpg",
+              id: "1366521"
+            }
+          ],
+          photo_count: "66"
+        },
+        {
+          name: "北京一游",
+          id: "533223",
+          photos: [
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            }
+          ],
+          photo_count: "66"
+        },
+        {
+          name: "北京一游",
+          id: "533223",
+          photos: [
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            },
+            {
+              middle_url: "http://inimg01.jiuyan.info/in/2017/10/18/680B046C-6BA0-4B1C-9F25-C2FA66F07244.jpg?roundPic/radius/200",
+              id: "1785411"
+            }
+          ],
+          photo_count: "66"
+        }
       ]
-    }]
-  },
-  timestamp: '1515055637'
+    },
+    timestamp: "1515053447"
+  }
 }

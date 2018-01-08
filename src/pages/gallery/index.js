@@ -7,28 +7,73 @@ export default class Index extends wepy.page {
     }
 
     data = {
-        groupInfo: {}
-    };
+        groupInfo: {},
+        galleryList: [],
+        loading: false,
+        noMoreNote: false,
+        page: 0,
+    }
     methods = {
-        changeBg () {
-            wx.chooseImage({
-                count: 1,
-                success: function(res) {
-                    console.log(res)
-                }
-            })
-        }
-    };
+        // changeBg () {
+        //     wx.chooseImage({
+        //         count: 1,
+        //         success: function(res) {
+        //             console.log(res)
+        //         }
+        //     })
+        // },
+    }
     onLoad() {
+        this.loadInfo()
+        this.loadGallerylist()
+    }
+    onReachBottom () {
+      if (this.data.noMoreNote) {
+        return
+      }
+      let that = this;
+      setTimeout(function () {
+        that.loadGallerylist();
+      }, 300);
+    }
+    async loadInfo () {
         request({
             url: '/gg/group/info',
             data: {
                 group_id: 0
             }
         }).then((res) =>{
-            this.groupInfo = res
+            this.groupInfo = res.data
             this.$apply()
-            console.log(this.groupInfo)
         })
-    };
+    }
+    async loadGallerylist () {
+        if (this.data.loading) {
+          return
+        }
+        this.data.loading = true
+        request({
+            url: '/gg/group/gallerylist',
+            data: {
+                group_id: 0,
+                page: this.data.page
+            }
+        }).then((res) =>{
+            if (res.succ && res.data) {
+                console.log(res)
+                this.galleryList = res.data.galleries
+                this.data.page = this.data.page + 1
+                this.$apply()
+                if (!res.data.has_next) {
+                    this.data.noMoreNote = true
+                    this.$apply()
+                    return
+                }
+            } else {
+                this.data.noMoreNote = true
+                this.$apply()
+            }
+            this.data.loading = false
+        })
+    }
 }

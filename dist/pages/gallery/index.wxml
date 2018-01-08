@@ -14,58 +14,16 @@
       </view>
     </view>
     <view class="gallery">
-      <view class="item">
-
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11 张</text>
-        <view class="preview p0"/>
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11 张</text>
-        <view class="preview p1">
-          <view/>
-        </view>
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11</text>
-        <view class="preview p2">
-          <view/>
-          <view/>
-        </view>
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11</text>
-        <view class="preview p3">
-          <view/>
-          <view/>
-          <view/>
-        </view>
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11</text>
-        <view class="preview p4">
-          <view/>
-          <view/>
-          <view/>
-          <view/>
-        </view>
-      </view>
-      <view class="item">
-        <text class="title">进击羽毛球俱乐部进击羽毛球俱乐部进击羽毛球俱乐部</text>
-        <text class="num">11</text>
-        <view class="preview p5">
-          <view/>
-          <view/>
-          <view/>
-          <view/>
-          <view/>
-        </view>
-      </view>
+      <block  wx:for="{{galleryList}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+          <view class="item">
+            <text class="title">{{item.name}}</text>
+            <text class="num">{{item.photo_count}} 张</text>
+            <view class="preview p{{item.photos.length}}">
+              <block wx:for="{{item.photos}}" wx:for-index="idx2" wx:for-item="item2" wx:key="{{idx2}}">
+                <view style="background-image:url({{item2.middle_url}})"/>
+              </block>
+            </view>
+          </view>
+      </block>
     </view>
   </view>
