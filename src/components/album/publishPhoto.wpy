@@ -7,7 +7,7 @@
   <view class="s-publish-btn" @tap.stop="chooseImage">
     上传照片
   </view>
-  <view class="s-side-btn" @tap.stop="chooseImage">
+  <view class="s-side-btn" @tap.stop="backToIndex">
      <view class="iconfont icon-quanbuxiangce"></view>
     全部相册
   </view>
@@ -142,7 +142,8 @@ import { request } from '../../utils/login.js';
 export default class PreviewPhoto extends wepy.component {
   props = {
     galleryAuth: Number,
-    galleryId: String
+    galleryId: String,
+    groupId: String
   };
   data = {
     images: [],
@@ -150,8 +151,11 @@ export default class PreviewPhoto extends wepy.component {
   };
   methods = {
     chooseImage: async function() {
-      if (this.galleryAuth < 1) {
-        console.log('choose image fail')
+      if (this.galleryAuth < 2) {
+        wepy.showModal({
+          title: '没有权限',
+          content: '没有权限'
+        })
         return;
       }
       try {
@@ -181,11 +185,19 @@ export default class PreviewPhoto extends wepy.component {
       })
     },
     openNewAlbum() {
-      if (this.galleryAuth < 1) {
-        console.log('openNewAlbum fail')
+      if (this.galleryAuth < 3) {
+        wepy.showModal({
+          title: '没有权限',
+          content: '没有权限'
+        })
         return;
       }
       this.$emit('openNewAlbum')
+    },
+    backToIndex() {
+      wepy.redirectTo({
+        url: `pages/gallery/gallery?id=${this.groupId}`
+      })
     }
   };
 

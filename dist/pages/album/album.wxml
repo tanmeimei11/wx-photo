@@ -89,7 +89,7 @@
   <view class="s-publish-btn" catchtap="$publishPhoto$chooseImage">
     上传照片
   </view>
-  <view class="s-side-btn" catchtap="$publishPhoto$chooseImage">
+  <view class="s-side-btn" catchtap="$publishPhoto$backToIndex">
      <view class="iconfont icon-quanbuxiangce"/>
     全部相册
   </view>

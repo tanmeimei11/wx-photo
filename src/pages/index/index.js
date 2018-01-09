@@ -17,6 +17,7 @@ export default class Index extends wepy.page {
   }
 
   data = {
+    pageName: 'index',
     groupList: []
   }
   methods = {}
@@ -62,41 +63,41 @@ export default class Index extends wepy.page {
     return {
       title: '快来上传图片吧~',
       path: '/page/share/dispatcher?from=index',
-      success: function(res) {
-        console.log(res);
+      success: function (res) {
+        console.log(res)
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
           wx.login({
-            withCredentials : true,
+            withCredentials: true,
             success: function (res) {
               if (res.code) {
                 var code = res.code
                 wx.getShareInfo({
                   shareTicket: ticket,
                   success(res) {
-                    var encryptedData = res.encryptedData;  //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
-                    var iv = res.iv; // 加密算法的初始向量
+                    var encryptedData = res.encryptedData //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
+                    var iv = res.iv // 加密算法的初始向量
                     request({
-                        url: '/gg/group/index/dispatcher',
-                        data: {
-                          encryptedData: encryptedData,
-                          code: code,
-                          iv: iv
-                        }
-                    }).then((res) =>{
-                      console.log(15);
-                        console.log(res);
-                        if(res.succ) {
-                          var redirect_path = res.data.redirect_path
-                          wx.navigateTo({
-                            url: redirect_path
-                          })
-                        }
+                      url: '/gg/group/index/dispatcher',
+                      data: {
+                        encryptedData: encryptedData,
+                        code: code,
+                        iv: iv
+                      }
+                    }).then((res) => {
+                      console.log(15)
+                      console.log(res)
+                      if (res.succ) {
+                        var redirect_path = res.data.redirect_path
+                        wx.navigateTo({
+                          url: redirect_path
+                        })
+                      }
                     })
                   },
                   fail() {},
                   complete() {}
-                });
+                })
               }
             }
           })

@@ -13,4 +13,17 @@ export default class LoadingMixin extends wepy.mixin {
   loadingOut() {
     wx.hideLoading()
   }
+  toastSucc(text) {
+    wx.showToast({
+      title: text,
+      mask: true
+    })
+  }
+  toastFail(text) {
+    wx.showToast({
+      title: text,
+      image: '../../images/toast-fail.png',
+      mask: true
+    })
+  }
 }
