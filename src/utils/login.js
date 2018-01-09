@@ -7,7 +7,8 @@ var DOMAIN = config.DOMAIN || ''
 var code = ''
 var isLoginIng = false
 var loginCollectOptions = [] // 请求搜集器
-var LOG = console.log || (() => {})
+// var LOG = console.log || (() => {})
+var LOG = () => {}
 
 /**
  * 封装wxPromisefy
@@ -78,7 +79,7 @@ var requestBefore = (option, token) => {
 var request = async function (option, isCheckLogin) {
   // isCheckLogin = option.isCheck
   isCheckLogin = false
-  console.log(option, isCheckLogin)
+  // console.log(option, isCheckLogin)
   try {
     var token = wx.getStorageSync('token')
     // if (isCheckLogin === true) {
@@ -92,12 +93,12 @@ var request = async function (option, isCheckLogin) {
   // if (token || !isCheckLogin) {
   requestBefore(option, token)
   if (isMock) {
-    console.log(require('../mock/' + mockConfig[option.url]))
+    // console.log(require('../mock/' + mockConfig[option.url]))
     return require('../mock/' + mockConfig[option.url]).data
   }
   LOG('start request option:', option)
   var reqRes = await wepy.request(option)
-  console.log(reqRes)
+  // console.log(reqRes)
   return reqRes.data
   // }
 }

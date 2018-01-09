@@ -147,11 +147,11 @@ export default class PreviewPhoto extends wepy.component {
   props = {
     galleryAuth: Number,
     galleryId: String,
-    groupId: String
+    groupId: String,
+    publishAfterInfo:Object
   };
   data = {
     images: [],
-    publishAfterInfo: null
   };
   methods = {
     chooseImage: async function() {
@@ -224,6 +224,7 @@ export default class PreviewPhoto extends wepy.component {
     await this.pushlishAfter()
   }
   async pushlishAfter() {
+    this.images = []
     var newsRes = await request({
       url: '/gg/group/news',
       data: {
@@ -231,8 +232,7 @@ export default class PreviewPhoto extends wepy.component {
       }
     })
     if (newsRes.succ && newsRes.data) {
-      this.publishAfterInfo = newsRes.data
-      this.$apply()
+      this.$emit('changePublishInfo', newsRes.data)
     }
   }
   async loadImages(files) {

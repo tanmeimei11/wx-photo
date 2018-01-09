@@ -255,7 +255,7 @@ export default class PhotoItem extends wepy.component {
         }
       })
 
-      if (res.succ && zanListRes.succ && zanListRes.data) {
+      if (res.succ && zanListRes.succ) {
         console.log(zanListRes.data, this.photoIndex)
         this.$emit('photoZanChange', this.photoIndex, zanListRes.data)
       }

@@ -7,7 +7,10 @@ import GroupItem from '../../components/index/groupItem'
 import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import LoadingMixin from '@/mixins/loadingMixin'
-
+var pageData = {
+  pageName: 'index',
+  groupList: []
+}
 export default class Index extends wepy.page {
   config = {
     navigationBarTitleText: '群活动相册'
@@ -19,12 +22,11 @@ export default class Index extends wepy.page {
   }
   mixins = [formSubmitMixin, LoadingMixin]
 
-  data = {
-    pageName: 'index',
-    groupList: []
-  }
+  data = Object.assign({}, pageData)
   methods = {}
   async onLoad() {
+    console.log('1231')
+    Object.assign(this, pageData)
     wx.showShareMenu({
       // 要求小程序返回分享目标信息
       withShareTicket: true
@@ -53,8 +55,11 @@ export default class Index extends wepy.page {
       isCheck: true
     })
     if (res && res.data) {
-      console.log(res.data)
-      this.groupList.push.apply(this.groupList, res.data.list)
+      console.log(this.groupList)
+      this.groupList = [
+        ...this.groupList,
+        ...res.data.list
+      ]
       console.log(this.groupList)
       this.$apply()
       this.loadingOut()

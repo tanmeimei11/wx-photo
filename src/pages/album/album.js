@@ -12,6 +12,30 @@ import {
   wxCheckLogin
 } from '@/utils/login'
 
+var pageData = {
+  pageName: 'album',
+  groupId: '',
+  galleryId: '1', // 相册id
+  galleryTitle: '',
+  galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限 3 不能修改名称
+
+  photoList: [],
+  previewPhotos: [], // 预览照片
+  previewPhotosIdx: 0, // 预览照片开始位置
+
+  curCursor: 0,
+  isGetList: false,
+  isListHasNext: true,
+
+  isShowNewAlbum: false, // 修改名称弹窗
+  newAlbumTitle: '修改相册名称',
+
+  isRefreshIndex: false, // 从创建过来的
+  isSubmitFormId: true, // 允许提交formid
+
+  publishAfterInfo:null
+}
+
 export default class Index extends wepy.page {
   // 配置
   config = {
@@ -28,27 +52,7 @@ export default class Index extends wepy.page {
   // 混合
   mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin]
   // data
-  data = {
-    pageName: 'album',
-    groupId: '',
-    galleryId: '1', // 相册id
-    galleryTitle: '',
-    galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限 3 不能修改名称
-
-    photoList: [],
-    previewPhotos: [], // 预览照片
-    previewPhotosIdx: 0, // 预览照片开始位置
-
-    curCursor: 0,
-    isGetList: false,
-    isListHasNext: true,
-
-    isShowNewAlbum: false, // 修改名称弹窗
-    newAlbumTitle: '修改相册名称',
-
-    isRefreshIndex: false, // 从创建过来的
-    isSubmitFormId: true // 允许提交formid
-  }
+  data = Object.assign({}, pageData)
   methods = {
     clearCurPhotos() {
       this.previewPhotos = []
@@ -71,6 +75,10 @@ export default class Index extends wepy.page {
     },
     closeNewAlbum() {
       this.isShowNewAlbum = false
+    },
+    changePublishInfo(data){
+      this.publishAfterInfo = data
+      this.$apply()
     },
     async submitTitle(title) {
       try {
@@ -97,7 +105,6 @@ export default class Index extends wepy.page {
       }
     },
     photoZanChange(idx, zanList) {
-      console.log(idx, zanList)
       this.photoList[idx].is_zan = !this.photoList[idx].is_zan
       this.photoList[idx].zan_list = zanList
       this.$apply()
@@ -105,15 +112,14 @@ export default class Index extends wepy.page {
   }
   events = {}
   async onLoad(options) {
-    // this.refreshIndex()
+    Object.assign(this, pageData)
     try {
       this.loadingIn('加载中')
       this.initOptions(options)
       await wxCheckLogin()
       await this.getGalleryAuth()
-      console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
-        await this.getList()
+        this.getList()
       }
     } catch (e) {
       this.loadingOut()
@@ -184,7 +190,6 @@ export default class Index extends wepy.page {
     if (res && res.data) {
       this.changeGalleryTitle(res.data.gallery_name)
       this.groupId = res.data.group_id || ''
-      console.log(this.photoList)
       this.photoList = [
         ...this.photoList,
         ...res.data.list

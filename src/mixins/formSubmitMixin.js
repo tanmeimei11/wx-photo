@@ -17,7 +17,7 @@ export default class formSubmitMixin extends wepy.mixin {
           }
         })
         if (res.succ) {
-          console.log('发送成功')
+          // console.log('发送成功')
         } else {
           this.isSubmitFormId = false
         }
