@@ -71,20 +71,21 @@
     }
   }
   .publish-info {
-    width: 454rpx;
-    height: 245rpx;
+    width: 484rpx;
+    height: 255rpx;
     overflow: hidden;
     position: absolute;
-    top: -245rpx;
-    right: 32rpx;
+    top: -246rpx;
+    right: 105rpx;
     background: url("http://inimg02.jiuyan.info/in/2018/01/08/1A424013-5A89-71C3-E246-E87841C1F119.png")
       no-repeat;
-    background-size: 484rpx 224rpx;
+    background-size: 484rpx 225rpx;
     background-position: center bottom;
     color: #333;
     font-size: 28rpx;
     padding: 0 30rpx;
     box-sizing: border-box;
+
     .s-avatar-wrap {
       display: flex;
       flex-direction: row;
@@ -123,6 +124,9 @@
       position: relative;
       width: 90rpx;
       height: 90rpx;
+      border: 1rpx solid #efefef;
+      border-radius: 50%;
+
       image {
         width: 100%;
         height: 100%;
@@ -175,10 +179,6 @@ export default class PreviewPhoto extends wepy.component {
     readTips: async function() {
       await request({
         url: '/gg/group/news_read',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
         data: {
           gallery_id: this.galleryId
         }
@@ -196,7 +196,7 @@ export default class PreviewPhoto extends wepy.component {
     },
     backToIndex() {
       wepy.redirectTo({
-        url: `pages/gallery/gallery?id=${this.groupId}`
+        url: `/pages/gallery/gallery?id=${this.groupId}`
       })
     }
   };
