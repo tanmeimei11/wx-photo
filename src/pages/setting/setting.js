@@ -9,29 +9,47 @@ export default class setting extends wepy.page {
   data = {
     groupID: '',
     groupInfo: {},
-    region: ['广东省', '广州市', ''],
-    type: '',
+    region: ['', '未填写', ''],
+    type: '未填写',
     checked: true,
-    typeList: []
+    typeList: [],
+    type_mapping: [],
+    newdata: {},
+    disabled: false
   }
   methods = {
     bindRegionChange(e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value)
       this.region = e.detail.value
-      // this.setData({
-      //   region: e.detail.value
-      // })
       this.$apply()
-      console.log(this.region)
+      this.newdata = {
+        province: this.region[0],
+        city: this.region[1]
+      }
+      this.changeSetting(this.newdata)
     },
     bindTypeChange(e) {
-
+      this.type = this.typeList[e.detail.value]
+      this.newdata = {
+        type: this.type_mapping.filter(item => {
+          return this.type === item.type_name
+        })[0].id
+      }
+      this.changeSetting(this.newdata)
     },
     bindOpenChange(e) {
-      console.log('switch1 发生 change 事件，携带值为', e.detail.value)
+      this.newdata = {
+        allow_rec: e.detail.value ? 1 : 0
+      }
+      this.changeSetting(this.newdata)
     },
     exitQun() {
-
+      this.newdata = {
+        quit_group: 1
+      }
+      this.changeSetting(this.newdata,()=>{
+        this.groupInfo.is_show_quit_btn = false
+        this.$apply()
+      })
     }
   }
   onLoad(options) {
@@ -39,25 +57,46 @@ export default class setting extends wepy.page {
     this.loadInfo()
   }
 
+  async changeSetting(cdata,fn) {
+    this.disabled = false
+    console.log(cdata)
+    var res = await request({
+      url: '/gg/group/updatesetting',
+      method: 'POST',
+      data: cdata
+    })
+    if (res.succ) {
+      this.disabled = true
+      fn && fn()
+    }
+  }
+
   async loadInfo() {
-    request({
+    var res = await request({
       url: '/gg/group/setting',
       data: {
         group_id: this.groupID
       }
-    }).then((res) => {
+    })
+    if (res.succ) {
       this.groupInfo = res.data
       this.region = [res.data.province, res.data.city]
-      // this.type = res.data.type_mapping.map(item => {
-      //   console.log()
-      // })
+
       this.type = res.data.type_mapping.filter(item => {
         return res.data.type === item.id
       })[0].type_name
+      this.typeList = res.data.type_mapping.map(item => {
+        return item.type_name
+      })
+      this.type_mapping = res.data.type_mapping
+
       this.checked = res.data.is_rec
-      this.typeList = res.data.type_mapping
+      
+      if (!res.data.can_modify) {
+        this.disabled = true
+      }
       this.$apply()
       console.log(this.typeList)
-    })
+    }
   }
 }

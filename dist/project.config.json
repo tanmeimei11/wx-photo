@@ -25,7 +25,11 @@
 			"list": []
 		},
 		"miniprogram": {
+<<<<<<< HEAD
+			"current": 1,
+=======
 			"current": 3,
+>>>>>>> 0e97cdc453234f4d35dceced4e85b7186e4c2cb7
 			"list": [
 				{
 					"id": 0,
@@ -37,7 +41,7 @@
 					"id": 1,
 					"name": "gallery",
 					"pathName": "pages/gallery/gallery",
-					"query": ""
+					"query": "id=16"
 				},
 				{
 					"id": -1,

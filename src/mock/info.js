@@ -12,8 +12,8 @@ module.exports = {
       id: "125444",
       user_role: "2",  // 0->普通群成员，1-> 管理员， 2->创建者
       photo_count: "6445",
-      is_show_setting_btn: true,
-      is_show_apply_btn: false
+      is_show_setting_btn: false,
+      is_show_apply_btn: true
     },
     timestamp: "1515046666"
   }
