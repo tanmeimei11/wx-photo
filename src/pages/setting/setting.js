@@ -24,7 +24,8 @@ export default class setting extends wepy.page {
       this.$apply()
       this.newdata = {
         province: this.region[0],
-        city: this.region[1]
+        city: this.region[1],
+        groupId: this.groupID
       }
       this.changeSetting(this.newdata)
     },
@@ -33,19 +34,22 @@ export default class setting extends wepy.page {
       this.newdata = {
         type: this.type_mapping.filter(item => {
           return this.type === item.type_name
-        })[0].id
+        })[0].id,
+        groupId: this.groupID
       }
       this.changeSetting(this.newdata)
     },
     bindOpenChange(e) {
       this.newdata = {
-        allow_rec: e.detail.value ? 1 : 0
+        allowRec: e.detail.value ? 1 : 0,
+        groupId: this.groupID
       }
       this.changeSetting(this.newdata)
     },
     exitQun() {
       this.newdata = {
-        quit_group: 1
+        quitGroup: 1,
+        groupId: this.groupID
       }
       this.changeSetting(this.newdata,()=>{
         this.showbtn = false
@@ -69,9 +73,6 @@ export default class setting extends wepy.page {
     var res = await request({
       url: '/gg/group/updatesetting',
       method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' // 默认值
-      },
       data: cdata
     })
     if (res.succ) {
