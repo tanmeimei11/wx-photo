@@ -46,16 +46,16 @@ export default class gallery extends wepy.page {
       })
     },
     toApply() {
-        this.showApply = true
+      this.showApply = true
     },
     closeApply() {
-        this.showApply = false
+      this.showApply = false
     },
     newAlbum() {
-        this.showNewAlbum = true
+      this.showNewAlbum = true
     },
     closeNewAlbum() {
-        this.showNewAlbum = false
+      this.showNewAlbum = false
     }
   }
   onLoad(options) {

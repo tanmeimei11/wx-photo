@@ -4,8 +4,10 @@ import Panel from '@/components/panel' // alias example
 import Counter from 'counter' // alias example
 import Group from '../../components/group'
 import Toast from 'wepy-com-toast'
-import testMixin from '../../mixins/test'
-import { requestPromisify } from '../../utils/login'
+// import testMixin from '../../mixins/test'
+import {
+  requestPromisify
+} from '../../utils/login'
 
 export default class Index extends wepy.page {
   config = {
@@ -20,7 +22,7 @@ export default class Index extends wepy.page {
     toast: Toast
   }
 
-  mixins = [testMixin]
+  // mixins = [testMixin]
 
   data = {
     mynum: 20,
@@ -31,63 +33,56 @@ export default class Index extends wepy.page {
     setTimeoutTitle: '标题三秒后会被修改',
     count: 0,
     netrst: '',
-    groupList: [
-      {
-        id: 1,
-        name: '点击改变',
-        list: [
-          {
-            childid: '1.1',
-            childname: '子项，点我改变'
-          }, {
-            childid: '1.2',
-            childname: '子项，点我改变'
-          }, {
-            childid: '1.3',
-            childname: '子项，点我改变'
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: '点击改变',
-        list: [
-          {
-            childid: '2.1',
-            childname: '子项，点我改变'
-          }, {
-            childid: '2.2',
-            childname: '子项，点我改变'
-          }, {
-            childid: '2.3',
-            childname: '子项，点我改变'
-          }
-        ]
-      },
-      {
-        id: 3,
-        name: '点击改变',
-        list: [
-          {
-            childid: '3.1',
-            childname: '子项，点我改变'
-          }
-        ]
-      }
+    groupList: [{
+      id: 1,
+      name: '点击改变',
+      list: [{
+          childid: '1.1',
+          childname: '子项，点我改变'
+        }, {
+          childid: '1.2',
+          childname: '子项，点我改变'
+        }, {
+          childid: '1.3',
+          childname: '子项，点我改变'
+        }]
+    },
+    {
+      id: 2,
+      name: '点击改变',
+      list: [{
+          childid: '2.1',
+          childname: '子项，点我改变'
+        }, {
+          childid: '2.2',
+          childname: '子项，点我改变'
+        }, {
+          childid: '2.3',
+          childname: '子项，点我改变'
+        }]
+    },
+    {
+      id: 3,
+      name: '点击改变',
+      list: [{
+          childid: '3.1',
+          childname: '子项，点我改变'
+        }]
+    }
     ]
   }
 
   computed = {
-    now () {
+    now() {
       return +new Date()
     }
   }
 
   methods = {
-    plus () {
+    plus() {
       this.mynum++
     },
-    toast () {
+    toast() {
       let promise = this.$invoke('toast', 'show', {
         title: '自定义标题',
         img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
@@ -97,10 +92,10 @@ export default class Index extends wepy.page {
         console.log('toast done')
       })
     },
-    tap () {
+    tap() {
       console.log('do noting from ' + this.$name)
     },
-    communicate () {
+    communicate() {
       console.log(this.$name + ' tap')
 
       this.$invoke('counter2', 'minus', 45, 6)
@@ -108,7 +103,7 @@ export default class Index extends wepy.page {
 
       this.$broadcast('index-broadcast', 1, 3, 4)
     },
-    request () {
+    request() {
       let self = this
       let i = 10
       let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
@@ -122,7 +117,7 @@ export default class Index extends wepy.page {
         })
       }
     },
-    counterEmit (...args) {
+    counterEmit(...args) {
       let $event = args[args.length - 1]
       console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
     }
@@ -153,4 +148,4 @@ export default class Index extends wepy.page {
       self.$apply()
     })
   }
-  }
+}

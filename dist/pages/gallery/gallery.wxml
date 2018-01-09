@@ -31,6 +31,31 @@
         </view>
       </block>
     </view>
-    <joinUs wx:if="{{showApply}}"  v-on:closeApply="closeApply"/>
-    <newAlbum wx:if="{{showNewAlbum}}"  v-on:closeNewAlbum="closeNewAlbum"/>
+    
+  <view class="joinUs" wx:if="{{showApply}}">
+    <view class="bg" bindtap="$joinUs$close"/>
+    <view class="window">
+      <view class="close" bindtap="$joinUs$close"/>
+      <view class="title">加入我们</view>
+      <view class="topic">一句话介绍</view>
+      <input bindinput="$joinUs$typeintro" placeholder="夸夸自己吧" placeholder-style="color:#E0E0E0"/>
+      <view class="topic">微信号</view>
+      <input bindinput="$joinUs$typewx" placeholder="输入微信号" placeholder-style="color:#E0E0E0"/>
+      <view class="tips">＊组织者将通过微信联系你</view>
+      <view class="btn {{$joinUs$full ? 'on' : ''}}" bindtap="$joinUs$submit">提交</view>
+    </view>
+  </view>
+
+    
+  <view class="newAlbum" wx:if="{{showNewAlbum}}">
+    <view class="bg" bindtap="$newAlbum$close"/>
+    <view class="window">
+      <view class="close" bindtap="$newAlbum$close"/>
+      <view class="title">新建活动相册</view>
+      <view class="topic">相册名称</view>
+      <input bindinput="$newAlbum$typetitle" placeholder="取个响亮的名称" placeholder-style="color:#E0E0E0"/>
+      <view class="btn {{$newAlbum$title ? 'on' : ''}}" bindtap="$newAlbum$submit">完成</view>
+    </view>
+  </view>
+
   </view>
