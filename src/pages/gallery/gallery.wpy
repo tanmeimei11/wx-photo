@@ -34,7 +34,7 @@
       </block>
     </view>
     <joinUs wx:if="{{showApply}}" @closeApply.user="closeApply" :groupID.sync="groupID"></joinUs>
-    <newAlbum wx:if="{{showNewAlbum}}" @closeNewAlbum.user="closeNewAlbum"></newAlbum>
+    <newAlbum wx:if="{{showNewAlbum}}" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
   </view>
   </button>
 </form>

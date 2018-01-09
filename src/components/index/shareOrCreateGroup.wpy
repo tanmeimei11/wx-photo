@@ -8,7 +8,7 @@
 <style  type="less">
 .c-publish-photo {
   position: absolute;
-  top: 280rpx;
+  top: 446rpx;
   left: 34rpx;
   width: 682rpx;
   height: 196rpx;

@@ -58,6 +58,28 @@ export default class gallery extends wepy.page {
     },
     closeNewAlbum() {
       this.showNewAlbum = false
+    },
+    async submitTitle(title) {
+      try {
+        var res = await request({
+          url: '/gg/gallery/add',
+          method: 'POST',
+          data: {
+            groupId: this.groupID,
+            galleryName: title
+          }
+        })
+      } catch (e) {
+        this.toastFail('新建失败')
+      }
+
+      if (res.succ) {
+        this.toastSucc('新建成功')
+        this.showNewAlbum = false
+        this.loadInfo()
+        this.loadGallerylist()
+        this.$apply()
+      }
     }
   }
   onLoad(options) {
