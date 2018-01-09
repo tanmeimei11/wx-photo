@@ -226,7 +226,9 @@ export default class PhotoItem extends wepy.component {
     photoItem: [],
     photoIndex: Number
   };
-  data = {};
+  data = {
+    isZanAjax: false
+  };
   mixins = [LoadingMixin];
   methods = {
     clickImage(e) {
@@ -234,6 +236,10 @@ export default class PhotoItem extends wepy.component {
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
     async clickZan() {
+      if (this.isZanAjax === true) {
+        return
+      }
+      this.isZanAjax = true
       var res = await request({
         url: '/gg/photo/zan',
         data: {
@@ -250,10 +256,10 @@ export default class PhotoItem extends wepy.component {
       })
 
       if (res.succ && zanListRes.succ && zanListRes.data) {
-        this.photoItem.is_zan = !this.photoItem.is_zan
-        this.photoItem.zan_list = zanListRes.data
-        this.$apply()
+        console.log(zanListRes.data, this.photoIndex)
+        this.$emit('photoZanChange', this.photoIndex, zanListRes.data)
       }
+      this.isZanAjax = false
     },
     async delPhoto() {
       var res = await wepy.showActionSheet({

@@ -1,62 +1,63 @@
 {
-  "description": "项目配置文件。",
-  "setting": {
-    "urlCheck": false,
-    "es6": false,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "1.6.0",
-  "appid": "wxaf5f744f73d14d55",
-  "projectname": "wx-photos",
-  "svr": "",
-  "client": "",
-  "qcloudRoot": "",
-  "miniprogramRoot": "",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 2,
-      "list": [{
-          "id": 0,
-          "name": "index",
-          "pathName": "pages/index/index",
-          "query": ""
-        },
-        {
-          "id": 1,
-          "name": "gallery",
-          "pathName": "pages/gallery/gallery",
-          "query": "id=30"
-        },
-        {
-          "id": 2,
-          "name": "setting",
-          "pathName": "pages/setting/setting",
-          "query": "id=30"
-        },
-        {
-          "id": 3,
-          "name": "album",
-          "pathName": "pages/album/album",
-          "query": "id=1&title=相册"
-        },
-        {
-          "id": 4,
-          "name": "index1",
-          "pathName": "pages/index1/index",
-          "query": ""
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.6.0",
+	"appid": "wxaf5f744f73d14d55",
+	"projectname": "wx-photos",
+	"svr": "",
+	"client": "",
+	"qcloudRoot": "",
+	"miniprogramRoot": "",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "gallery",
+					"pathName": "pages/gallery/gallery",
+					"query": "id=30"
+				},
+				{
+					"id": 2,
+					"name": "setting",
+					"pathName": "pages/setting/setting",
+					"query": "id=30"
+				},
+				{
+					"id": 3,
+					"name": "album",
+					"pathName": "pages/album/album",
+					"query": "id=1&title=相册"
+				},
+				{
+					"id": 4,
+					"name": "index1",
+					"pathName": "pages/index1/index",
+					"query": ""
+				}
+			]
+		}
+	}
 }

@@ -41,7 +41,7 @@ export default class Index extends wepy.page {
 
     curCursor: 0,
     isGetList: false,
-    isGetListFinish: false,
+    isListHasNext: true,
 
     isShowNewAlbum: false, // 修改名称弹窗
     newAlbumTitle: '修改相册名称',
@@ -95,18 +95,26 @@ export default class Index extends wepy.page {
         this.isShowNewAlbum = false
         this.$apply()
       }
+    },
+    photoZanChange(idx, zanList) {
+      console.log(idx, zanList)
+      this.photoList[idx].is_zan = !this.photoList[idx].is_zan
+      this.photoList[idx].zan_list = zanList
+      this.$apply()
     }
   }
   events = {}
   async onLoad(options) {
-    this.refreshIndex()
+    // this.refreshIndex()
     try {
       this.loadingIn('加载中')
       this.initOptions(options)
       await wxCheckLogin()
       await this.getGalleryAuth()
+      console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
-        this.getList()
+        console.log('1111')
+        await this.getList()
       }
     } catch (e) {
       this.loadingOut()
@@ -156,11 +164,13 @@ export default class Index extends wepy.page {
 
       this.loadingOut()
       this.$apply()
+
+      return this.galleryAuth
     }
   }
   // 照片列表
   async getList() {
-    if (this.isGetList || this.isGetListFinish) {
+    if (this.isGetList || !this.isListHasNext) {
       return
     }
     this.isGetList = true
@@ -178,7 +188,7 @@ export default class Index extends wepy.page {
       this.curCursor = res.data.cursor
       this.loadingOut()
       this.isGetList = false
-      this.isGetListFinish = res.data.has_next
+      this.isListHasNext = res.data.has_next
       this.$apply()
     }
   }

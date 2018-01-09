@@ -6,6 +6,7 @@ import {
 import GroupItem from '../../components/index/groupItem'
 import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
+import LoadingMixin from '@/mixins/loadingMixin'
 
 export default class Index extends wepy.page {
   config = {
@@ -16,7 +17,7 @@ export default class Index extends wepy.page {
     shareOrCreateGroup: shareOrCreateGroup,
     groupItem: GroupItem
   }
-  mixins = [formSubmitMixin]
+  mixins = [formSubmitMixin, LoadingMixin]
 
   data = {
     pageName: 'index',
@@ -38,7 +39,10 @@ export default class Index extends wepy.page {
       withShareTicket: true
     })
   }
-
+  initPage() {
+    this.groupList = []
+    this.getList()
+  }
   async getList() {
     console.log('other refresh')
     var res = await request({
@@ -60,36 +64,40 @@ export default class Index extends wepy.page {
     wx.hideLoading()
   }
   ShareCallBack(res) {
-    console.log('111')
     return async(res) => {
-      console.log('share succ', res)
-      if (res.shareTickets) {
-        var ticket = res.shareTickets[0]
-        var loginRes = await wepy.login({
-          withCredentials: true
-        })
-        var shareInfoRes = await wepy.getShareInfo({
-          shareTicket: ticket
-        })
-        if (loginRes.code && shareInfoRes.encryptedData && shareInfoRes.iv) {
-          var _data = {
-            encryptedData: shareInfoRes.encryptedData, //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
-            iv: shareInfoRes.iv, // 加密算法的初始向量
-            code: loginRes.code
-          }
-
-          var dispatcherRes = await request({
-            url: '/gg/group/index/dispatcher',
-            data: _data
+      this.loadingIn()
+      try {
+        if (res.shareTickets) {
+          var ticket = res.shareTickets[0]
+          var loginRes = await wepy.login({
+            withCredentials: true
           })
+          var shareInfoRes = await wepy.getShareInfo({
+            shareTicket: ticket
+          })
+          if (loginRes.code && shareInfoRes.encryptedData && shareInfoRes.iv) {
+            var _data = {
+              encryptedData: shareInfoRes.encryptedData, //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
+              iv: shareInfoRes.iv, // 加密算法的初始向量
+              code: loginRes.code
+            }
 
-          console.log(dispatcherRes)
-          if (dispatcherRes && dispatcherRes.succ) {
-            wx.navigateTo({
-              url: dispatcherRes.data.redirect_path
+            var dispatcherRes = await request({
+              url: '/gg/group/index/dispatcher',
+              data: _data
             })
+
+            if (dispatcherRes && dispatcherRes.succ) {
+              await this.initPage()
+              wx.navigateTo({
+                url: dispatcherRes.data.redirect_path
+              })
+            }
           }
         }
+        this.loadingIn()
+      } catch (e) {
+        this.loadingOut()
       }
     }
   }

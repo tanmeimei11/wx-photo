@@ -10,4 +10,6 @@ const fail = {
   'msg': '已取消点赞',
   'timestamp': '1449324953'
 }
-module.exports = succ
+module.exports = {
+  data: succ
+}

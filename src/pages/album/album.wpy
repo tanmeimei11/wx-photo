@@ -6,7 +6,7 @@
     <!-- 照片列表 -->
     <block wx:if="{{photoList.length != 0}}">
     <repeat for="{{photoList}}" key="index" index="index" item="item">
-       <photoItem :photoItem.sync="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto"></photoItem>
+       <photoItem :photoItem.sync="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto" @photoZanChange.user="photoZanChange"></photoItem>
     </repeat>
     </block>
     <!-- 空态页 -->
@@ -20,7 +20,7 @@
     <!-- 预览照片 -->
     <previewPhoto  wx:if="{{previewPhotos.length != 0}}" :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
     <!-- 发布照片 -->
-    <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" :publishAfterInfo.sync="publishAfterInfo"  @openNewAlbum.user="openNewAlbum"></publishPhoto>
+    <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" :publishAfterInfo.sync="publishAfterInfo"  @openNewAlbum.user="openNewAlbum" ></publishPhoto>
      <!-- 修改名称 -->
     <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
   </view>
