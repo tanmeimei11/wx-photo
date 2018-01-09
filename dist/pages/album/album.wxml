@@ -24,7 +24,7 @@
       <view class="s-down iconfont icon-xiazai-sigel" bindtap="$photoItem$downUrl" data-com-index="{{index}}"/>
       <view class="icons-wrap">
         <view class="s-like iconfont {{!item.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
-        <view class="s-comment iconfont icon-pinglun-miaobian"/>
+        <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
         <view class="s-print iconfont icon-dayinji"/>
       </view>
     </view>
@@ -33,7 +33,7 @@
       <view class="s-zan-wrap" wx:if="{{item.zan_list && item.zan_list.length}}">
         <view class="zan-icon ">
           <view class="iconfont icon-dianzan_xiaoxin"/>
-          <view class="zan-icon-num">12</view>
+          <view class="zan-icon-num">{{item.zan_list.length}}</view>
         </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{item.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"/>
@@ -59,8 +59,12 @@
     </block>
     </block>
     <!-- 空态页 -->
-    <block wx:if="{{photoList.length == 0}}">
+    <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
       <view class="empty"/>
+    </block>
+    <!-- 隐私 -->
+    <block wx:if="{{galleryAuth == 0}}">
+      <view class="empty private"/>
     </block>
     <!-- 预览照片 -->
     
@@ -77,11 +81,28 @@
   
     <!-- 发布照片 -->
     
-<view class="c-publish-photo">
+<view class="c-publish-photo" wx:if="{{galleryAuth > 1}}">
   <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
     上传照片
   </view>
-  <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo}}"/>
+  <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo && $publishPhoto$publishAfterInfo.is_show}}" bindtap="$publishPhoto$readTips">
+    <view class="s-avatar-wrap">
+      <view class="s-avatar">
+        <image src="{{$publishPhoto$publishAfterInfo.avatar}}"/>
+        <view class="s-avatar-qun"/>
+      </view>
+      <view class="s-name">
+        {{$publishPhoto$publishAfterInfo.inviter_name}} 
+      </view>
+      <view class="s-name">
+       {{$publishPhoto$publishAfterInfo.invite_action}}
+      </view>
+    </view>
+   
+     <view class="s-text">
+       {{$publishPhoto$publishAfterInfo.txt}}
+    </view>
+  </view>
 </view>
   
 

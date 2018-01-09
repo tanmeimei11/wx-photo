@@ -21,7 +21,8 @@ export default class Index extends wepy.page {
 
   // data
   data = {
-    galleryId: '123', // 相册id
+    galleryId: '1', // 相册id
+    galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
 
     photoList: [],
     previewPhotos: [], // 预览照片
@@ -29,15 +30,7 @@ export default class Index extends wepy.page {
 
     curCursor: 0,
     isGetList: false,
-    isGetListFinish: false,
-
-    publishAfterInfo: null // 发布照片之后气泡信息
-  }
-
-  computed = {
-    now() {
-      return +new Date()
-    }
+    isGetListFinish: false
   }
 
   methods = {
@@ -56,29 +49,24 @@ export default class Index extends wepy.page {
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
       this.$apply()
-    },
-    changeZanList(idx, photoId, zanlist) {
-      var _photo = this.photoList[idx]
-      if (_photo.photo_id === photoId) {
-        _photo.zan_list = zanlist
-      }
-      this.$apply()
-    },
-    showPublishBubal(data) {
-      this.publishAfterInfo = data
-      this.$apply()
     }
   }
 
-  events = {
-    'index-emit': (...args) => {
-      let $event = args[args.length - 1]
-      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+  events = {}
+  async onLoad() {
+    try {
+      this.loadingIn('加载中')
+      await this.getGalleryAuth()
+      if (this.galleryAuth !== 0) {
+        this.getList()
+      }
+    } catch (e) {
+      this.loadingOut()
+      wx.showToast({
+        title: '加载失败',
+        icon: 'loading'
+      })
     }
-  }
-  onLoad() {
-    this.loadingIn('加载中')
-    this.getList()
   }
   loadingIn(text) {
     wx.showLoading({
@@ -89,6 +77,25 @@ export default class Index extends wepy.page {
   loadingOut() {
     wx.hideLoading()
   }
+  async getGalleryAuth() {
+    var res = await request({
+      url: '/gg/gallery/info',
+      data: {
+        gallery_id: this.galleryId
+      }
+    })
+    if (res && res.data) {
+      this.galleryAuth = 2
+      if (!res.data.can_publish) {
+        this.galleryAuth = 1
+      }
+      if (!res.data.can_view_photo) {
+        this.galleryAuth = 0
+      }
+      this.loadingOut()
+      this.$apply()
+    }
+  }
   async getList() {
     if (this.isGetList || this.isGetListFinish) {
       return
@@ -97,7 +104,7 @@ export default class Index extends wepy.page {
     var res = await request({
       url: '/gg/gallery/photolist',
       data: {
-        gallery_id: 1,
+        gallery_id: this.galleryId,
         cursor: 0
       }
     })

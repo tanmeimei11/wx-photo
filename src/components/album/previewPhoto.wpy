@@ -71,20 +71,16 @@ export default class PreviewPhoto extends wepy.component {
     swiperChange(e) {
       this.photoItemIdx = e.detail.current
       this.$apply()
-      console.log(this.photoItemIdx)
     },
     async downImage() {
       await downInternetUrl(this.photos[this.photoItemIdx].url)
     },
     clearSwiper() {
-      // console.log(this.photos)
-      console.log('clearCurPhotos')
       this.$emit('clearCurPhotos')
     }
   };
   watch = {
     photoIdx(newValue, oldValue) {
-      console.log(newValue)
       this.photoItemIdx = newValue
       this.$apply()
     }

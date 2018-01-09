@@ -20,7 +20,7 @@
       <view class="s-down iconfont icon-xiazai-sigel" bindtap="downUrl"></view>
       <view class="icons-wrap">
         <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
-        <view class="s-comment iconfont icon-pinglun-miaobian"></view>
+        <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
         <view class="s-print iconfont icon-dayinji" ></view>
       </view>
     </view>
@@ -29,7 +29,7 @@
       <view class="s-zan-wrap" wx:if="{{photoItem.zan_list && photoItem.zan_list.length}}">
         <view class="zan-icon ">
           <view class="iconfont icon-dianzan_xiaoxin"></view>
-          <view class="zan-icon-num">12</view>
+          <view class="zan-icon-num">{{photoItem.zan_list.length}}</view>
         </view>
         <view class="s-zanavatar-wrap">
           <image class="s-avatar" wx:for="{{photoItem.zan_list}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" mode="aspectFill" src="{{item.avatar}}"></image>
@@ -128,7 +128,8 @@
       font-size: 40rpx;
     }
     .icons-wrap {
-      width: 280rpx;
+      /* width: 280rpx; */
+      width: 150rpx;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -231,7 +232,6 @@ export default class PhotoItem extends wepy.component {
   methods = {
     clickImage(e) {
       var _photoIdx = e.target.dataset.index
-      console.log(this.photoItem.photos, _photoIdx)
       this.$emit('changeCurPhotos', this.photoItem.photos, _photoIdx)
     },
     async clickZan() {
@@ -243,10 +243,6 @@ export default class PhotoItem extends wepy.component {
         }
       })
 
-      if (res.succ) {
-        this.photoItem.is_zan = !this.photoItem.is_zan
-        this.$apply()
-      }
       var zanListRes = await request({
         url: '/gg/photo/zan_list',
         data: {
@@ -254,14 +250,10 @@ export default class PhotoItem extends wepy.component {
         }
       })
 
-      if (zanListRes.succ && zanListRes.data) {
-        console.log(zanListRes)
-        this.$emit(
-          'changeZanList',
-          this.photoIndex,
-          this.photoItem.photo_id,
-          zanListRes.data
-        )
+      if (res.succ && zanListRes.succ && zanListRes.data) {
+        this.photoItem.is_zan = !this.photoItem.is_zan
+        this.photoItem.zan_list = zanListRes.data
+        this.$apply()
       }
     },
     async delPhoto() {
@@ -278,7 +270,6 @@ export default class PhotoItem extends wepy.component {
         }).then(res => {
           this.$emit('deletPhoto', this.photoIndex)
           this.$apply()
-          console.log(this)
           wx.showToast({
             title: '删除成功',
             icon: 'success',

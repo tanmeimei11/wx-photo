@@ -11,6 +11,8 @@ module.exports = {
   [`${DOMAIN}/gg/photo/zan`]: 'zanPhoto',
   [`${DOMAIN}/gg/publish/photo`]: 'publishPhoto',
   [`${DOMAIN}/gg/photo/zan_list`]: 'zanList',
-  [`${DOMAIN}/gg/group/news`]: 'publishAfter'
+  [`${DOMAIN}/gg/group/news`]: 'publishAfter',
+  [`${DOMAIN}/gg/group/news_read`]: 'readTips',
+  [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo'
 }
 console.log(module.export)

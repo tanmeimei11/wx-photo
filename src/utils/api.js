@@ -6,13 +6,13 @@ import {
   qnUploadUrl
   // qnResUrl
 } from './config'
-
+import wepy from 'wepy'
 /**
  * 上传文件到七牛
  * @param {*} file
  */
 const uploadImageToQiniu = async file => {
-  var tokenRes = await wxPromisify(wx.request)({
+  var tokenRes = await wepy.request({
     url: qnTokenUrl
   })
 
@@ -21,12 +21,13 @@ const uploadImageToQiniu = async file => {
     filePath: file,
     name: 'file',
     formData: {
-      key: tokenRes.data.key,
-      token: tokenRes.data.token
+      key: tokenRes.data.data.key,
+      token: tokenRes.data.data.token
     }
   }
   var uploadRes = await wxPromisify(wx.uploadFile)(uploadData)
   var _res = JSON.parse(uploadRes)
+  console.log(_res)
   return {
     // url: `${qnResUrl}${res.key}`,
     hash: _res.hash,
@@ -51,11 +52,13 @@ const downInternetUrl = async function (urls) {
     await downSigleUrl(urls[i])
   }
   wx.hideLoading()
-  wx.showToast({
-    title: '下载成功',
-    duration: 2000,
-    mask: true
-  })
+  if (i === _len) {
+    wx.showToast({
+      title: '下载成功',
+      duration: 2000,
+      mask: true
+    })
+  }
 }
 
 /**
@@ -63,13 +66,13 @@ const downInternetUrl = async function (urls) {
  */
 const downSigleUrl = async function (url) {
   try {
-    await wxPromisify(wx.authorize)({
+    await wepy.authorize({
       scope: 'scope.writePhotosAlbum'
     })
-    var _downRes = await wxPromisify(wx.downloadFile)({
+    var _downRes = await wepy.downloadFile({
       url: url
     })
-    await wxPromisify(wx.saveImageToPhotosAlbum)({
+    await wepy.saveImageToPhotosAlbum({
       filePath: _downRes.tempFilePath
     })
   } catch (e) {}
