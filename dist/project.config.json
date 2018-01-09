@@ -46,9 +46,16 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "album",
-					"pathName": "pages/album/album"
+					"pathName": "pages/album/album",
+					"query": "id=1&title=相册"
+				},
+				{
+					"id": 4,
+					"name": "index1",
+					"pathName": "pages/index1/index",
+					"query": ""
 				}
 			]
 		}

@@ -15,4 +15,3 @@ module.exports = {
   [`${DOMAIN}/gg/group/news_read`]: 'readTips',
   [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo'
 }
-console.log(module.export)
