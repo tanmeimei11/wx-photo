@@ -1,21 +1,21 @@
-
 <template>
   <view class="container">
-  <shareOrCreateGroup></shareOrCreateGroup>
+    <view class="indexBg"></view>
+    <shareOrCreateGroup></shareOrCreateGroup>
 
     <block wx:if="{{groupList.length != 0}}">
-    <repeat for="{{groupList}}" key="index" index="index" item="item">
-       <groupItem :groupItem="item" :groupIndex="index" ></groupItem>
-    </repeat>
+      <repeat for="{{groupList}}" key="index" index="index" item="item">
+        <groupItem :groupItem="item" :groupIndex="index"></groupItem>
+      </repeat>
     </block>
-    <block wx:if="{{groupList.length == 0}}" >
-      <view class="empty"></view>
-    </block>
+    <view class="empty" wx:if="{{groupList.length == 0}}">
+      <view></view>
+      <text>这里空空如也，快去创建群活动相册吧</text>
+    </view>
   </view>
 </template>
-<style lang="less" src="./index.scss">
+<style lang="less" src="index.scss">
 </style>
 
 <script src="./index.js">
 </script>
-

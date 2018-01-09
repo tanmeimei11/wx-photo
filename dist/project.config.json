@@ -36,13 +36,19 @@
 				{
 					"id": 1,
 					"name": "gallery",
-					"pathName": "pages/album/album",
+					"pathName": "pages/gallery/index",
 					"query": ""
 				},
 				{
 					"id": -1,
 					"name": "setting",
 					"pathName": "pages/setting/setting",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "album",
+					"pathName": "pages/album/album",
 					"query": ""
 				}
 			]

@@ -1,37 +1,63 @@
 module.exports = {
   data:{
-    msg: '',
-    code: '200003',
+    msg: "",
+    code: "200003",
     succ: true,
     data: {
-      has_next: false, // 是否还有下一页
-      list: [{
-        is_zan: true, // 是否点赞
-        photo_id: '1123244', // 图片id
-        fmt_time: '8分钟', // 发图距离现在时间
-        photo: [{
-          url: 'https://inimg07.jiuyan.info/aW4vMjAxNy8xMC8yNi85NUQ1RDk2NS1FMjE1LTYwREQtQkIxRS0wQkYxQjlDOTUxM0QuanBn', // 用于展示的图片列表
-          origin_url: 'https://inimg07.jiuyan.info/aW4vMjAxNy8xMC8yNi85NUQ1RDk2NS1FMjE1LTYwREQtQkIxRS0wQkYxQjlDOTUxM0QuanBn', // 原图
-          photo_id: '1123244', // 图片id
-          album_id: '2233' // 多图相片中某张图片的id
-        }],
-        user: {
-          name: '王小虎',
-          avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-          user_id: '1283' // 图片作者id
-        },
-        zan_list: [{
-          avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-          user_id: '1283'
+      cursor: "1565777",
+      list: [
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "笑嘻嘻登山团",
+          id: "1124466",
+          user_role: "0",
+          notice_count: "12" // 提醒数大于 0 ，显示红点
         },
         {
-          avatar: 'http://inimg02.jiuyan.info/in/2016/12/01/32AED610-14DD-68F8-AAF2-123BEE24CFFC-1EJqr.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-          user_id: '1283'
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
+        },
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
+        },
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
+        },
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
+        },
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
+        },
+        {
+          icon_img: "http://inimg02.jiuyan.info/in/2016/09/22/9D455689-1B46-EC56-58DC-EEFF82B16767-1jzQX.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!",
+          name: "小明不小心",
+          id: "11248996",
+          user_role: "2",
+          notice_count: "0" 
         }
-  
-        ]
-      }]
+      ],
+      has_next: false
     },
-    timestamp: '1515055637'
+    timestamp: "1515142798"
   }
 }
