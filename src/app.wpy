@@ -44,7 +44,7 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-    this.testAsync()
+    // this.testAsync()
   }
 
   sleep(s) {
@@ -56,8 +56,8 @@ export default class extends wepy.app {
   }
 
   async testAsync() {
-    const data = await this.sleep(3)
-    console.log(data)
+    // const data = await this.sleep(3)
+    // console.log(data)
   }
 
   getUserInfo(cb) {

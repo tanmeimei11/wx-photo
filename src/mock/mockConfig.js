@@ -13,5 +13,6 @@ module.exports = {
   [`${DOMAIN}/gg/photo/zan_list`]: 'zanList',
   [`${DOMAIN}/gg/group/news`]: 'publishAfter',
   [`${DOMAIN}/gg/group/news_read`]: 'readTips',
-  [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo'
+  [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo',
+  [`${DOMAIN}/gg/login`]: 'login'
 }

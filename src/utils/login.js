@@ -75,30 +75,30 @@ var requestBefore = (option, token) => {
  * @param {*} option
  */
 
-var request = async(option, isCheckLogin) => {
+var request = async function (option, isCheckLogin) {
+  // isCheckLogin = option.isCheck
+  isCheckLogin = false
   console.log(option, isCheckLogin)
   try {
-    var token = null
-    if (!option.isCheckLogin) {
-      token = ''
-    } else {
-      token = await wxCheckLogin(option)
-    }
-    LOG('get token', token)
-    if (token || !option.isCheckLogin) {
-      requestBefore(option, token)
-      if (isMock) {
-        option.success(require('../mock/' + mockConfig[option.url]))
-        return
-      }
-      LOG('start request option:', option)
-      var reqRes = await wepy.request(option)
-      console.log(reqRes)
-      // wx.request(option)
-    }
+    var token = wx.getStorageSync('token')
+    // if (isCheckLogin === true) {
+    //   token = await wxCheckLogin(option)
+    // }
+    // LOG('get token', token)
   } catch (e) {
     LOG('未登陆...')
   }
+
+  // if (token || !isCheckLogin) {
+  requestBefore(option, token)
+  if (isMock) {
+    return require('../mock/' + mockConfig[option.url]).data
+  }
+  LOG('start request option:', option)
+  var reqRes = await wepy.request(option)
+  console.log(reqRes)
+  return reqRes.data
+  // }
 }
 
 /**
@@ -112,15 +112,16 @@ var wxCheckLogin = async option => {
   if (_token) {
     LOG('token succ:', _token)
     return _token
+  } else {
+    LOG('token fail:', _token)
+    return await wxLogin(option)
   }
-  LOG('token fail:', _token)
-  return await wxLogin(option)
 }
 
-var loginRequest = () => {
+var loginRequest = async() => {
   if (!loginCollectOptions.length) return
   for (var i = 0; i < loginCollectOptions.length; i++) {
-    request(loginCollectOptions[i])
+    await request(loginCollectOptions[i])
   }
   loginCollectOptions = []
 }
@@ -134,11 +135,12 @@ var wxLogin = async option => {
   loginCollectOptions.push(option)
   if (isLoginIng) {
     LOG('正在登陆')
-    return Promise.reject() // eslint-disable-line
+    return ''
   } else {
     LOG('开始登陆')
     isLoginIng = true
   }
+
   var loginRes = await wepy.login()
   code = loginRes.code
   LOG('get code', code)
@@ -153,7 +155,11 @@ var wxLogin = async option => {
   }
 
   let _data = {
-    url: DOMAIN + '/party/login',
+    url: DOMAIN + '/gg/login',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    method: 'POST',
     data: {
       code: code,
       encryptedData: userInfoRes.encryptedData,
@@ -162,14 +168,17 @@ var wxLogin = async option => {
   }
   LOG('login', _data)
   var reqRes = await wepy.request(_data)
+  reqRes = reqRes.data
 
   if (reqRes.succ && reqRes.data) {
     LOG('login succ', reqRes)
     wx.setStorageSync('token', reqRes.data)
     isLoginIng = false
-    loginRequest()
+    // await loginRequest()
+    return reqRes.data
   } else {
     LOG('login fail', reqRes)
+    return ''
   }
 }
 
@@ -178,5 +187,6 @@ module.exports = {
   DOMAIN,
   isMock,
   wxPromisify,
-  request: request
+  request: request,
+  wxCheckLogin: wxCheckLogin
 }
