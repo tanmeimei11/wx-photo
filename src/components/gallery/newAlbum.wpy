@@ -98,7 +98,7 @@ import wepy from 'wepy';
 export default class newAlbum extends wepy.component {
   props = {
     newAlbumTitle: String,
-    galleryTitle: String
+    galleryTitle: String,
   };
   data = {
     wx: '',
