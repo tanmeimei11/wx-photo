@@ -1,6 +1,10 @@
 
 .container{
   background: #f4f4f4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block
 }
 
 .top{
@@ -88,6 +92,8 @@
 .gallery{
   width: 716rpx;
   padding: 36rpx 17rpx 0;
+  background: #f4f4f4;
+  overflow: hidden;
   .item{
     width: 324rpx;
     height: 310rpx;

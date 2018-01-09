@@ -6,6 +6,7 @@ module.exports = {
   [`${DOMAIN}/gg/group/info`]: 'info',
   [`${DOMAIN}/gg/group/gallerylist`]: 'gallerylist',
   [`${DOMAIN}/gg/group/setting`]: 'setting',
+  [`${DOMAIN}/gg/group/updatesetting`]: 'readTips',
   [`${DOMAIN}/gg/index/grouplist`]: 'grouplist',
   [`${DOMAIN}/gg/photo/del`]: 'delPhoto',
   [`${DOMAIN}/gg/photo/zan`]: 'zanPhoto',
