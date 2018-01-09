@@ -4,6 +4,7 @@ import PreviewPhoto from '@/components/album/previewPhoto'
 import publishPhoto from '@/components/album/publishPhoto'
 import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
+import refreshIndexMixin from '@/mixins/refreshIndexMixin'
 import newAlbum from '@/components/gallery/newAlbum'
 
 import {
@@ -25,9 +26,10 @@ export default class Index extends wepy.page {
     newAlbum: newAlbum
   }
   // 混合
-  mixins = [LoadingMixin, formSubmitMixin]
+  mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin]
   // data
   data = {
+    pageName: 'album',
     groupId: '',
     galleryId: '1', // 相册id
     galleryTitle: '',
@@ -97,6 +99,7 @@ export default class Index extends wepy.page {
   }
   events = {}
   async onLoad(options) {
+    this.refreshIndex()
     try {
       this.loadingIn('加载中')
       this.initOptions(options)

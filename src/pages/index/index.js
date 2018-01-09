@@ -40,6 +40,7 @@ export default class Index extends wepy.page {
   }
 
   async getList() {
+    console.log('other refresh')
     var res = await request({
       url: '/gg/index/grouplist',
       data: {

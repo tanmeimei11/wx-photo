@@ -16,7 +16,8 @@ module.exports = {
   globals: {
     "wx": true,
     "Promise": true,
-    "getApp": true
+    "getApp": true,
+    "getCurrentPages": true
   },
   settings: {
     'html/html-extensions': ['.html', '.wpy']
