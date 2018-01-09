@@ -81,9 +81,15 @@ export default class gallery extends wepy.page {
   }
   onLoad(options) {
     this.groupID = options.id
-    this.title = options.id
     this.loadInfo()
     this.loadGallerylist()
+  }
+  // 分享
+  onShareAppMessage() {
+    return {
+      title: this.groupInfo.name,
+      path: `/page/gallery/gallery?id=${this.groupID}`
+    }
   }
   onReachBottom() {
     if (this.data.noMoreNote) {

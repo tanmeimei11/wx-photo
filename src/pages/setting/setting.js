@@ -14,7 +14,7 @@ export default class setting extends wepy.page {
     groupInfo: {},
     region: ['', '未填写', ''],
     type: '未填写',
-    checked: true,
+    checked: false,
     typeList: [],
     type_mapping: [],
     newdata: {},

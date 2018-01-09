@@ -6,6 +6,7 @@ import {
 import GroupItem from '../../components/index/groupItem'
 import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
+import LoadingMixin from '@/mixins/loadingMixin'
 
 export default class Index extends wepy.page {
   config = {
@@ -16,7 +17,7 @@ export default class Index extends wepy.page {
     shareOrCreateGroup: shareOrCreateGroup,
     groupItem: GroupItem
   }
-  mixins = [formSubmitMixin]
+  mixins = [formSubmitMixin, LoadingMixin]
 
   data = {
     pageName: 'index',
@@ -61,6 +62,7 @@ export default class Index extends wepy.page {
   }
   ShareCallBack(res) {
     console.log('111')
+    this.loadingIn('相册分享中')
     return async(res) => {
       console.log('share succ', res)
       if (res.shareTickets) {
@@ -85,6 +87,7 @@ export default class Index extends wepy.page {
 
           console.log(dispatcherRes)
           if (dispatcherRes && dispatcherRes.succ) {
+            this.loadingOut()
             wx.navigateTo({
               url: dispatcherRes.data.redirect_path
             })

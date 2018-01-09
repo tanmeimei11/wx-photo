@@ -9,7 +9,7 @@
         <view class="name">{{groupInfo.name}}</view>
         <view class="infotxt">
           <text class="member">成员 {{groupInfo.member_count}} | </text>
-          <text class="act">活动 {{groupInfo.gallery_count}} | </text>
+          <text class="act">相册 {{groupInfo.gallery_count}} | </text>
           <text class="pic">图片 {{groupInfo.photo_count}}</text>
         </view>
         <view class="btn" wx:if="{{groupInfo.is_show_apply_btn}}" @tap="toApply">申请加入</view>
@@ -34,7 +34,7 @@
       </block>
     </view>
     <joinUs wx:if="{{showApply}}" @closeApply.user="closeApply" :groupID.sync="groupID"></joinUs>
-    <newAlbum wx:if="{{showNewAlbum}}" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
+    <newAlbum wx:if="{{showNewAlbum}}" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle" :galleryTitle.sync="galleryTitle"></newAlbum>
   </view>
   </button>
 </form>
