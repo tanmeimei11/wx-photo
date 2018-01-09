@@ -9,6 +9,7 @@
 .c-publish-photo {
   position: absolute;
   top: 280rpx;
+  left: 34rpx;
   width: 682rpx;
   height: 196rpx;
   box-sizing: border-box;
