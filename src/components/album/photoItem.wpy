@@ -268,11 +268,7 @@ export default class PhotoItem extends wepy.component {
         }).then(res => {
           this.$emit('deletPhoto', this.photoIndex)
           this.$apply()
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-            mask: true
-          })
+          this.toastSucc('删除成功')
         })
       }
     },
@@ -284,24 +280,29 @@ export default class PhotoItem extends wepy.component {
     },
     async printerClick() {
       this.loadingIn('正在跳转')
-      var res = await request({
-        url: '/gg/photo/fetchpayloadkey',
-        data: {
-          photo_id: this.photoItem.photo_id
-        }
-      })
-      if (!(res.succ && res.data)) {
-        return
+      try {
+        var res = await request({
+          url: '/gg/photo/fetchpayloadkey',
+          data: {
+            photo_id: this.photoItem.photo_id
+          }
+        })
+      } catch (e) {
+        this.loadingOut()
+        this.toastFail('跳转失败了')
       }
+
       this.loadingOut()
-      var nav = await wepy.navigateToMiniProgram({
+      if (!(res && res.succ && res.data)) {
+        this.toastFail('跳转失败了')
+        return;
+      }
+      await wepy.navigateToMiniProgram({
         appId: 'wxf34fe3fb525ea139',
         path: `pages/transfer/transfer?payloadKey=${res.data}`,
         // path: `pages/transfer/transfer`,
         envVersion: 'develop'
       })
-
-      console.log(nav)
     },
     tap() {},
     downImage() {}

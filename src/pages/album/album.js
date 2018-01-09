@@ -115,7 +115,7 @@ export default class Index extends wepy.page {
   onShareAppMessage() {
     return {
       title: this.galleryTitle,
-      path: `/page/album/album?id=${this.galleryId}&title=${this.galleryTitle}`
+      path: `/page/album/album?id=${this.galleryId}`
     }
   }
   // 修改标题
@@ -168,7 +168,7 @@ export default class Index extends wepy.page {
     })
     if (res && res.data) {
       this.changeGalleryTitle(res.data.gallery_name)
-      this.groupId = res.data.group_id
+      this.groupId = res.data.group_id || ''
       this.photoList.push.apply(this.photoList, res.data.list)
       this.curCursor = res.data.cursor
       this.loadingOut()
