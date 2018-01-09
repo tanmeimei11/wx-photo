@@ -1,7 +1,15 @@
 <template>
 <view class="c-publish-photo">
+  <view class="s-side-btn" bindtap="chooseImage">
+    <view class="iconfont icon-xiugaimingcheng"></view>
+    修改名称
+  </view>
   <view class="s-publish-btn" bindtap="chooseImage">
     上传照片
+  </view>
+  <view class="s-side-btn" bindtap="chooseImage">
+     <view class="iconfont icon-quanbuxiangce"></view>
+    全部相册
   </view>
   <view class="publish-info" wx:if="{{publishAfterInfo && publishAfterInfo.is_show}}" @tap.atop="readTips">
     <view class="s-avatar-wrap">
@@ -32,11 +40,14 @@
   width: 750rpx;
   height: 128rpx;
   box-sizing: border-box;
-  padding: 20rpx 34rpx;
+  padding: 20rpx 0rpx;
   background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .s-publish-btn {
     height: 100%;
-    width: 100%;
+    width: 482rpx;
     background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
     border-radius: 6px;
     display: flex;
@@ -44,6 +55,20 @@
     justify-content: center;
     font-size: 32rpx;
     color: #fff;
+  }
+  .s-side-btn {
+    height: 100%;
+    width: 130rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20rpx;
+    color: #666666;
+    padding-top: 8rpx;
+    .iconfont {
+      margin-bottom: 12rpx;
+    }
   }
   .publish-info {
     width: 454rpx;

@@ -14,5 +14,6 @@ module.exports = {
   [`${DOMAIN}/gg/group/news`]: 'publishAfter',
   [`${DOMAIN}/gg/group/news_read`]: 'readTips',
   [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo',
-  [`${DOMAIN}/gg/login`]: 'login'
+  [`${DOMAIN}/gg/login`]: 'login',
+  [`${DOMAIN}/gg/photo/fetchpayloadkey`]: 'fetchpayloadkey'
 }
