@@ -25,8 +25,10 @@ export default class Index extends wepy.page {
       // 要求小程序返回分享目标信息
       withShareTicket: true
     })
-    await wxCheckLogin()
-    await this.getList()
+    var token = await wxCheckLogin()
+    if (token) {
+      await this.getList()
+    }
   }
   onShow(e) {
     wx.showShareMenu({
@@ -60,51 +62,45 @@ export default class Index extends wepy.page {
     return {
       title: '快来上传图片吧~',
       path: '/page/share/dispatcher?from=index',
-      success: function (res) {
-        console.log(res)
+      success: function(res) {
+        console.log(res);
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
-          wx.getShareInfo({
-            shareTicket: ticket,
-            success(res) {
-              var encryptedData = res.encryptedData //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
-              var iv = res.iv // 加密算法的初始向量
-              wx.login({
-                withCredentials: true,
-                success: function (res) {
-                  console.log(res)
-                  if (res.code) {
-                    var code = res.code
-                    console.log(res.code) // 使用这个 code 向微信换取 session_key
-                    console.log(14)
+          wx.login({
+            withCredentials : true,
+            success: function (res) {
+              if (res.code) {
+                var code = res.code
+                wx.getShareInfo({
+                  shareTicket: ticket,
+                  success(res) {
+                    var encryptedData = res.encryptedData;  //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
+                    var iv = res.iv; // 加密算法的初始向量
                     request({
-                      url: '/gg/group/index/dispatcher',
-                      data: {
-                        encryptedData: encryptedData,
-                        code: code,
-                        iv: iv
-                      }
-                    }).then((res) => {
-                      console.log(15)
-                      console.log(res)
-                      if (res.succ) {
-                        var redirect_path = res.data.redirect_path
-                        wx.navigateTo({
-                          url: redirect_path
-                        })
-                      }
+                        url: '/gg/group/index/dispatcher',
+                        data: {
+                          encryptedData: encryptedData,
+                          code: code,
+                          iv: iv
+                        }
+                    }).then((res) =>{
+                      console.log(15);
+                        console.log(res);
+                        if(res.succ) {
+                          var redirect_path = res.data.redirect_path
+                          wx.navigateTo({
+                            url: redirect_path
+                          })
+                        }
                     })
-                  }
-                }
-              })
-            },
-            fail() {},
-            complete() {}
+                  },
+                  fail() {},
+                  complete() {}
+                });
+              }
+            }
           })
         }
-      },
-      fail: function (res) {
-
       }
     }
   }

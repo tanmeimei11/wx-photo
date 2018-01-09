@@ -5,13 +5,11 @@
       <image class="s-avatar" mode="aspectFill" src="{{groupItem.icon_img}}"></image>
       <view class="iconfont icon-arrow"></view>
       <view class="s-name-wrap">
-          <open-data type="groupName" open-gid="{{groupItem.open_gid}}"></open-data>
+          <open-data type="groupName" open-gid="{{groupItem.open_gid}}" />
       </view>
       <text class="name">{{groupItem.name}}</text>
       <text class="s-info">
-        <text>成员 {{groupItem.member_count}} | </text>
-        <text>相册  {{groupItem.gallery_count}} | </text>
-        <text>图片  {{groupItem.photo_count}}</text>
+        <text>{{groupItem.feed_msg}}</text>
       </text>
       <view wx:if="{{groupItem.notice_count > 0}}" class="notice"></view>
     </view>
