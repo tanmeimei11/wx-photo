@@ -40,10 +40,10 @@ export default class gallery extends wepy.page {
         url: `/pages/setting/setting?id=${this.groupID}`
       })
     },
-    toAlbum() {
-      console.log(this.groupID)
+    toAlbum(e) {
+      console.log(e.currentTarget.dataset.id)
       wx.navigateTo({
-        url: `/pages/album/album?id=${this.groupID}`
+        url: `/pages/album/album?id=${e.currentTarget.dataset.id}`
       })
     },
     toApply() {
@@ -101,7 +101,7 @@ export default class gallery extends wepy.page {
     })
     if (res.succ && res.data) {
       console.log(res)
-      this.galleryList = res.data.galleries
+      this.galleryList = res.data.list
       this.data.page = this.data.page + 1
       this.$apply()
       if (!res.data.has_next) {

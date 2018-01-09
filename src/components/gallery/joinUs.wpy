@@ -97,6 +97,9 @@
 <script>
   import wepy from 'wepy';
   export default class joinUs extends wepy.component {
+    props = {
+      groupID: String
+    };
     data = {
       intro: '',
       wx: '',
@@ -117,6 +120,22 @@
       submit() {
         if(this.full) {
           console.log(this.intro, this.wx)
+          var res = await request({
+            url: '/gg/group/info',
+            method: 'POST',
+            data: {
+              groupId: this.groupID,
+              bio: this.intro,
+              wx_id: this.wx
+            }
+          })
+          if (res.succ) {
+            this.groupInfo = res.data
+            this.$apply()
+            console.log(this.groupInfo)
+          } else if (res.msg === "已经再群内") {
+            
+          }
         }
       }
     };
