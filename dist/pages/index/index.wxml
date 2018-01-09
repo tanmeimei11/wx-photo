@@ -22,9 +22,7 @@
       </view>
       <text class="name">{{item.name}}</text>
       <text class="s-info">
-        <text>成员 {{item.member_count}} | </text>
-        <text>相册  {{item.gallery_count}} | </text>
-        <text>图片  {{item.photo_count}}</text>
+        <text>{{item.feed_msg}}</text>
       </text>
       <view  wx:if="{{item.notice_count > 0}}" class="notice"/>
     </view>
