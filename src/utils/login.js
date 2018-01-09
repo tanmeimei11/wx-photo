@@ -92,6 +92,7 @@ var request = async function (option, isCheckLogin) {
   // if (token || !isCheckLogin) {
   requestBefore(option, token)
   if (isMock) {
+    console.log(require('../mock/' + mockConfig[option.url]))
     return require('../mock/' + mockConfig[option.url]).data
   }
   LOG('start request option:', option)

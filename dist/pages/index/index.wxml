@@ -1,4 +1,6 @@
 
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="indexBg"/>
     
@@ -37,3 +39,5 @@
       <text>这里空空如也，快去创建群活动相册吧</text>
     </view>
   </view>
+    </button>
+</form>

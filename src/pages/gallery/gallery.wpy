@@ -1,4 +1,6 @@
 <template>
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="top">
       <view class="background" style="background-image:url({{groupInfo.bg_img}})" @tap="changeBg"></view>
@@ -34,7 +36,8 @@
     <joinUs wx:if="{{showApply}}" @closeApply.user="closeApply" :groupID.sync="groupID"></joinUs>
     <newAlbum wx:if="{{showNewAlbum}}" @closeNewAlbum.user="closeNewAlbum"></newAlbum>
   </view>
-
+  </button>
+</form>
 </template>
 <style lang="less" src="gallery.scss">
 

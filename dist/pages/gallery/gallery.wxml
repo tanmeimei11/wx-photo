@@ -1,4 +1,6 @@
 
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="top">
       <view class="background" style="background-image:url({{groupInfo.bg_img}})" bindtap="changeBg"/>
@@ -59,3 +61,5 @@
   </view>
 
   </view>
+  </button>
+</form>

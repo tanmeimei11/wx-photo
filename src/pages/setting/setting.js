@@ -1,5 +1,8 @@
-import wepy from 'wepy';
-import { request } from '../../utils/login'
+import wepy from 'wepy'
+import {
+  request
+} from '../../utils/login'
+import formSubmitMixin from '@/mixins/formSubmitMixin'
 
 export default class setting extends wepy.page {
   config = {
@@ -17,6 +20,7 @@ export default class setting extends wepy.page {
     newdata: {},
     disabled: false
   }
+  mixins = [formSubmitMixin]
   methods = {
     bindRegionChange(e) {
       this.region = e.detail.value
@@ -46,13 +50,13 @@ export default class setting extends wepy.page {
       this.newdata = {
         quit_group: 1
       }
-      this.changeSetting(this.newdata,()=>{
+      this.changeSetting(this.newdata, () => {
         this.groupInfo.is_show_quit_btn = false
         wx.showToast({
           title: '退出成功',
           icon: 'success',
           mask: true
-        });
+        })
         this.$apply()
       })
     }
@@ -62,7 +66,7 @@ export default class setting extends wepy.page {
     this.loadInfo()
   }
 
-  async changeSetting(cdata,fn) {
+  async changeSetting(cdata, fn) {
     this.disabled = false
     console.log(cdata)
     var res = await request({
@@ -96,7 +100,7 @@ export default class setting extends wepy.page {
       this.type_mapping = res.data.type_mapping
 
       this.checked = res.data.is_rec
-      
+
       if (!res.data.can_modify) {
         this.disabled = true
       }

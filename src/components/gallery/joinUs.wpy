@@ -14,139 +14,139 @@
   </view>
 </template>
 <style type="less">
-  .joinUs{
-    position: fixed;
+.joinUs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .bg {
+    position: absoulte;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    .bg{
-      position: absoulte;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      opacity: 0.5;
-    }
-    .window{
+    background: #000;
+    opacity: 0.5;
+  }
+  .window {
+    position: absolute;
+    top: 50%;
+    left: 95rpx;
+    transform: translateY(-50%);
+    border-radius: 8rpx;
+    width: 560rpx;
+    height: 624rpx;
+    background: #fff;
+    .close {
+      width: 44rpx;
+      height: 44rpx;
       position: absolute;
-      top: 50%;
-      left: 95rpx;
-      transform: translateY(-50%);
+      top: 14rpx;
+      right: 14rpx;
+      background: url(http://inimg07.jiuyan.info/in/2018/01/09/B498E068-56DC-2F35-6709-51094B7EE2EF.png)
+        no-repeat;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .title {
+      margin-top: 52rpx;
+      text-align: center;
+      font-size: 36rpx;
+      color: #333;
+    }
+    .topic {
+      margin: 30rpx 48rpx 12rpx;
+      color: #666;
+      font-size: 28rpx;
+    }
+    input {
+      width: 444rpx;
+      height: 70rpx;
+      margin-left: 48rpx;
+      background: #f7f7f7;
       border-radius: 8rpx;
-      width: 560rpx;
-      height: 624rpx;
-      background: #fff;
-      .close{
-        width: 44rpx;
-        height: 44rpx;
-        position: absolute;
-        top: 14rpx;
-        right: 14rpx;
-        background: url(http://inimg07.jiuyan.info/in/2018/01/09/B498E068-56DC-2F35-6709-51094B7EE2EF.png) no-repeat;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-      .title{
-        margin-top: 52rpx;
-        text-align: center;
-        font-size: 36rpx;
-        color: #333;
-      }
-      .topic{
-        margin: 30rpx 48rpx 12rpx;
-        color: #666;
-        font-size: 28rpx;
-      }
-      input{
-        width: 444rpx;
-        height: 70rpx;
-        margin-left: 48rpx;
-        background: #f7f7f7;
-        border-radius: 8rpx;
-        font-size: 28rpx;
-        line-height: 70rpx;
-        padding-left: 20rpx;
-        color: #333;
-      }
-      .tips{
-        margin: 10rpx 48rpx 42rpx;
-        font-size: 20rpx;
-        color: #b0b0b0;
-      }
-      .btn{
-        width: 460rpx;
-        height: 80rpx;
-        text-align: center;
-        line-height: 80rpx;
-        font-size: 28rpx;
-        color: #fff;
-        background-image: linear-gradient(90deg, #FD823E 0%, #FAA84B 100%);
-        border-radius: 6rpx;
-        margin: 0 auto;
-        opacity: 0.3;
-        &.on{
-          opacity: 1;
-        }
+      font-size: 28rpx;
+      line-height: 70rpx;
+      padding-left: 20rpx;
+      color: #333;
+    }
+    .tips {
+      margin: 10rpx 48rpx 42rpx;
+      font-size: 20rpx;
+      color: #b0b0b0;
+    }
+    .btn {
+      width: 460rpx;
+      height: 80rpx;
+      text-align: center;
+      line-height: 80rpx;
+      font-size: 28rpx;
+      color: #fff;
+      background-image: linear-gradient(90deg, #fd823e 0%, #faa84b 100%);
+      border-radius: 6rpx;
+      margin: 0 auto;
+      opacity: 0.3;
+      &.on {
+        opacity: 1;
       }
     }
   }
+}
 </style>
 <script>
-  import wepy from 'wepy';
-  export default class joinUs extends wepy.component {
-    props = {
-      groupID: String
-    };
-    data = {
-      intro: '',
-      wx: '',
-      full: false
-    };
-    methods = {
-      close() {
-        this.$emit('closeApply')
-      },
-      typeintro(e) {
-        this.intro = e.detail.value
-        this.checkBtn()
-      },
-      typewx(e) {
-        this.wx = e.detail.value
-        this.checkBtn()
-      },
-      submit() {
-        if(this.full) {
-          console.log(this.intro, this.wx)
-          var res = await request({
-            url: '/gg/group/info',
-            method: 'POST',
-            data: {
-              groupId: this.groupID,
-              bio: this.intro,
-              wx_id: this.wx
-            }
-          })
-          if (res.succ) {
-            this.groupInfo = res.data
-            this.$apply()
-            console.log(this.groupInfo)
-          } else if (res.msg === "已经再群内") {
-            
+import wepy from 'wepy';
+import { request } from '@/utils/login';
+export default class joinUs extends wepy.component {
+  props = {
+    groupID: String
+  };
+  data = {
+    intro: '',
+    wx: '',
+    full: false
+  };
+  methods = {
+    close() {
+      this.$emit('closeApply')
+    },
+    typeintro(e) {
+      this.intro = e.detail.value
+      this.checkBtn()
+    },
+    typewx(e) {
+      this.wx = e.detail.value
+      this.checkBtn()
+    },
+    async submit() {
+      if (this.full) {
+        console.log(this.intro, this.wx)
+        var res = await request({
+          url: '/gg/group/info',
+          method: 'POST',
+          data: {
+            groupId: this.groupID,
+            bio: this.intro,
+            wx_id: this.wx
           }
+        })
+        if (res.succ) {
+          this.groupInfo = res.data
+          this.$apply()
+          console.log(this.groupInfo)
+        } else if (res.msg === '已经再群内') {
         }
       }
-    };
-    checkBtn() {
-      if (this.intro && this.wx) {
-        this.full = true
-      } else {
-        this.full = false
-      }
     }
-    watch = {
-    };
+  };
+  checkBtn() {
+    if (this.intro && this.wx) {
+      this.full = true
+    } else {
+      this.full = false
+    }
   }
+  watch = {};
+}
 </script>
