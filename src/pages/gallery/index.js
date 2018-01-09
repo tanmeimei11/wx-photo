@@ -36,17 +36,17 @@ export default class gallery extends wepy.page {
       })
     },
     toAlbum() {
+      console.log(this.groupID)
       wx.navigateTo({
         url: `/pages/album/album?id=${this.groupID}`
       })
     }
   }
   onLoad(options) {
-    this.loadInfo()
-    this.loadGallerylist()
     this.groupID = options.id
     this.title = options.id
-    this.$apply()
+    this.loadInfo()
+    this.loadGallerylist()
   }
   onReachBottom() {
     if (this.data.noMoreNote) {
