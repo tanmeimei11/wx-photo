@@ -115,6 +115,7 @@ export default class newAlbum extends wepy.component {
       if (this.galleryTitle) {
         console.log(this.galleryTitle)
         this.$emit('submitTitle', this.galleryTitle)
+        this.galleryTitle = ''
       }
     }
   };

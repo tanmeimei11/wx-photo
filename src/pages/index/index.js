@@ -69,6 +69,8 @@ export default class Index extends wepy.page {
     wx.hideLoading()
   }
   ShareCallBack(res) {
+    console.log('111')
+    this.loadingIn('相册分享中')
     return async(res) => {
       this.loadingIn()
       try {
@@ -93,6 +95,7 @@ export default class Index extends wepy.page {
             })
 
             if (dispatcherRes && dispatcherRes.succ) {
+              this.loadingOut()
               await this.initPage()
               wx.navigateTo({
                 url: dispatcherRes.data.redirect_path

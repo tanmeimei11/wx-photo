@@ -195,9 +195,16 @@ export default class PreviewPhoto extends wepy.component {
       this.$emit('openNewAlbum')
     },
     backToIndex() {
-      wepy.redirectTo({
-        url: `/pages/gallery/gallery?id=${this.groupId}`
-      })
+      var pages = getCurrentPages().length
+      if (pages > 1) {
+        wepy.navigateBack({
+          delta: 1
+        })
+      } else {
+        wepy.redirectTo({
+          url: `/pages/gallery/gallery?id=${this.groupId}`
+        })
+      }
     }
   };
 
