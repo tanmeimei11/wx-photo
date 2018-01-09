@@ -41,7 +41,7 @@ export default class Index extends wepy.page {
 
     curCursor: 0,
     isGetList: false,
-    isGetListFinish: false,
+    isListHasNext: true,
 
     isShowNewAlbum: false, // 修改名称弹窗
     newAlbumTitle: '修改相册名称',
@@ -95,18 +95,25 @@ export default class Index extends wepy.page {
         this.isShowNewAlbum = false
         this.$apply()
       }
+    },
+    photoZanChange(idx, zanList) {
+      console.log(idx, zanList)
+      this.photoList[idx].is_zan = !this.photoList[idx].is_zan
+      this.photoList[idx].zan_list = zanList
+      this.$apply()
     }
   }
   events = {}
   async onLoad(options) {
-    this.refreshIndex()
+    // this.refreshIndex()
     try {
       this.loadingIn('加载中')
       this.initOptions(options)
       await wxCheckLogin()
       await this.getGalleryAuth()
+      console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
-        this.getList()
+        await this.getList()
       }
     } catch (e) {
       this.loadingOut()
@@ -156,11 +163,14 @@ export default class Index extends wepy.page {
 
       this.loadingOut()
       this.$apply()
+
+      return this.galleryAuth
     }
   }
   // 照片列表
   async getList() {
-    if (this.isGetList || this.isGetListFinish) {
+    console.log(this.isGetList, this.isListHasNext)
+    if (this.isGetList || !this.isListHasNext) {
       return
     }
     this.isGetList = true
@@ -168,18 +178,22 @@ export default class Index extends wepy.page {
       url: '/gg/gallery/photolist',
       data: {
         gallery_id: this.galleryId,
-        cursor: 0
+        cursor: this.curCursor
       }
     })
     if (res && res.data) {
       this.changeGalleryTitle(res.data.gallery_name)
       this.groupId = res.data.group_id || ''
-      this.photoList.push.apply(this.photoList, res.data.list)
-      this.curCursor = res.data.cursor
-      this.loadingOut()
+      console.log(this.photoList)
+      this.photoList = [
+        ...this.photoList,
+        ...res.data.list
+      ]
+      this.curCursor = res.data.cursor || ''
       this.isGetList = false
-      this.isGetListFinish = res.data.has_next
+      this.isListHasNext = res.data.has_next
       this.$apply()
+      this.loadingOut()
     }
   }
   // 下啦加载
