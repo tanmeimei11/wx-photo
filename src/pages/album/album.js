@@ -113,7 +113,6 @@ export default class Index extends wepy.page {
       await this.getGalleryAuth()
       console.log(this.galleryAuth)
       if (this.galleryAuth !== 0) {
-        console.log('1111')
         await this.getList()
       }
     } catch (e) {
@@ -170,6 +169,7 @@ export default class Index extends wepy.page {
   }
   // 照片列表
   async getList() {
+    console.log(this.isGetList, this.isListHasNext)
     if (this.isGetList || !this.isListHasNext) {
       return
     }
@@ -178,18 +178,22 @@ export default class Index extends wepy.page {
       url: '/gg/gallery/photolist',
       data: {
         gallery_id: this.galleryId,
-        cursor: 0
+        cursor: this.curCursor
       }
     })
     if (res && res.data) {
       this.changeGalleryTitle(res.data.gallery_name)
       this.groupId = res.data.group_id || ''
-      this.photoList.push.apply(this.photoList, res.data.list)
-      this.curCursor = res.data.cursor
-      this.loadingOut()
+      console.log(this.photoList)
+      this.photoList = [
+        ...this.photoList,
+        ...res.data.list
+      ]
+      this.curCursor = res.data.cursor || ''
       this.isGetList = false
       this.isListHasNext = res.data.has_next
       this.$apply()
+      this.loadingOut()
     }
   }
   // 下啦加载
