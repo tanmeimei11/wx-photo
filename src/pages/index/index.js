@@ -5,7 +5,7 @@ import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
 
 export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '群工具首页'
+      navigationBarTitleText: '群活动相册'
     }
     // 组件
     components = {

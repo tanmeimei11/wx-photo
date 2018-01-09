@@ -1,19 +1,31 @@
 <template>
 <view class="c-publish-photo">
+  <text class="txt">转发到群创建你的活动相册</text>
   <button class="s-publish-btn" open-type="share">创建群活动相册</button>
 </view>
   
 </template>
 <style  type="less">
 .c-publish-photo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 750rpx;
-  height: 128rpx;
+  position: absolute;
+  top: 280rpx;
+  left: 34rpx;
+  width: 682rpx;
+  height: 196rpx;
   box-sizing: border-box;
-  padding: 20rpx 34rpx;
+  padding: 73rpx 34rpx 35rpx;
   background-color: #fff;
+  box-shadow: 0 0 15rpx 0 rgba(0,0,0,0.08);
+  border-radius: 6rpx;
+  .txt{
+    position: absolute;
+    top: 20rpx;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 24rpx;
+    color: #b0b0b0;
+  }
   .s-publish-btn {
     height: 100%;
     width: 100%;
