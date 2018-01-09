@@ -63,16 +63,31 @@
       color: #fea167;
       text-align: center;
     }
+    .set{
+      position: absolute;
+      top: 60rpx;
+      right: 48rpx;
+      font-size: 24rpx;
+      color: #666;
+      &:after{
+        content: '';
+        position: absolute;
+        top: 13rpx;
+        left: 115%;
+        width: 7rpx;
+        height: 10rpx;
+        background: url(http://inimg07.jiuyan.info/in/2018/01/09/B2C159B5-B16D-0F81-0035-EB9F6D0EB836.png) no-repeat;
+        background-size: contain;
+        background-position: center;
+        position: absolute;
+      }
+    }
   }
 }
 
 .gallery{
   width: 716rpx;
   padding: 36rpx 17rpx 0;
-  .item:after{
-    content: '';
-    position: absolute;
-  }
   .item{
     width: 324rpx;
     height: 310rpx;
@@ -81,6 +96,31 @@
     float: left;
     margin: 0 17rpx 34rpx; 
     position: relative;
+    &.new{
+      height: 106rpx;
+      text-align: center;
+      padding-top: 204rpx;
+      color: #666;
+      font-size: 30rpx;
+    }
+    &.new:after{
+      content: '';
+      position: absolute;
+      top: 74rpx;
+      left: 114rpx;
+      width: 96rpx;
+      height: 96rpx;
+      background: url(http://inimg02.jiuyan.info/in/2018/01/09/616DE763-6E2C-4018-BF77-4CAB9EAF5C09.png) no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .icon-arrow{
+      position: absolute;
+      top: 28rpx;
+      right: 20rpx;
+      font-size: 30rpx;
+      opacity: 0.5;
+    }
     .title{
       display: block;
       margin: 22rpx 20rpx 0;

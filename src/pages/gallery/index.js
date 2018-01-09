@@ -1,9 +1,13 @@
 import wepy from 'wepy';
 import { request } from '../../utils/login'
+import joinUs from '../../components/gallery/joinUs'
 
-export default class Index extends wepy.page {
+export default class gallery extends wepy.page {
     config = {
         navigationBarTitleText: '群活动相册'
+    }
+    components = {
+      joinUs: joinUs
     }
 
     data = {
@@ -22,6 +26,11 @@ export default class Index extends wepy.page {
         //         }
         //     })
         // },
+        toSetting() {
+            wx.navigateTo({
+                url: "/pages/setting/setting"
+            });
+        }
     }
     onLoad() {
         this.loadInfo()
@@ -43,9 +52,10 @@ export default class Index extends wepy.page {
                 group_id: 0
             }
         })
-        if(res.succ && res.data) {
+        if (res.succ && res.data) {
             this.groupInfo = res.data
             this.$apply()
+            console.log(this.groupInfo)
         }
     }
     async loadGallerylist() {
