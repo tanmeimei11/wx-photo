@@ -39,10 +39,10 @@ export default class gallery extends wepy.page {
         url: `/pages/setting/setting?id=${this.groupID}`
       })
     },
-    toAlbum() {
-      console.log(this.groupID)
+    toAlbum(e) {
+      console.log(e.currentTarget.dataset.id)
       wx.navigateTo({
-        url: `/pages/album/album?id=${this.groupID}`
+        url: `/pages/album/album?id=${e.currentTarget.dataset.id}`
       })
     },
     toApply() {

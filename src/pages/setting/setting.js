@@ -48,6 +48,11 @@ export default class setting extends wepy.page {
       }
       this.changeSetting(this.newdata,()=>{
         this.groupInfo.is_show_quit_btn = false
+        wx.showToast({
+          title: '退出成功',
+          icon: 'success',
+          mask: true
+        });
         this.$apply()
       })
     }
