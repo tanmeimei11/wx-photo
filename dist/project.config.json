@@ -25,7 +25,11 @@
 			"list": []
 		},
 		"miniprogram": {
+<<<<<<< HEAD
 			"current": 1,
+=======
+			"current": 3,
+>>>>>>> 9d1a9ee22939eb9045bcb524a588599407d13b85
 			"list": [
 				{
 					"id": 0,
@@ -46,9 +50,15 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "album",
 					"pathName": "pages/album/album",
+					"query": "id=1&title=相册"
+				},
+				{
+					"id": 4,
+					"name": "index1",
+					"pathName": "pages/index1/index",
 					"query": ""
 				}
 			]

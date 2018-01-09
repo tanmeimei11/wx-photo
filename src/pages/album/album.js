@@ -9,7 +9,7 @@ import {
 export default class Index extends wepy.page {
   // 配置
   config = {
-    navigationBarTitleText: '第一次聚会',
+    navigationBarTitleText: '相册详情',
     onReachBottomDistance: '100'
   }
   // 组件
@@ -53,9 +53,11 @@ export default class Index extends wepy.page {
   }
 
   events = {}
-  async onLoad() {
+  async onLoad(options) {
     try {
       this.loadingIn('加载中')
+      this.initOptions(options)
+
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
@@ -67,6 +69,12 @@ export default class Index extends wepy.page {
         icon: 'loading'
       })
     }
+  }
+  initOptions(options) {
+    this.galleryId = options.id || '1'
+    wepy.setNavigationBarTitle({
+      title: options.title || '相册详情'
+    })
   }
   loadingIn(text) {
     wx.showLoading({
@@ -83,7 +91,7 @@ export default class Index extends wepy.page {
       data: {
         gallery_id: this.galleryId
       }
-    })
+    }, true)
     if (res && res.data) {
       this.galleryAuth = 2
       if (!res.data.can_publish) {
