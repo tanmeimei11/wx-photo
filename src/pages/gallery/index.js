@@ -32,6 +32,11 @@ export default class gallery extends wepy.page {
             wx.navigateTo({
                 url: `/pages/setting/setting?id=${this.groupID}`
             });
+        },
+        toAlbum() {
+            wx.navigateTo({
+                url: `/pages/album/album?id=${this.groupID}`
+            });
         }
     }
     onLoad(options) {
