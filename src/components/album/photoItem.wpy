@@ -21,7 +21,7 @@
       <view class="icons-wrap">
         <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
         <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
-        <view class="s-print iconfont icon-dayinji" ></view>
+        <view class="s-print iconfont icon-dayinji" @tap.stop="printerClick"></view>
       </view>
     </view>
     <view class="s-operate-wrap">
@@ -219,16 +219,14 @@
 import wepy from 'wepy';
 import { request } from '../../utils/login.js';
 import { downInternetUrl } from '../../utils/api.js';
-import { wxPromisify } from '../../utils/common.js';
+import LoadingMixin from '@/mixins/loadingMixin';
 export default class PhotoItem extends wepy.component {
   props = {
     photoItem: [],
     photoIndex: Number
   };
-  data = {
-    image: [1, 2, 3, 4, 5, 6, 7]
-  };
-  watch = {};
+  data = {};
+  mixins = [LoadingMixin];
   methods = {
     clickImage(e) {
       var _photoIdx = e.target.dataset.index
@@ -257,7 +255,7 @@ export default class PhotoItem extends wepy.component {
       }
     },
     async delPhoto() {
-      var res = await wxPromisify(wx.showActionSheet)({
+      var res = await wepy.showActionSheet({
         itemList: ['删除'],
         itemColor: '#FF5E51'
       })
@@ -283,6 +281,27 @@ export default class PhotoItem extends wepy.component {
         return photo.url
       })
       await downInternetUrl(_urls)
+    },
+    async printerClick() {
+      // this.loadingIn('正在跳转')
+      // var res = await request({
+      //   url: '/gg/photo/fetchpayloadkey',
+      //   data: {
+      //     photo_id: this.photoItem.photo_id
+      //   }
+      // })
+      // if (!(res.succ && res.data)) {
+      //   return
+      // }
+      // this.loadingOut()
+      var nav = await wepy.navigateToMiniProgram({
+        appId: 'wxf34fe3fb525ea139',
+        // path: `pages/transfer/transfer?payloadKey=${res.data}`,
+        path: `pages/transfer/transfer`,
+        envVersion: 'develop'
+      })
+
+      console.log(nav)
     },
     tap() {},
     downImage() {}

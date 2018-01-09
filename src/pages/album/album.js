@@ -2,6 +2,7 @@ import wepy from 'wepy'
 import PhotoItem from '../../components/album/photoItem'
 import PreviewPhoto from '../../components/album/previewPhoto'
 import publishPhoto from '../../components/album/publishPhoto'
+import LoadingMixin from '@/mixins/loadingMixin'
 import {
   request,
   wxCheckLogin
@@ -19,10 +20,12 @@ export default class Index extends wepy.page {
     previewPhoto: PreviewPhoto,
     publishPhoto: publishPhoto
   }
-
+  // 混合
+  mixins = [LoadingMixin]
   // data
   data = {
     galleryId: '1', // 相册id
+    galleryTitle: '',
     galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
 
     photoList: [],
@@ -71,20 +74,19 @@ export default class Index extends wepy.page {
       })
     }
   }
+  // 分享
+  onShareAppMessage() {
+    return {
+      title: this.galleryTitle,
+      path: `/page/album/album?id=${this.galleryId}&title=${this.galleryTitle}`
+    }
+  }
   initOptions(options) {
     this.galleryId = options.id || '1'
+    this.galleryTitle = options.title
     wepy.setNavigationBarTitle({
       title: options.title || '相册详情'
     })
-  }
-  loadingIn(text) {
-    wx.showLoading({
-      title: text,
-      mask: true
-    })
-  }
-  loadingOut() {
-    wx.hideLoading()
   }
   async getGalleryAuth() {
     var res = await request({

@@ -25,7 +25,7 @@
       <view class="icons-wrap">
         <view class="s-like iconfont {{!item.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="$photoItem$clickZan" data-com-index="{{index}}"/>
         <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
-        <view class="s-print iconfont icon-dayinji"/>
+        <view class="s-print iconfont icon-dayinji" catchtap="$photoItem$printerClick" data-com-index="{{index}}"/>
       </view>
     </view>
     <view class="s-operate-wrap">
@@ -82,8 +82,16 @@
     <!-- 发布照片 -->
     
 <view class="c-publish-photo" wx:if="{{galleryAuth > 1}}">
+  <view class="s-side-btn" bindtap="$publishPhoto$chooseImage">
+    <view class="iconfont icon-xiugaimingcheng"/>
+    修改名称
+  </view>
   <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
     上传照片
+  </view>
+  <view class="s-side-btn" bindtap="$publishPhoto$chooseImage">
+     <view class="iconfont icon-quanbuxiangce"/>
+    全部相册
   </view>
   <view class="publish-info"  wx:if="{{$publishPhoto$publishAfterInfo && $publishPhoto$publishAfterInfo.is_show}}" bindtap="$publishPhoto$readTips">
     <view class="s-avatar-wrap">

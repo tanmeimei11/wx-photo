@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.6.0",
 	"appid": "wxaf5f744f73d14d55",
-	"projectname": "wx-promos",
+	"projectname": "wx-photos",
 	"svr": "",
 	"client": "",
 	"qcloudRoot": "",
@@ -25,7 +25,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
