@@ -1,12 +1,14 @@
 import wepy from 'wepy'
-import PhotoItem from '../../components/album/photoItem'
-import PreviewPhoto from '../../components/album/previewPhoto'
-import publishPhoto from '../../components/album/publishPhoto'
+import PhotoItem from '@/components/album/photoItem'
+import PreviewPhoto from '@/components/album/previewPhoto'
+import publishPhoto from '@/components/album/publishPhoto'
 import LoadingMixin from '@/mixins/loadingMixin'
+import newAlbum from '@/components/gallery/newAlbum'
+
 import {
   request,
   wxCheckLogin
-} from '../../utils/login'
+} from '@/utils/login'
 
 export default class Index extends wepy.page {
   // 配置
@@ -18,7 +20,8 @@ export default class Index extends wepy.page {
   components = {
     photoItem: PhotoItem,
     previewPhoto: PreviewPhoto,
-    publishPhoto: publishPhoto
+    publishPhoto: publishPhoto,
+    newAlbum: newAlbum
   }
   // 混合
   mixins = [LoadingMixin]
@@ -34,7 +37,10 @@ export default class Index extends wepy.page {
 
     curCursor: 0,
     isGetList: false,
-    isGetListFinish: false
+    isGetListFinish: false,
+
+    isShowNewAlbum: true, // 修改名称弹窗
+    newAlbumTitle: '修改相册名称'
   }
 
   methods = {
@@ -53,6 +59,16 @@ export default class Index extends wepy.page {
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
       this.$apply()
+    },
+    openNewAlbum() {
+      this.isShowNewAlbum = true
+    },
+    closeNewAlbum() {
+      this.isShowNewAlbum = false
+    },
+    submitTitle(title) {
+      console.log(title)
+      // this.submitTitle()
     }
   }
 

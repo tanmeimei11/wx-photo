@@ -3,115 +3,120 @@
     <view class="bg" @tap="close"></view>
     <view class="window">
       <view class="close" @tap="close"></view>
-      <view class="title">新建活动相册</view>
+      <view class="title">{{newAlbumTitle || '新建相册名称'}}</view>
       <view class="topic">相册名称</view>
-      <input bindinput="typetitle" placeholder="取个响亮的名称" placeholder-style="color:#E0E0E0"/>
-      <view class="btn {{title ? 'on' : ''}}" @tap="submit">完成</view>
+      <input bindinput="typetitle" placeholder="取个响亮的名称" value="{{galleryTitle}}" placeholder-style="color:#E0E0E0"/>
+      <view class="btn {{galleryTitle ? 'on' : ''}}" @tap="submit">完成</view>
     </view>
   </view>
 </template>
 <style type="less">
-  .newAlbum{
-    position: fixed;
+.newAlbum {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .bg {
+    position: absoulte;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    .bg{
-      position: absoulte;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      opacity: 0.5;
-    }
-    .window{
+    background: #000;
+    opacity: 0.5;
+  }
+  .window {
+    position: absolute;
+    top: 50%;
+    left: 95rpx;
+    transform: translateY(-50%);
+    border-radius: 8rpx;
+    width: 560rpx;
+    height: 432rpx;
+    background: #fff;
+    .close {
+      width: 44rpx;
+      height: 44rpx;
       position: absolute;
-      top: 50%;
-      left: 95rpx;
-      transform: translateY(-50%);
+      top: 14rpx;
+      right: 14rpx;
+      background: url(http://inimg07.jiuyan.info/in/2018/01/09/B498E068-56DC-2F35-6709-51094B7EE2EF.png)
+        no-repeat;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .title {
+      margin-top: 52rpx;
+      text-align: center;
+      font-size: 36rpx;
+      color: #333;
+    }
+    .topic {
+      margin: 30rpx 48rpx 12rpx;
+      color: #666;
+      font-size: 28rpx;
+    }
+    input {
+      width: 444rpx;
+      height: 70rpx;
+      margin-left: 48rpx;
+      background: #f7f7f7;
       border-radius: 8rpx;
-      width: 560rpx;
-      height: 432rpx;
-      background: #fff;
-      .close{
-        width: 44rpx;
-        height: 44rpx;
-        position: absolute;
-        top: 14rpx;
-        right: 14rpx;
-        background: url(http://inimg07.jiuyan.info/in/2018/01/09/B498E068-56DC-2F35-6709-51094B7EE2EF.png) no-repeat;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-      .title{
-        margin-top: 52rpx;
-        text-align: center;
-        font-size: 36rpx;
-        color: #333;
-      }
-      .topic{
-        margin: 30rpx 48rpx 12rpx;
-        color: #666;
-        font-size: 28rpx;
-      }
-      input{
-        width: 444rpx;
-        height: 70rpx;
-        margin-left: 48rpx;
-        background: #f7f7f7;
-        border-radius: 8rpx;
-        font-size: 28rpx;
-        line-height: 70rpx;
-        padding-left: 20rpx;
-        color: #333;
-        margin-bottom: 40rpx;
-      }
-      .tips{
-        margin: 10rpx 48rpx 42rpx;
-        font-size: 20rpx;
-        color: #b0b0b0;
-      }
-      .btn{
-        width: 460rpx;
-        height: 80rpx;
-        text-align: center;
-        line-height: 80rpx;
-        font-size: 28rpx;
-        color: #fff;
-        background-image: linear-gradient(90deg, #FD823E 0%, #FAA84B 100%);
-        border-radius: 6rpx;
-        margin: 0 auto;
-        opacity: 0.3;
-        &.on{
-          opacity: 1;
-        }
+      font-size: 28rpx;
+      line-height: 70rpx;
+      padding-left: 20rpx;
+      color: #333;
+      margin-bottom: 40rpx;
+    }
+    .tips {
+      margin: 10rpx 48rpx 42rpx;
+      font-size: 20rpx;
+      color: #b0b0b0;
+    }
+    .btn {
+      width: 460rpx;
+      height: 80rpx;
+      text-align: center;
+      line-height: 80rpx;
+      font-size: 28rpx;
+      color: #fff;
+      background-image: linear-gradient(90deg, #fd823e 0%, #faa84b 100%);
+      border-radius: 6rpx;
+      margin: 0 auto;
+      opacity: 0.3;
+      &.on {
+        opacity: 1;
       }
     }
   }
+}
 </style>
 <script>
-  import wepy from 'wepy';
-  export default class newAlbum extends wepy.component {
-    data = {
-      title: '',
-      wx: '',
-      full: false
-    };
-    methods = {
-      close() {
-        this.$emit('closeNewAlbum')
-      },
-      typetitle(e) {
-        this.title = e.detail.value
-      },
-      submit() {
-        if(this.title) {
-          console.log(this.title)
-        }
+import wepy from 'wepy';
+export default class newAlbum extends wepy.component {
+  props = {
+    newAlbumTitle: String,
+    galleryTitle: String
+  };
+  data = {
+    wx: '',
+    full: false
+  };
+  methods = {
+    close() {
+      this.$emit('closeNewAlbum')
+    },
+    typetitle(e) {
+      this.galleryTitle = e.detail.value
+    },
+    submit() {
+      if (this.title) {
+        this.$emit('submitTitle', this.galleryTitle)
+        console.log(this.title)
       }
-    };
-  }
+    }
+  };
+}
 </script>

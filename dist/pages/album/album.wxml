@@ -81,15 +81,15 @@
   
     <!-- 发布照片 -->
     
-<view class="c-publish-photo" wx:if="{{galleryAuth > 1}}">
-  <view class="s-side-btn" bindtap="$publishPhoto$chooseImage">
+<view class="c-publish-photo">
+  <view class="s-side-btn" catchtap="$publishPhoto$openNewAlbum">
     <view class="iconfont icon-xiugaimingcheng"/>
     修改名称
   </view>
-  <view class="s-publish-btn" bindtap="$publishPhoto$chooseImage">
+  <view class="s-publish-btn" catchtap="$publishPhoto$chooseImage">
     上传照片
   </view>
-  <view class="s-side-btn" bindtap="$publishPhoto$chooseImage">
+  <view class="s-side-btn" catchtap="$publishPhoto$chooseImage">
      <view class="iconfont icon-quanbuxiangce"/>
     全部相册
   </view>
@@ -113,5 +113,18 @@
   </view>
 </view>
   
+
+     <!-- 修改名称 -->
+    
+  <view class="newAlbum" wx:if="{{isShowNewAlbum}}">
+    <view class="bg" bindtap="$newAlbum$close"/>
+    <view class="window">
+      <view class="close" bindtap="$newAlbum$close"/>
+      <view class="title">{{$newAlbum$newAlbumTitle || '新建相册名称'}}</view>
+      <view class="topic">相册名称</view>
+      <input bindinput="$newAlbum$typetitle" placeholder="取个响亮的名称" value="{{$newAlbum$galleryTitle}}" placeholder-style="color:#E0E0E0"/>
+      <view class="btn {{$newAlbum$galleryTitle ? 'on' : ''}}" bindtap="$newAlbum$submit">完成</view>
+    </view>
+  </view>
 
   </view>

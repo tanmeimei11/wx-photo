@@ -16,9 +16,11 @@
       <view class="empty private"></view>
     </block>
     <!-- 预览照片 -->
-    <previewPhoto :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" wx:if="{{previewPhotos.length != 0}}" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+    <previewPhoto  wx:if="{{previewPhotos.length != 0}}" :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
     <!-- 发布照片 -->
-    <publishPhoto @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" :publishAfterInfo.sync="publishAfterInfo"  wx:if="{{galleryAuth > 1}}"></publishPhoto>
+    <publishPhoto  :galleryAuth.sync="galleryAuth" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" :publishAfterInfo.sync="publishAfterInfo"  @openNewAlbum.user="openNewAlbum"></publishPhoto>
+     <!-- 修改名称 -->
+    <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
   </view>
 </template>
 <style lang="less" src="./album.scss">
