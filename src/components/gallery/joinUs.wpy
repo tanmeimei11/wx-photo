@@ -97,11 +97,13 @@
 </style>
 <script>
 import wepy from 'wepy';
-import { request } from '@/utils/login';
+import { request } from '../../utils/login';
+import LoadingMixin from '@/mixins/loadingMixin';
 export default class joinUs extends wepy.component {
   props = {
     groupID: String
   };
+  mixins = [LoadingMixin];
   data = {
     intro: '',
     wx: '',
@@ -123,20 +125,32 @@ export default class joinUs extends wepy.component {
       if (this.full) {
         console.log(this.intro, this.wx)
         var res = await request({
-          url: '/gg/group/info',
+          url: '/gg/group/apply2join',
           method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
           data: {
             groupId: this.groupID,
             bio: this.intro,
             wx_id: this.wx
           }
         })
+
         if (res.succ) {
-          this.groupInfo = res.data
           this.$apply()
-          console.log(this.groupInfo)
-        } else if (res.msg === '已经再群内') {
+          this.toastSucc('申请成功！')
+          this.$emit('closeApply')
+        } else if (res.code === '-1') {
+          this.toastFail(res.msg)
         }
+      }
+
+      if (res.succ) {
+        this.groupInfo = res.data
+        this.$apply()
+        console.log(this.groupInfo)
+      } else if (res.msg === '已经再群内') {
       }
     }
   };

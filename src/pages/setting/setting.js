@@ -18,7 +18,8 @@ export default class setting extends wepy.page {
     typeList: [],
     type_mapping: [],
     newdata: {},
-    disabled: false
+    disabled: false,
+    showbtn: true
   }
   mixins = [formSubmitMixin]
   methods = {
@@ -51,13 +52,13 @@ export default class setting extends wepy.page {
         quit_group: 1
       }
       this.changeSetting(this.newdata, () => {
-        this.groupInfo.is_show_quit_btn = false
+        this.showbtn = false
+        this.$apply()
         wx.showToast({
           title: '退出成功',
           icon: 'success',
           mask: true
         })
-        this.$apply()
       })
     }
   }
@@ -67,15 +68,19 @@ export default class setting extends wepy.page {
   }
 
   async changeSetting(cdata, fn) {
-    this.disabled = false
+    this.disabled = true
     console.log(cdata)
     var res = await request({
       url: '/gg/group/updatesetting',
       method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' // 默认值
+      },
       data: cdata
     })
     if (res.succ) {
-      this.disabled = true
+      this.disabled = false
+      this.$apply()
       fn && fn()
     }
   }

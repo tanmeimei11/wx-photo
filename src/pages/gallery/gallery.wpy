@@ -3,7 +3,7 @@
   <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="top">
-      <view class="background" style="background-image:url({{groupInfo.bg_img}})" @tap="changeBg"></view>
+      <view class="background" style="background-image:url({{groupInfo.bg_img}})"></view>
       <view class="info">
         <view class="avatar" style="background-image:url({{groupInfo.icon_img}})"></view>
         <view class="name">{{groupInfo.name}}</view>
