@@ -5,6 +5,7 @@ import {
 } from '../../utils/login'
 import GroupItem from '../../components/index/groupItem'
 import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
+import formSubmitMixin from '@/mixins/formSubmitMixin'
 
 export default class Index extends wepy.page {
   config = {
@@ -15,6 +16,7 @@ export default class Index extends wepy.page {
     shareOrCreateGroup: shareOrCreateGroup,
     groupItem: GroupItem
   }
+  mixins = [formSubmitMixin]
 
   data = {
     pageName: 'index',
@@ -45,8 +47,6 @@ export default class Index extends wepy.page {
       },
       isCheck: true
     })
-    console.log('-----------get list------')
-    console.log(res)
     if (res && res.data) {
       console.log(res.data)
       this.groupList.push.apply(this.groupList, res.data.list)
@@ -58,51 +58,45 @@ export default class Index extends wepy.page {
   loadingOut() {
     wx.hideLoading()
   }
+  ShareCallBack(res) {
+    console.log('111')
+    return async(res) => {
+      console.log('share succ', res)
+      if (res.shareTickets) {
+        var ticket = res.shareTickets[0]
+        var loginRes = await wepy.login({
+          withCredentials: true
+        })
+        var shareInfoRes = await wepy.getShareInfo({
+          shareTicket: ticket
+        })
+        if (loginRes.code && shareInfoRes.encryptedData && shareInfoRes.iv) {
+          var _data = {
+            encryptedData: shareInfoRes.encryptedData, //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
+            iv: shareInfoRes.iv, // 加密算法的初始向量
+            code: loginRes.code
+          }
+
+          var dispatcherRes = await request({
+            url: '/gg/group/index/dispatcher',
+            data: _data
+          })
+
+          console.log(dispatcherRes)
+          if (dispatcherRes && dispatcherRes.succ) {
+            wx.navigateTo({
+              url: dispatcherRes.data.redirect_path
+            })
+          }
+        }
+      }
+    }
+  }
   onShareAppMessage(res) {
-    console.log(res)
     return {
       title: '快来上传图片吧~',
       path: '/page/share/dispatcher?from=index',
-      success: function (res) {
-        console.log(res)
-        if (res.shareTickets) {
-          var ticket = res.shareTickets[0]
-          wx.login({
-            withCredentials: true,
-            success: function (res) {
-              if (res.code) {
-                var code = res.code
-                wx.getShareInfo({
-                  shareTicket: ticket,
-                  success(res) {
-                    var encryptedData = res.encryptedData //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
-                    var iv = res.iv // 加密算法的初始向量
-                    request({
-                      url: '/gg/group/index/dispatcher',
-                      data: {
-                        encryptedData: encryptedData,
-                        code: code,
-                        iv: iv
-                      }
-                    }).then((res) => {
-                      console.log(15)
-                      console.log(res)
-                      if (res.succ) {
-                        var redirect_path = res.data.redirect_path
-                        wx.navigateTo({
-                          url: redirect_path
-                        })
-                      }
-                    })
-                  },
-                  fail() {},
-                  complete() {}
-                })
-              }
-            }
-          })
-        }
-      }
+      success: this.ShareCallBack(res)
     }
   }
 }

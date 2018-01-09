@@ -4,6 +4,7 @@ import {
 } from '../../utils/login'
 import joinUs from '../../components/gallery/joinUs'
 import newAlbum from '../../components/gallery/newAlbum'
+import formSubmitMixin from '@/mixins/formSubmitMixin'
 
 export default class gallery extends wepy.page {
   config = {
@@ -13,7 +14,7 @@ export default class gallery extends wepy.page {
     joinUs: joinUs,
     newAlbum: newAlbum
   }
-
+  mixins = [formSubmitMixin]
   data = {
     pageName: 'gallery',
     groupID: '',

@@ -1,4 +1,6 @@
 <template>
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="indexBg"></view>
     <shareOrCreateGroup></shareOrCreateGroup>
@@ -13,8 +15,11 @@
       <text>这里空空如也，快去创建群活动相册吧</text>
     </view>
   </view>
+    </button>
+</form>
 </template>
 <style lang="less" src="index.scss">
+
 </style>
 
 <script src="./index.js">

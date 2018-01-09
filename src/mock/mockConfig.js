@@ -18,5 +18,7 @@ module.exports = {
   [`${DOMAIN}/gg/login`]: 'login',
   [`${DOMAIN}/gg/photo/fetchpayloadkey`]: 'fetchpayloadkey',
   [`${DOMAIN}/gg/gallery/add`]: 'addgallery',
-  [`${DOMAIN}/gg/gallery/updatename`]: 'updatename'
+  [`${DOMAIN}/gg/gallery/updatename`]: 'updatename',
+  [`${DOMAIN}/tmpl/formid/submit`]: 'submitForm',
+  [`${DOMAIN}/gg/group/index/dispatcher`]: 'dispatcher'
 }

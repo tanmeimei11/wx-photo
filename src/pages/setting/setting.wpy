@@ -1,5 +1,7 @@
 
 <template>
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
   <view class="container">
     <view class="members">
       <block wx:for="{{groupInfo.members}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
@@ -32,8 +34,11 @@
     </view>
     <view class="btn" wx:if="{{groupInfo.is_show_quit_btn && showbtn}}" bindtap="exitQun">退出群空间</view>
   </view>
+    </button>
+</form>
 </template>
 <style lang="less" src="./setting.scss">
+
 </style>
 <script src="./setting.js">
 </script>
