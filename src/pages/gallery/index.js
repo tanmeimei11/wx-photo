@@ -1,12 +1,18 @@
 import wepy from 'wepy';
 import { request } from '../../utils/login'
+import joinUs from '../../components/gallery/joinUs'
 
-export default class Index extends wepy.page {
+export default class gallery extends wepy.page {
     config = {
         navigationBarTitleText: '群活动相册'
     }
+    components = {
+      joinUs: joinUs
+    }
 
     data = {
+        groupID: '',
+        title: '',
         groupInfo: {},
         galleryList: [],
         loading: false,
@@ -22,10 +28,18 @@ export default class Index extends wepy.page {
         //         }
         //     })
         // },
+        toSetting() {
+            wx.navigateTo({
+                url: `/pages/setting/setting?id=${this.groupID}`
+            });
+        }
     }
-    onLoad() {
+    onLoad(options) {
         this.loadInfo()
         this.loadGallerylist()
+        this.groupID = options.id
+        this.title = opitons.id
+        this.$apply()
     }
     onReachBottom() {
         if (this.data.noMoreNote) {
@@ -40,12 +54,13 @@ export default class Index extends wepy.page {
         var res = await request({
             url: '/gg/group/info',
             data: {
-                group_id: 0
+                group_id: this.groupID
             }
         })
-        if(res.succ && res.data) {
+        if (res.succ && res.data) {
             this.groupInfo = res.data
             this.$apply()
+            console.log(this.groupInfo)
         }
     }
     async loadGallerylist() {
@@ -56,7 +71,7 @@ export default class Index extends wepy.page {
         var res = await request({
             url: '/gg/group/gallerylist',
             data: {
-                group_id: 0,
+                group_id: this.groupID,
                 page: this.data.page
             }
         })

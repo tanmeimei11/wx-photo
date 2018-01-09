@@ -1,7 +1,7 @@
 import wepy from 'wepy';
 import { request } from '../../utils/login'
 
-export default class Index extends wepy.page {
+export default class setting extends wepy.page {
   config = {
     navigationBarTitleText: '设置'
   }
@@ -33,16 +33,16 @@ export default class Index extends wepy.page {
 
     }
   }
-  onLoad() {
+  onLoad(options) {
     this.loadInfo()
-
+    this.groupID = options.id
   }
 
   async loadInfo() {
     request({
       url: '/gg/group/setting',
       data: {
-        group_id: 0
+        group_id: groupID
       }
     }).then((res) => {
       this.groupInfo = res.data

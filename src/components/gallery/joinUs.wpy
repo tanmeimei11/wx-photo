@@ -1,0 +1,23 @@
+<template>
+  <view class="joinUs">
+    <view class="window"></view>
+  </view>
+</template>
+<style type="less">
+  .joinUs{
+
+  }
+</style>
+<script>
+  import wepy from 'wepy';
+  export default class joinUs extends wepy.component {
+    props = {
+    };
+    data = {
+    };
+    methods = {
+    };
+    watch = {
+    };
+  }
+</script>
