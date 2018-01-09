@@ -29,7 +29,7 @@ export default class Index extends wepy.page {
   data = {
     galleryId: '1', // 相册id
     galleryTitle: '',
-    galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限
+    galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限 3 不能修改名称
 
     photoList: [],
     previewPhotos: [], // 预览照片
@@ -39,10 +39,11 @@ export default class Index extends wepy.page {
     isGetList: false,
     isGetListFinish: false,
 
-    isShowNewAlbum: true, // 修改名称弹窗
-    newAlbumTitle: '修改相册名称'
-  }
+    isShowNewAlbum: false, // 修改名称弹窗
+    newAlbumTitle: '修改相册名称',
 
+    isRefreshIndex: false // 从创建过来的
+  }
   methods = {
     clearCurPhotos() {
       this.previewPhotos = []
@@ -66,12 +67,28 @@ export default class Index extends wepy.page {
     closeNewAlbum() {
       this.isShowNewAlbum = false
     },
-    submitTitle(title) {
-      console.log(title)
-      // this.submitTitle()
+    async submitTitle(title) {
+      try {
+        var res = await request({
+          url: '/gg/gallery/add',
+          method: 'POST',
+          data: {
+            id: this.galleryId,
+            galleryName: title
+          }
+        })
+      } catch (e) {
+        this.toastFail('修改失败')
+      }
+
+      if (res.succ) {
+        this.toastSucc('修改成功')
+        this.changeGalleryTitle(title)
+        this.isShowNewAlbum = false
+        this.$apply()
+      }
     }
   }
-
   events = {}
   async onLoad(options) {
     try {
@@ -97,32 +114,42 @@ export default class Index extends wepy.page {
       path: `/page/album/album?id=${this.galleryId}&title=${this.galleryTitle}`
     }
   }
-  initOptions(options) {
-    this.galleryId = options.id || '1'
-    this.galleryTitle = options.title
+  // 修改标题
+  changeGalleryTitle(text) {
+    this.galleryTitle = text || '相册详情'
     wepy.setNavigationBarTitle({
-      title: options.title || '相册详情'
+      title: this.galleryTitle
     })
   }
+  // 初始化配置
+  initOptions(options) {
+    this.galleryId = options.id || '1'
+  }
+  // 相册权限
   async getGalleryAuth() {
     var res = await request({
       url: '/gg/gallery/info',
       data: {
         gallery_id: this.galleryId
       }
-    }, true)
+    })
     if (res && res.data) {
-      this.galleryAuth = 2
+      this.galleryAuth = 10
+      if (!res.data.can_modify_info) {
+        this.galleryAuth = 2
+      }
       if (!res.data.can_publish) {
         this.galleryAuth = 1
       }
       if (!res.data.can_view_photo) {
         this.galleryAuth = 0
       }
+
       this.loadingOut()
       this.$apply()
     }
   }
+  // 照片列表
   async getList() {
     if (this.isGetList || this.isGetListFinish) {
       return
@@ -136,6 +163,7 @@ export default class Index extends wepy.page {
       }
     })
     if (res && res.data) {
+      this.changeGalleryTitle(res.data.gallery_name)
       this.photoList.push.apply(this.photoList, res.data.list)
       this.curCursor = res.data.cursor
       this.loadingOut()
@@ -144,6 +172,7 @@ export default class Index extends wepy.page {
       this.$apply()
     }
   }
+  // 下啦加载
   async onReachBottom(e) {
     await this.getList()
   }
