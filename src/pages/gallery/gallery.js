@@ -5,6 +5,7 @@ import {
 import joinUs from '../../components/gallery/joinUs'
 import newAlbum from '../../components/gallery/newAlbum'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
+import LoadingMixin from '@/mixins/loadingMixin'
 
 export default class gallery extends wepy.page {
   config = {
@@ -14,7 +15,7 @@ export default class gallery extends wepy.page {
     joinUs: joinUs,
     newAlbum: newAlbum
   }
-  mixins = [formSubmitMixin]
+  mixins = [formSubmitMixin, LoadingMixin]
   data = {
     pageName: 'gallery',
     groupID: '',
@@ -60,18 +61,14 @@ export default class gallery extends wepy.page {
       this.showNewAlbum = false
     },
     async submitTitle(title) {
-      try {
-        var res = await request({
-          url: '/gg/gallery/add',
-          method: 'POST',
-          data: {
-            groupId: this.groupID,
-            galleryName: title
-          }
-        })
-      } catch (e) {
-        this.toastFail('新建失败')
-      }
+      var res = await request({
+        url: '/gg/gallery/add',
+        method: 'POST',
+        data: {
+          groupId: this.groupID,
+          galleryName: title
+        }
+      })
 
       if (res.succ) {
         this.toastSucc('新建成功')

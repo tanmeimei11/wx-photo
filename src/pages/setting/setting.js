@@ -52,18 +52,29 @@ export default class setting extends wepy.page {
       this.changeSetting(this.newdata)
     },
     exitQun() {
-      this.newdata = {
-        quitGroup: 1,
-        groupId: this.groupID
-      }
-      this.changeSetting(this.newdata, () => {
-        this.showbtn = false
-        this.$apply()
-        wx.showToast({
-          title: '退出成功',
-          icon: 'success',
-          mask: true
-        })
+      var that = this
+      wx.showModal({
+        content: '确认退出群空间？',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            that.newdata = {
+              quitGroup: 1,
+              groupId: that.groupID
+            }
+            that.changeSetting(that.newdata, () => {
+              that.showbtn = false
+              that.$apply()
+              wx.showToast({
+                title: '退出成功',
+                icon: 'success',
+                mask: true
+              })
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
       })
     }
   }
@@ -107,9 +118,7 @@ export default class setting extends wepy.page {
       }
       this.$apply()
 
-      this.type = res.data.type === '' ? '未填写' : res.data.type_mapping.filter(item => {
-        return res.data.type === item.id
-      })[0].type_name
+      this.type = res.data.type_name
       this.typeList = res.data.type_mapping.map(item => {
         return item.type_name
       })
