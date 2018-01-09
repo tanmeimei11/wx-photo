@@ -284,7 +284,8 @@ export default class PhotoItem extends wepy.component {
         var res = await request({
           url: '/gg/photo/fetchpayloadkey',
           data: {
-            photo_id: this.photoItem.photo_id
+            photo_id: this.photoItem.photo_id,
+            user_id: this.photoItem.user.user_id
           }
         })
       } catch (e) {
@@ -300,7 +301,6 @@ export default class PhotoItem extends wepy.component {
       await wepy.navigateToMiniProgram({
         appId: 'wxf34fe3fb525ea139',
         path: `pages/transfer/transfer?payloadKey=${res.data}`,
-        // path: `pages/transfer/transfer`,
         envVersion: 'develop'
       })
     },
