@@ -33,16 +33,16 @@ export default class setting extends wepy.page {
 
     }
   }
-  onLoad() {
+  onLoad(options) {
     this.loadInfo()
-
+    this.groupID = options.id
   }
 
   async loadInfo() {
     request({
       url: '/gg/group/setting',
       data: {
-        group_id: 0
+        group_id: groupID
       }
     }).then((res) => {
       this.groupInfo = res.data

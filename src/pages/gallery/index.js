@@ -11,6 +11,8 @@ export default class gallery extends wepy.page {
     }
 
     data = {
+        groupID: '',
+        title: '',
         groupInfo: {},
         galleryList: [],
         loading: false,
@@ -28,13 +30,16 @@ export default class gallery extends wepy.page {
         // },
         toSetting() {
             wx.navigateTo({
-                url: "/pages/setting/setting"
+                url: `/pages/setting/setting?id=${this.groupID}`
             });
         }
     }
-    onLoad() {
+    onLoad(options) {
         this.loadInfo()
         this.loadGallerylist()
+        this.groupID = options.id
+        this.title = opitons.id
+        this.$apply()
     }
     onReachBottom() {
         if (this.data.noMoreNote) {
@@ -49,7 +54,7 @@ export default class gallery extends wepy.page {
         var res = await request({
             url: '/gg/group/info',
             data: {
-                group_id: 0
+                group_id: this.groupID
             }
         })
         if (res.succ && res.data) {
@@ -66,7 +71,7 @@ export default class gallery extends wepy.page {
         var res = await request({
             url: '/gg/group/gallerylist',
             data: {
-                group_id: 0,
+                group_id: this.groupID,
                 page: this.data.page
             }
         })
