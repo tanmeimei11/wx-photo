@@ -3,6 +3,7 @@ import PhotoItem from '@/components/album/photoItem'
 import PreviewPhoto from '@/components/album/previewPhoto'
 import publishPhoto from '@/components/album/publishPhoto'
 import LoadingMixin from '@/mixins/loadingMixin'
+import formSubmitMixin from '@/mixins/formSubmitMixin'
 import newAlbum from '@/components/gallery/newAlbum'
 
 import {
@@ -24,7 +25,7 @@ export default class Index extends wepy.page {
     newAlbum: newAlbum
   }
   // 混合
-  mixins = [LoadingMixin]
+  mixins = [LoadingMixin, formSubmitMixin]
   // data
   data = {
     groupId: '',
@@ -43,7 +44,8 @@ export default class Index extends wepy.page {
     isShowNewAlbum: false, // 修改名称弹窗
     newAlbumTitle: '修改相册名称',
 
-    isRefreshIndex: false // 从创建过来的
+    isRefreshIndex: false, // 从创建过来的
+    isSubmitFormId: true // 允许提交formid
   }
   methods = {
     clearCurPhotos() {

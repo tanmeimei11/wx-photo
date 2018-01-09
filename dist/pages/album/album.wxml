@@ -1,5 +1,7 @@
 
-  <view class="container">
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
+  <view class="container" bindtap="sunmit">
     <!-- 照片列表 -->
     <block  wx:if="{{photoList.length != 0}}">
     <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
@@ -128,3 +130,5 @@
   </view>
 
   </view>
+  </button>
+</form>

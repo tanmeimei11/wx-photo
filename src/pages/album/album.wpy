@@ -1,6 +1,8 @@
 
 <template>
-  <view class="container" >
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
+  <view class="container" @tap="sunmit">
     <!-- 照片列表 -->
     <block wx:if="{{photoList.length != 0}}">
     <repeat for="{{photoList}}" key="index" index="index" item="item">
@@ -22,6 +24,8 @@
      <!-- 修改名称 -->
     <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
   </view>
+  </button>
+</form>
 </template>
 <style lang="less" src="./album.scss">
 
