@@ -283,21 +283,21 @@ export default class PhotoItem extends wepy.component {
       await downInternetUrl(_urls)
     },
     async printerClick() {
-      // this.loadingIn('正在跳转')
-      // var res = await request({
-      //   url: '/gg/photo/fetchpayloadkey',
-      //   data: {
-      //     photo_id: this.photoItem.photo_id
-      //   }
-      // })
-      // if (!(res.succ && res.data)) {
-      //   return
-      // }
-      // this.loadingOut()
+      this.loadingIn('正在跳转')
+      var res = await request({
+        url: '/gg/photo/fetchpayloadkey',
+        data: {
+          photo_id: this.photoItem.photo_id
+        }
+      })
+      if (!(res.succ && res.data)) {
+        return
+      }
+      this.loadingOut()
       var nav = await wepy.navigateToMiniProgram({
         appId: 'wxf34fe3fb525ea139',
-        // path: `pages/transfer/transfer?payloadKey=${res.data}`,
-        path: `pages/transfer/transfer`,
+        path: `pages/transfer/transfer?payloadKey=${res.data}`,
+        // path: `pages/transfer/transfer`,
         envVersion: 'develop'
       })
 

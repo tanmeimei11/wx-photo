@@ -27,6 +27,7 @@ export default class Index extends wepy.page {
   mixins = [LoadingMixin]
   // data
   data = {
+    groupId: '',
     galleryId: '1', // 相册id
     galleryTitle: '',
     galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限 3 不能修改名称
@@ -70,8 +71,11 @@ export default class Index extends wepy.page {
     async submitTitle(title) {
       try {
         var res = await request({
-          url: '/gg/gallery/add',
+          url: '/gg/gallery/updatename',
           method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
           data: {
             id: this.galleryId,
             galleryName: title
@@ -164,6 +168,7 @@ export default class Index extends wepy.page {
     })
     if (res && res.data) {
       this.changeGalleryTitle(res.data.gallery_name)
+      this.groupId = res.data.group_id
       this.photoList.push.apply(this.photoList, res.data.list)
       this.curCursor = res.data.cursor
       this.loadingOut()

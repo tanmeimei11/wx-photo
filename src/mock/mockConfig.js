@@ -17,5 +17,6 @@ module.exports = {
   [`${DOMAIN}/gg/gallery/info`]: 'galleryInfo',
   [`${DOMAIN}/gg/login`]: 'login',
   [`${DOMAIN}/gg/photo/fetchpayloadkey`]: 'fetchpayloadkey',
-  [`${DOMAIN}/gg/gallery/add`]: 'addgallery'
+  [`${DOMAIN}/gg/gallery/add`]: 'addgallery',
+  [`${DOMAIN}/gg/gallery/updatename`]: 'updatename'
 }

@@ -15,6 +15,7 @@ export default class gallery extends wepy.page {
   }
 
   data = {
+    pageName: 'gallery',
     groupID: '',
     title: '',
     groupInfo: {},
