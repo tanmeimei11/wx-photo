@@ -5,13 +5,11 @@
       <image class="s-avatar" mode="aspectFill" src="{{groupItem.icon_img}}"></image>
       <view class="iconfont icon-arrow"></view>
       <view class="s-name-wrap">
-          <open-data type="groupName" open-gid="{{groupItem.open_gid}}"></open-data>
+          <open-data type="groupName" open-gid="{{groupItem.open_gid}}" />
       </view>
       <text class="name">{{groupItem.name}}</text>
       <text class="s-info">
-        <text>成员 {{groupItem.member_count}} | </text>
-        <text>相册  {{groupItem.gallery_count}} | </text>
-        <text>图片  {{groupItem.photo_count}}</text>
+        <text>{{groupItem.feed_msg}}</text>
       </text>
       <view wx:if="{{groupItem.notice_count > 0}}" class="notice"></view>
     </view>
@@ -20,83 +18,88 @@
   </view>
 </template>
 <style type="less">
-.c-index-group {
-  width: 682rpx;
-  height: 168rpx;
-  box-sizing: border-box;
-  margin: 0 34rpx;
-  background-color: #fff;
-  border-bottom: 2rpx solid #e0e0e0;
-  position: relative;
-  .name {
-    position: absolute;
-    top: 41rpx;
-    left: 130rpx;
-    width: 300rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 32rpx;
-    color: #333;
+  .c-index-group {
+    width: 682rpx;
+    height: 168rpx;
+    box-sizing: border-box;
+    margin: 0 34rpx;
+    background-color: #fff;
+    border-bottom: 2rpx solid #e0e0e0;
+    position: relative;
+    .name{
+      position: absolute;
+      top: 41rpx;
+      left: 130rpx;
+      width: 300rpx;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 32rpx;
+      color: #333;
+    }
+    .icon-arrow{
+      position: absolute;
+      top: 59rpx;
+      right: 0;
+      font-size: 48rpx;
+      opacity: 0.3
+    }
+    .s-avatar{
+      height: 100rpx;
+      width: 100rpx;
+      border-radius: 6rpx;
+      margin-top: 34rpx;
+    }
+    .s-name-wrap{
+      position: absolute;
+      top: 41rpx;
+      left: 130rpx;
+      width: 300rpx;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .s-info{
+      position: absolute;
+      top: 94rpx;
+      left: 130rpx;
+      font-size: 24rpx;
+      color: #666;
+      opacity: 0.7;
+    }
+    .notice{
+      position: absolute;
+      top: 76rpx;
+      right: 54rpx;
+      width: 16rpx;
+      height: 16rpx;
+      background: #ff5e51;
+      border-radius: 50%;
+    }
   }
-  .icon-arrow {
-    position: absolute;
-    top: 59rpx;
-    right: 0;
-    font-size: 48rpx;
-    opacity: 0.3;
-  }
-  .s-avatar {
-    height: 100rpx;
-    width: 100rpx;
-    border-radius: 6rpx;
-    margin-top: 34rpx;
-  }
-  .s-name-wrap {
-    position: absolute;
-    top: 41rpx;
-    left: 130rpx;
-    width: 300rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .s-info {
-    position: absolute;
-    top: 94rpx;
-    left: 130rpx;
-    font-size: 24rpx;
-    color: #666;
-    opacity: 0.7;
-  }
-  .notice {
-    position: absolute;
-    top: 76rpx;
-    right: 54rpx;
-    width: 16rpx;
-    height: 16rpx;
-    background: #ff5e51;
-    border-radius: 50%;
-  }
-}
+
 </style>
 <script>
 import wepy from 'wepy';
+import { request } from '../../utils/login.js';
+import { downInternetUrl } from '../../utils/api.js';
+import { wxPromisify } from '../../utils/common.js';
 export default class GroupItem extends wepy.component {
   props = {
     groupItem: [],
     groupIndex: Number
   };
-  data = {};
+  data = {
+  };
   watch = {};
   methods = {
     clickToGroup() {
       var groupId = this.groupItem.id
       console.log(groupId)
       wx.navigateTo({
-        url: '/pages/gallery/index?id=' + groupId
+        url: "/pages/gallery/index?id="+groupId
       })
-    }
+    },
   };
 }
 </script>
