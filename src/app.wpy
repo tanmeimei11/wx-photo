@@ -1,5 +1,9 @@
 <style lang="less">
 @import "./utils/font.scss";
+page {
+  width: 100%;
+  height: 100%;
+}
 .container {
   height: 100%;
   display: flex;
@@ -8,10 +12,13 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
-
-.submit-from .submit-btn {
+.submit-from {
   width: 100%;
   height: 100%;
+}
+.submit-from .submit-btn {
+  width: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
   position: relative;
