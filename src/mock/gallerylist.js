@@ -5,7 +5,7 @@ module.exports = {
     succ: true,
     data: {
       has_next: false,
-      galleries: [
+      list: [
         {
           name: "北京一游",
           id: "533223",

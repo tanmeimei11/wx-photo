@@ -25,7 +25,11 @@
 			"list": []
 		},
 		"miniprogram": {
+<<<<<<< HEAD
 			"current": 0,
+=======
+			"current": 2,
+>>>>>>> 36ddbaa789b27e490230905cf17a2726aa084300
 			"list": [
 				{
 					"id": 0,
@@ -40,10 +44,10 @@
 					"query": "id=16"
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "setting",
 					"pathName": "pages/setting/setting",
-					"query": ""
+					"query": "id=30"
 				},
 				{
 					"id": 3,

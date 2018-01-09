@@ -19,7 +19,8 @@ export default class setting extends wepy.page {
     type_mapping: [],
     newdata: {},
     disabled: false,
-    showbtn: true
+    showbtn: true,
+    members: []
   }
   mixins = [formSubmitMixin]
   methods = {
@@ -95,23 +96,25 @@ export default class setting extends wepy.page {
     })
     if (res.succ) {
       this.groupInfo = res.data
-      this.region = [res.data.province, res.data.city]
-
-      this.type = res.data.type_mapping.filter(item => {
-        return res.data.type === item.id
-      })[0].type_name
-      this.typeList = res.data.type_mapping.map(item => {
-        return item.type_name
-      })
-      this.type_mapping = res.data.type_mapping
+      this.members = res.data.members
+      this.region = res.data.city ? [res.data.province, res.data.city] : this.region
 
       this.checked = res.data.is_rec
+      this.type_mapping = res.data.type_mapping
 
       if (!res.data.can_modify) {
         this.disabled = true
       }
       this.$apply()
-      console.log(this.typeList)
+
+      this.type = res.data.type === '' ? '未填写' : res.data.type_mapping.filter(item => {
+        return res.data.type === item.id
+      })[0].type_name
+      this.typeList = res.data.type_mapping.map(item => {
+        return item.type_name
+      })
+      console.log(this.typelist)
+      this.$apply()
     }
   }
 }
