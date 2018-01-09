@@ -25,10 +25,8 @@ export default class Index extends wepy.page {
       // 要求小程序返回分享目标信息
       withShareTicket: true
     })
-    var token = await wxCheckLogin()
-    if (token) {
-      await this.getList()
-    }
+    await wxCheckLogin()
+    await this.getList()
   }
   onShow(e) {
     wx.showShareMenu({

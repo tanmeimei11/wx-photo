@@ -3,7 +3,8 @@ import PhotoItem from '../../components/album/photoItem'
 import PreviewPhoto from '../../components/album/previewPhoto'
 import publishPhoto from '../../components/album/publishPhoto'
 import {
-  request
+  request,
+  wxCheckLogin
 } from '../../utils/login'
 
 export default class Index extends wepy.page {
@@ -57,7 +58,7 @@ export default class Index extends wepy.page {
     try {
       this.loadingIn('加载中')
       this.initOptions(options)
-
+      await wxCheckLogin()
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
