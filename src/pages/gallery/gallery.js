@@ -101,7 +101,7 @@ export default class gallery extends wepy.page {
     })
     if (res.succ && res.data) {
       console.log(res)
-      this.galleryList = res.data.galleries
+      this.galleryList = res.data.list
       this.data.page = this.data.page + 1
       this.$apply()
       if (!res.data.has_next) {
