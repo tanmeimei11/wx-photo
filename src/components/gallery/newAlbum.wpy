@@ -1,20 +1,17 @@
 <template>
-  <view class="joinUs">
+  <view class="newAlbum">
     <view class="bg" @tap="close"></view>
     <view class="window">
       <view class="close" @tap="close"></view>
-      <view class="title">加入我们</view>
-      <view class="topic">一句话介绍</view>
-      <input bindinput="typeintro" placeholder="夸夸自己吧" placeholder-style="color:#E0E0E0"/>
-      <view class="topic">微信号</view>
-      <input bindinput="typewx" placeholder="输入微信号" placeholder-style="color:#E0E0E0"/>
-      <view class="tips">＊组织者将通过微信联系你</view>
-      <view class="btn {{full ? 'on' : ''}}" @tap="submit">提交</view>
+      <view class="title">新建活动相册</view>
+      <view class="topic">相册名称</view>
+      <input bindinput="typetitle" placeholder="取个响亮的名称" placeholder-style="color:#E0E0E0"/>
+      <view class="btn {{title ? 'on' : ''}}" @tap="submit">完成</view>
     </view>
   </view>
 </template>
 <style type="less">
-  .joinUs{
+  .newAlbum{
     position: fixed;
     top: 0;
     left: 0;
@@ -36,7 +33,7 @@
       transform: translateY(-50%);
       border-radius: 8rpx;
       width: 560rpx;
-      height: 624rpx;
+      height: 432rpx;
       background: #fff;
       .close{
         width: 44rpx;
@@ -70,6 +67,7 @@
         line-height: 70rpx;
         padding-left: 20rpx;
         color: #333;
+        margin-bottom: 40rpx;
       }
       .tips{
         margin: 10rpx 48rpx 42rpx;
@@ -96,38 +94,24 @@
 </style>
 <script>
   import wepy from 'wepy';
-  export default class joinUs extends wepy.component {
+  export default class newAlbum extends wepy.component {
     data = {
-      intro: '',
+      title: '',
       wx: '',
       full: false
     };
     methods = {
       close() {
-        this.$emit('closeApply')
+        this.$emit('closeNewAlbum')
       },
-      typeintro(e) {
-        this.intro = e.detail.value
-        this.checkBtn()
-      },
-      typewx(e) {
-        this.wx = e.detail.value
-        this.checkBtn()
+      typetitle(e) {
+        this.title = e.detail.value
       },
       submit() {
-        if(this.full) {
-          console.log(this.intro, this.wx)
+        if(this.title) {
+          console.log(this.title)
         }
       }
-    };
-    checkBtn() {
-      if (this.intro && this.wx) {
-        this.full = true
-      } else {
-        this.full = false
-      }
-    }
-    watch = {
     };
   }
 </script>

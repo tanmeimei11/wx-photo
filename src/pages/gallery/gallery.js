@@ -3,13 +3,15 @@ import {
   request
 } from '../../utils/login'
 import joinUs from '../../components/gallery/joinUs'
+import newAlbum from '../../components/gallery/newAlbum'
 
 export default class gallery extends wepy.page {
   config = {
     navigationBarTitleText: '群活动相册'
   }
   components = {
-    joinUs: joinUs
+    joinUs: joinUs,
+    newAlbum: newAlbum
   }
 
   data = {
@@ -19,7 +21,9 @@ export default class gallery extends wepy.page {
     galleryList: [],
     loading: false,
     noMoreNote: false,
-    page: 0
+    page: 0,
+    showApply: false,
+    showNewAlbum: false
   }
   methods = {
     // changeBg () {
@@ -39,14 +43,26 @@ export default class gallery extends wepy.page {
       wx.navigateTo({
         url: `/pages/album/album?id=${this.groupID}`
       })
+    },
+    toApply() {
+        this.showApply = true
+    },
+    closeApply() {
+        this.showApply = false
+    },
+    newAlbum() {
+        this.showNewAlbum = true
+    },
+    closeNewAlbum() {
+        this.showNewAlbum = false
     }
   }
   onLoad(options) {
-    this.loadInfo()
-    this.loadGallerylist()
     this.groupID = options.id
     this.title = options.id
-    this.$apply()
+
+    this.loadInfo()
+    this.loadGallerylist()
   }
   onReachBottom() {
     if (this.data.noMoreNote) {

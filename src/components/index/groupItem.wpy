@@ -99,7 +99,7 @@ export default class GroupItem extends wepy.component {
       var groupId = this.groupItem.id
       console.log(groupId)
       wx.navigateTo({
-        url: "/pages/gallery/index?id="+groupId
+        url: "/pages/gallery/gallery?id="+groupId
       })
     },
   };

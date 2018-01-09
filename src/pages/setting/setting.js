@@ -7,6 +7,7 @@ export default class setting extends wepy.page {
   }
 
   data = {
+    groupID: '',
     groupInfo: {},
     region: ['广东省', '广州市', ''],
     type: '',
@@ -34,15 +35,15 @@ export default class setting extends wepy.page {
     }
   }
   onLoad(options) {
-    this.loadInfo()
     this.groupID = options.id
+    this.loadInfo()
   }
 
   async loadInfo() {
     request({
       url: '/gg/group/setting',
       data: {
-        group_id: groupID
+        group_id: this.groupID
       }
     }).then((res) => {
       this.groupInfo = res.data

@@ -36,7 +36,7 @@
 				{
 					"id": 1,
 					"name": "gallery",
-					"pathName": "pages/gallery/index",
+					"pathName": "pages/gallery/gallery",
 					"query": ""
 				},
 				{

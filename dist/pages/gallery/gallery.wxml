@@ -1,41 +1,36 @@
-<template>
+
   <view class="container">
     <view class="top">
-      <view class="background" style="background-image:url({{groupInfo.bg_img}})" @tap="changeBg"></view>
+      <view class="background" style="background-image:url({{groupInfo.bg_img}})" bindtap="changeBg"/>
       <view class="info">
-        <view class="avatar" style="background-image:url({{groupInfo.icon_img}})"></view>
+        <view class="avatar" style="background-image:url({{groupInfo.icon_img}})"/>
         <view class="name">{{groupInfo.name}}</view>
         <view class="infotxt">
           <text class="member">成员 {{groupInfo.member_count}} | </text>
           <text class="act">活动 {{groupInfo.gallery_count}} | </text>
           <text class="pic">图片 {{groupInfo.photo_count}}</text>
         </view>
-        <view class="btn" wx:if="{{groupInfo.is_show_apply_btn}}">申请加入</view>
-        <view class="set" wx:if="{{groupInfo.is_show_setting_btn}}" @tap="toSetting">设置</view>
+        <view class="btn"  wx:if="{{groupInfo.is_show_apply_btn}}" bindtap="toApply">申请加入</view>
+        <view class="set"  wx:if="{{groupInfo.is_show_setting_btn}}" bindtap="toSetting">设置</view>
       </view>
     </view>
     <view class="gallery">
-      <view class="item new" wx:if="{{groupInfo.is_show_setting_btn}}">
+      <view class="item new" wx:if="{{groupInfo.is_show_setting_btn}}" bindtap="newAlbum">
         <text>新建相册</text>
       </view>
       <block wx:for="{{galleryList}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-        <view class="item" @tap="toAlbum">
-          <view class="iconfont icon-arrow"></view>
+        <view class="item" bindtap="toAlbum">
+          <view class="iconfont icon-arrow"/>
           <text class="title">{{item.name}}</text>
           <text class="num">{{item.photo_count}} 张</text>
           <view class="preview p{{item.photos.length}}">
             <block wx:for="{{item.photos}}" wx:for-index="idx2" wx:for-item="item2" wx:key="{{idx2}}">
-              <view style="background-image:url({{item2.middle_url}})"></view>
+              <view style="background-image:url({{item2.middle_url}})"/>
             </block>
           </view>
         </view>
       </block>
     </view>
-    <joinUs></joinUs>
+    <joinUs wx:if="{{showApply}}"  v-on:closeApply="closeApply"/>
+    <newAlbum wx:if="{{showNewAlbum}}"  v-on:closeNewAlbum="closeNewAlbum"/>
   </view>
-
-</template>
-<style lang="less" src="index.scss">
-</style>
-<script src="index.js">
-</script>
