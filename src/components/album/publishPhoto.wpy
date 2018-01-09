@@ -1,13 +1,13 @@
 <template>
 <view class="c-publish-photo">
-  <view class="s-side-btn" bindtap="chooseImage">
+  <view class="s-side-btn" @tap.stop="openNewAlbum">
     <view class="iconfont icon-xiugaimingcheng"></view>
     修改名称
   </view>
-  <view class="s-publish-btn" bindtap="chooseImage">
+  <view class="s-publish-btn" @tap.stop="chooseImage">
     上传照片
   </view>
-  <view class="s-side-btn" bindtap="chooseImage">
+  <view class="s-side-btn" @tap.stop="chooseImage">
      <view class="iconfont icon-quanbuxiangce"></view>
     全部相册
   </view>
@@ -141,6 +141,7 @@ import { uploadImageToQiniu } from '../../utils/api.js';
 import { request } from '../../utils/login.js';
 export default class PreviewPhoto extends wepy.component {
   props = {
+    galleryAuth: Number,
     galleryId: String
   };
   data = {
@@ -149,6 +150,10 @@ export default class PreviewPhoto extends wepy.component {
   };
   methods = {
     chooseImage: async function() {
+      if (this.galleryAuth < 1) {
+        console.log('choose image fail')
+        return;
+      }
       try {
         var chooseRes = await wepy.chooseImage({
           count: 9
@@ -174,6 +179,13 @@ export default class PreviewPhoto extends wepy.component {
           gallery_id: this.galleryId
         }
       })
+    },
+    openNewAlbum() {
+      if (this.galleryAuth < 1) {
+        console.log('openNewAlbum fail')
+        return;
+      }
+      this.$emit('openNewAlbum')
     }
   };
 
