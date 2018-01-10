@@ -113,6 +113,7 @@ export default class Index extends wepy.page {
     return {
       title: '快来上传图片吧~',
       path: '/pages/share/dispatcher?from=index',
+      imageUrl: 'https://mres.jiuyan.info/201712271701/tugoweb/3.0/images/in/20150313/in_logo.png?t=201712271701',
       success: this.ShareCallBack(res)
     }
   }

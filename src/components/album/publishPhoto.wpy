@@ -143,18 +143,22 @@
 import wepy from 'wepy';
 import { uploadImageToQiniu } from '../../utils/api.js';
 import { request } from '../../utils/login.js';
+import LoadingMixin from '@/mixins/loadingMixin';
 export default class PreviewPhoto extends wepy.component {
   props = {
     galleryAuth: Number,
     galleryId: String,
     groupId: String,
-    publishAfterInfo:Object
+    publishAfterInfo: Object
   };
+  // 混合
+  mixins = [LoadingMixin];
   data = {
-    images: [],
+    images: []
   };
   methods = {
     chooseImage: async function() {
+      this.images = []
       if (this.galleryAuth < 2) {
         wepy.showModal({
           title: '没有权限',
@@ -162,17 +166,17 @@ export default class PreviewPhoto extends wepy.component {
         })
         return;
       }
+
       try {
         var chooseRes = await wepy.chooseImage({
           count: 9
         })
         var tempFilePaths = chooseRes.tempFilePaths
-        wx.showLoading({
-          title: '正在上传',
-          mask: true
-        })
+        this.loadingIn('正在上传')
         await this.loadImages(tempFilePaths)
       } catch (e) {
+        this.loadingOut()
+        this.toastFail('上传失败')
         console.log(e)
       }
     },
@@ -209,10 +213,7 @@ export default class PreviewPhoto extends wepy.component {
   };
 
   async pushlish() {
-    wx.showLoading({
-      title: '正在发布',
-      mask: true
-    })
+    this.loadingIn('正在发布')
     var res = await request({
       url: '/gg/publish/photo',
       method: 'POST',
@@ -231,7 +232,6 @@ export default class PreviewPhoto extends wepy.component {
     await this.pushlishAfter()
   }
   async pushlishAfter() {
-    this.images = []
     var newsRes = await request({
       url: '/gg/group/news',
       data: {
@@ -243,17 +243,17 @@ export default class PreviewPhoto extends wepy.component {
     }
   }
   async loadImages(files) {
-    var _load = async file => {
-      var res = await uploadImageToQiniu(file)
-      this.images.push(res)
+    try {
+      var _len = files.length
+      for (var i = 0; i < _len; i++) {
+        var res = await uploadImageToQiniu(files[i])
+        this.images.push(res)
+      }
       this.$apply()
-    };
-
-    var _len = files.length
-    for (var i = 0; i < _len; i++) {
-      await _load(files[i])
+      this.pushlish()
+    } catch (e) {
+      throw new Error()
     }
-    this.pushlish()
   }
 }
 </script>

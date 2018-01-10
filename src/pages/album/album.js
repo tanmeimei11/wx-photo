@@ -33,7 +33,7 @@ var pageData = {
   isRefreshIndex: false, // 从创建过来的
   isSubmitFormId: true, // 允许提交formid
 
-  publishAfterInfo:null
+  publishAfterInfo: null
 }
 
 export default class Index extends wepy.page {
@@ -76,7 +76,7 @@ export default class Index extends wepy.page {
     closeNewAlbum() {
       this.isShowNewAlbum = false
     },
-    changePublishInfo(data){
+    changePublishInfo(data) {
       this.publishAfterInfo = data
       this.$apply()
     },

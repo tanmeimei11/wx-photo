@@ -79,7 +79,7 @@
 }
 </style>
 <script>
-import wepy from 'wepy';
+import wepy from "wepy";
 export default class GroupItem extends wepy.component {
   props = {
     groupItem: [],
@@ -89,11 +89,11 @@ export default class GroupItem extends wepy.component {
   watch = {};
   methods = {
     clickToGroup() {
-      var groupId = this.groupItem.id
-      console.log(groupId)
+      var groupId = this.groupItem.id;
+      console.log(groupId);
       wx.navigateTo({
         url: `/pages/gallery/gallery?id=${groupId}`
-      })
+      });
     }
   };
 }
