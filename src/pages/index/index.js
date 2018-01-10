@@ -13,7 +13,7 @@ var pageData = {
 }
 export default class Index extends wepy.page {
   config = {
-    navigationBarTitleText: '群活动相册'
+    navigationBarTitleText: '群友共享相册'
   }
   // 组件
   components = {
@@ -73,6 +73,7 @@ export default class Index extends wepy.page {
       try {
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
+          console.log(ticket)
           var loginRes = await wepy.login({
             withCredentials: true
           })

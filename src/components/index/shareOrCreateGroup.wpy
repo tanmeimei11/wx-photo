@@ -1,7 +1,7 @@
 <template>
 <view class="c-publish-photo">
-  <text class="txt">转发到群创建你的群活动相册</text>
-  <button class="s-publish-btn" open-type="share">创建群活动相册</button>
+  <text class="txt">转发到群创建你的群友共享相册</text>
+  <button class="s-publish-btn" open-type="share">创建群友共享相册</button>
 </view>
   
 </template>
