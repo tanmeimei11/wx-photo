@@ -1,4 +1,3 @@
-
 <template>
 <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
   <button formType="submit" class="submit-btn">
@@ -20,22 +19,34 @@
     <!-- 发布照片 -->
     <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" :groupUserName.sync="groupUserName" :isShowTips.sync="isShowTips" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum" @clearPublishAfterInfo.user="clearPublishAfterInfo" ></publishPhoto>
 
-    <!-- 发布成功 弹窗 -->
-    <publishSucc wx:if="{{isShowPublishSucc}}" @closePublishSucc.user="closePublishSucc" @publishPrintPhoto.user="publishPrintPhoto"></publishSucc>
-     <!-- 打印照片  弹窗-->
-    <printerPhoto  wx:if="{{isShowPrinterModal}}" :groupId.sync="groupId" :printerPhotoModalInfo.sync="printerPhotoModalInfo" @closePrinterPhotoModal.user="closePrinterPhotoModal"></printerPhoto>  
+        <!-- 发布成功 弹窗 -->
+        <publishSucc wx:if="{{isShowPublishSucc}}" @closePublishSucc.user="closePublishSucc" @publishPrintPhoto.user="publishPrintPhoto"></publishSucc>
+        <!-- 打印照片  弹窗-->
+        <printerPhoto wx:if="{{isShowPrinterModal}}" :groupId.sync="groupId" :printerPhotoModalInfo.sync="printerPhotoModalInfo"
+          @closePrinterPhotoModal.user="closePrinterPhotoModal"></printerPhoto>
 
-    <!-- 预览照片 弹窗-->
-    <previewPhoto  wx:if="{{isShowPreViewModal}}" :previewPhotos.sync="previewPhotos"  @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+        <!-- 预览照片 弹窗-->
+        <!-- <previewPhoto  wx:if="{{isShowPreViewModal}}" :previewPhotos.sync="previewPhotos"  @clearCurPhotos.user="clearCurPhotos"></previewPhoto>   -->
+        <view class="c-main-swiper-wrap" wx:if="{{isShowPreViewModal}}">
+          <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper">
+          <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" @tap.stop="clearSwiper"> -->
+            <swiper-item bindtap="closeSwiper" wx:for="{{previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+              <view class="slide-image" style="background-image:url({{item.url}})"></view>
+            </swiper-item>
+          </swiper>
+          <!-- <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view> -->
+          <!-- <view class="swiper-index">{{previewPhotos.length}}</view> -->
+          <view class="swiper-down iconfont icon-xiazai" @tap.stop="downImage"></view>
+        </view>
 
-     <!-- 修改名称 弹窗-->
-    <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
-  </view>
-  </button>
-</form>
+        <!-- 修改名称 弹窗-->
+        <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum"
+          @submitTitle.user="submitTitle"></newAlbum>
+      </view>
+    </button>
+  </form>
 </template>
 <style lang="less" src="./album.scss">
-
 </style>
 <script src="./album.js">
 </script>
