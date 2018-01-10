@@ -201,7 +201,7 @@ export default class PublishPhoto extends wepy.component {
     },
     backToIndex() {
       var pages = getCurrentPages().length
-      if (pages > 1) {
+      if (pages > 2) {
         wepy.navigateBack({
           delta: 1
         })
