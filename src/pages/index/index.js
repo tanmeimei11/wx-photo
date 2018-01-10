@@ -72,7 +72,7 @@ export default class Index extends wepy.page {
     console.log('111')
     this.loadingIn('相册分享中')
     return async(res) => {
-      this.loadingIn()
+      this.loadingIn('相册分享中')
       try {
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
@@ -103,7 +103,6 @@ export default class Index extends wepy.page {
             }
           }
         }
-        this.loadingIn()
       } catch (e) {
         this.loadingOut()
       }

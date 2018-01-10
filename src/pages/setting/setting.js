@@ -72,6 +72,15 @@ export default class setting extends wepy.page {
                 icon: 'success',
                 mask: true
               })
+              var _page = getCurrentPages()
+              _page.filter(item => {
+                return item.data.pageName === 'gallery'
+              })[0].init()
+              setTimeout(() => {
+                wepy.navigateBack({
+                  delta: 1
+                })
+              },2000)
             })
           } else if (res.cancel) {
             console.log('用户点击取消')

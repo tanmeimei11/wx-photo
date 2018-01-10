@@ -5,7 +5,7 @@
       <view class="close" @tap="close"></view>
       <view class="title">{{newAlbumTitle || '新建相册名称'}}</view>
       <view class="topic">相册名称</view>
-      <input bindinput="typetitle" placeholder="取个响亮的名称" value="{{galleryTitle}}" placeholder-style="color:#E0E0E0"/>
+      <input bindinput="typetitle" placeholder="取个响亮的名称" value="{{galleryTitle}}" placeholder-style="color:#E0E0E0" maxlength="20"/>
       <view class="btn {{galleryTitle ? 'on' : ''}}" @tap="submit">完成</view>
     </view>
   </view>
