@@ -194,11 +194,13 @@ export default class Index extends wepy.page {
 
   // 分享
   onShareAppMessage(res) {
-    var image = (this.publishPhotoInfo && this.publishPhotoInfo.photos[0].url) || ''
+    this.isShowPublishSucc = false
+    var image = this.publishPhotoInfo && this.publishPhotoInfo.photos[0].url
+    console.log(image)
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
-      image: image || 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
+      imageUrl: image || 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
       success: this.shareCallBack({ ...res,
         shareCallBackUrl: this.shareCallBackUrl
       })
