@@ -17,11 +17,17 @@
     <block wx:if="{{galleryAuth == 0}}" >
       <view class="empty private"></view>
     </block>
-    <!-- 预览照片 -->
-    <previewPhoto  wx:if="{{previewPhotos.length != 0}}" :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
     <!-- 发布照片 -->
     <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" @changePublishInfo.user="changePublishInfo" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum" ></publishPhoto>
-     <!-- 修改名称 -->
+
+
+     <!-- 打印照片  弹窗-->
+    <printerPhoto  wx:if="{{isShowPrinterModal}}" :printerPhotoModalInfo.sync="printerPhotoModalInfo"></printerPhoto>  
+
+    <!-- 预览照片 弹窗-->
+    <previewPhoto  wx:if="{{previewPhotos.length != 0}}" :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+
+     <!-- 修改名称 弹窗-->
     <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
   </view>
   </button>

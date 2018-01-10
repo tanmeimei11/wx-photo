@@ -11,7 +11,7 @@ export default class formSubmitMixin extends wepy.mixin {
     async formSubmit(e) {
       if (this.isSubmitFormId) {
         var res = await request({
-          url: '/tmpl/formid/submit',
+          url: '/gg/tmpl//formid/submit',
           data: {
             formId: e.detail.formId
           }

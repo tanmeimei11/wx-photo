@@ -68,19 +68,6 @@
     <block wx:if="{{galleryAuth == 0}}">
       <view class="empty private"/>
     </block>
-    <!-- 预览照片 -->
-    
-<!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
-  <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-    <swiper-item bindtap="$previewPhoto$closeSwiper">
-      <view class="slide-image" style="background-image:url({{item.url}})"/>
-    </swiper-item>
-  </block>
-  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
-  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
-</swiper>
-  
     <!-- 发布照片 -->
     
 <view class="c-publish-photo">
@@ -116,7 +103,37 @@
 </view>
   
 
-     <!-- 修改名称 -->
+
+
+     <!-- 打印照片  弹窗-->
+    
+<!-- 预览图片 -->
+<swiper class="c-main-swiper" bindchange="$printerPhoto$swiperChange" current="{{$printerPhoto$photoItemIdx}}" data-idx="{{$printerPhoto$photoItemIdx}}" catchtap="$printerPhoto$clearSwiper" wx:if="{{isShowPrinterModal}}">
+  <block  wx:for="{{$printerPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+    <swiper-item bindtap="$printerPhoto$closeSwiper">
+      <view class="slide-image" style="background-image:url({{item.url}})"/>
+    </swiper-item>
+  </block>
+  <view class="swiper-index"  wx:if="{{$printerPhoto$photos.length >1}}">{{$printerPhoto$photoItemIdx + 1}}/{{$printerPhoto$photos.length}}</view>
+  <view class="swiper-down iconfont icon-xiazai" catchtap="$printerPhoto$downImage"/>
+</swiper>
+  
+
+    <!-- 预览照片 弹窗-->
+    
+<!-- 预览图片 -->
+<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
+  <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+    <swiper-item bindtap="$previewPhoto$closeSwiper">
+      <view class="slide-image" style="background-image:url({{item.url}})"/>
+    </swiper-item>
+  </block>
+  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
+  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
+</swiper>
+  
+
+     <!-- 修改名称 弹窗-->
     
   <view class="newAlbum" wx:if="{{isShowNewAlbum}}">
     <view class="bg" bindtap="$newAlbum$close"/>

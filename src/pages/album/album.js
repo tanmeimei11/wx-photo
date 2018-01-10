@@ -1,7 +1,8 @@
 import wepy from 'wepy'
 import PhotoItem from '@/components/album/photoItem'
 import PreviewPhoto from '@/components/album/previewPhoto'
-import publishPhoto from '@/components/album/publishPhoto'
+import PublishPhoto from '@/components/album/publishPhoto'
+import PrinterPhoto from '@/components/album/printerPhoto'
 import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import refreshIndexMixin from '@/mixins/refreshIndexMixin'
@@ -31,9 +32,11 @@ var pageData = {
   newAlbumTitle: '修改相册名称',
 
   isRefreshIndex: false, // 从创建过来的
-  isSubmitFormId: true, // 允许提交formid
 
-  publishAfterInfo:null
+  publishAfterInfo: null, // 发布图片后的信息
+
+  isShowPrinterModal: false, // 是否展示跳转打印的弹窗
+  printerPhotoModalInfo: null // 跳转打印的弹窗信息
 }
 
 export default class Index extends wepy.page {
@@ -46,7 +49,8 @@ export default class Index extends wepy.page {
   components = {
     photoItem: PhotoItem,
     previewPhoto: PreviewPhoto,
-    publishPhoto: publishPhoto,
+    publishPhoto: PublishPhoto,
+    printerPhoto: PrinterPhoto,
     newAlbum: newAlbum
   }
   // 混合
@@ -76,7 +80,7 @@ export default class Index extends wepy.page {
     closeNewAlbum() {
       this.isShowNewAlbum = false
     },
-    changePublishInfo(data){
+    changePublishInfo(data) {
       this.publishAfterInfo = data
       this.$apply()
     },
@@ -123,10 +127,7 @@ export default class Index extends wepy.page {
       }
     } catch (e) {
       this.loadingOut()
-      wx.showToast({
-        title: '加载失败',
-        icon: 'loading'
-      })
+      this.toastFail('加载失败')
     }
   }
   // 分享
