@@ -128,12 +128,12 @@ export default class joinUs extends wepy.component {
           url: '/gg/group/apply2join',
           method: 'POST',
           header: {
-            'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            'content-type': 'application/json;charset=UTF-8'
           },
           data: {
             groupId: this.groupID,
             bio: this.intro,
-            wx_id: this.wx
+            wxId: this.wx
           }
         })
 
