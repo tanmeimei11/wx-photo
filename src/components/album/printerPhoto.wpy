@@ -1,88 +1,117 @@
 <template>
-<!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper">
-  <block wx:for="{{photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-    <swiper-item bindtap="closeSwiper">
-      <view class="slide-image" style="background-image:url({{item.url}})"></view>
-    </swiper-item>
-  </block>
-  <view class="swiper-index" wx:if="{{photos.length >1}}">{{photoItemIdx + 1}}/{{photos.length}}</view>
-  <view class="swiper-down iconfont icon-xiazai" @tap.stop="downImage"></view>
-</swiper>
+  <view class="c-printer-photo-modal">
+    <view class="bg" @tap="close"></view>
+    <view class="window">
+      <view class="close" @tap="close"></view>
+      <view class="title">所有成员免费打印照片</view>
+      <image class="main-img" src="https://inimg07.jiuyan.info/in/2018/01/10/2A474632-8D48-4FA8-86A9-74C53C85B894.png" mode="widthFix"></image>
+      <view class="btn on" @tap="goEdit">去编辑</view>
+    </view>
+  </view>
 </template>
 <style type="less">
-.c-main-swiper {
-  width: 100%;
-  height: 100%;
+.c-printer-photo-modal {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
-  background-color: #000;
-  swiper-item .slide-image {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
-
-  .swiper-index {
-    position: absolute;
-    top: 56rpx;
+  width: 100%;
+  height: 100%;
+  .bg {
+    position: absoulte;
+    top: 0;
     left: 0;
     width: 100%;
-    font-size: 40rpx;
-    color: #fff;
-    text-align: center;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
   }
-  .swiper-down {
+  .window {
     position: absolute;
-    bottom: 34rpx;
-    right: 34rpx;
-    font-size: 80rpx;
-    color: #1f1f1f;
-    background-color: #fff;
-    background-position: center;
-    background-size: 30rpx 30rpx;
-    background: -webkit-radial-gradient(
-      rgba(255, 255, 255, 1) 40%,
-      rgba(255, 255, 255, 0) 50%
-    );
+    top: 50%;
+    left: 95rpx;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    border-radius: 8rpx;
+    width: 560rpx;
+    height: 624rpx;
+    background: #fff;
+    .close {
+      width: 44rpx;
+      height: 44rpx;
+      position: absolute;
+      top: 14rpx;
+      right: 14rpx;
+      background: url(http://inimg07.jiuyan.info/in/2018/01/09/B498E068-56DC-2F35-6709-51094B7EE2EF.png)
+        no-repeat;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .title {
+      margin-top: 52rpx;
+      text-align: center;
+      font-size: 36rpx;
+      color: #333;
+    }
+    .main-img {
+      display: block;
+      width: 505rpx;
+      margin: 10rpx auto 0;
+    }
+    input {
+      width: 444rpx;
+      height: 70rpx;
+      margin-left: 48rpx;
+      background: #f7f7f7;
+      border-radius: 8rpx;
+      font-size: 28rpx;
+      line-height: 70rpx;
+      padding-left: 20rpx;
+      color: #333;
+      margin-bottom: 40rpx;
+    }
+    .tips {
+      margin: 10rpx 48rpx 42rpx;
+      font-size: 20rpx;
+      color: #b0b0b0;
+    }
+    .btn {
+      width: 460rpx;
+      height: 80rpx;
+      text-align: center;
+      line-height: 80rpx;
+      font-size: 28rpx;
+      color: #fff;
+      background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
+      border-radius: 6rpx;
+      margin: 0 auto;
+      opacity: 0.3;
+      &.on {
+        opacity: 1;
+      }
+    }
   }
 }
 </style>
 <script>
 import wepy from 'wepy';
-import { downInternetUrl } from '../../utils/api.js';
-export default class PrinterPhoto extends wepy.component {
+export default class newAlbum extends wepy.component {
   props = {
-    photos: Array,
-    photoIdx: {
-      type: Number,
-      default: 0,
-      twoWay: true
-    }
+    groupId: String
   };
   data = {
-    photoItemIdx: 0
+    wx: '',
+    full: false
   };
   methods = {
-    swiperChange(e) {
-      this.photoItemIdx = e.detail.current
-      this.$apply()
+    close() {
+      this.$emit('closePrinterPhotoModal')
     },
-    async downImage() {
-      await downInternetUrl(this.photos[this.photoItemIdx].url)
-    },
-    clearSwiper() {
-      this.$emit('clearCurPhotos')
-    }
-  };
-  watch = {
-    photoIdx(newValue, oldValue) {
-      this.photoItemIdx = newValue
-      this.$apply()
+    async goEdit() {
+      await wepy.navigateTo({
+        url: `/pages/setting/setting?id=${this.groupId}`
+      })
+      this.$emit('closePrinterPhotoModal')
     }
   };
 }
