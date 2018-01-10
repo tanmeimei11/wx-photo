@@ -28,6 +28,7 @@
   position: relative;
   .name {
     position: absolute;
+    font-weight: bold;
     top: 41rpx;
     left: 130rpx;
     width: 300rpx;

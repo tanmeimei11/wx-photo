@@ -64,6 +64,9 @@ page{
       opacity: 0.7;
       font-size: 24rpx;
       color: #666;
+      text{
+        margin: 0 6rpx;
+      }
     }
     .btn{
       position: absolute;
@@ -87,14 +90,13 @@ page{
       &:after{
         content: '';
         position: absolute;
-        top: 13rpx;
+        top: 11rpx;
         left: 115%;
         width: 7rpx;
         height: 10rpx;
         background: url(http://inimg07.jiuyan.info/in/2018/01/09/B2C159B5-B16D-0F81-0035-EB9F6D0EB836.png) no-repeat;
         background-size: contain;
         background-position: center;
-        position: absolute;
       }
     }
   }
@@ -140,6 +142,7 @@ page{
     }
     .title{
       display: block;
+      font-weight: bold;
       margin: 22rpx 20rpx 0;
       width: 250rpx;
       font-size: 32rpx;

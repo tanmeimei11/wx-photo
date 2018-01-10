@@ -8,8 +8,10 @@
         <view class="avatar" style="background-image:url({{groupInfo.icon_img}})"/>
         <view class="name"><open-data type="groupName" open-gid="{{openGId}}"/></view>
         <view class="infotxt">
-          <text class="member">成员 {{groupInfo.member_count}} | </text>
-          <text class="act">相册 {{groupInfo.gallery_count}} | </text>
+          <text class="member">成员 {{groupInfo.member_count}}</text>
+          <text>|</text>
+          <text class="act">相册 {{groupInfo.gallery_count}}</text>
+          <text>|</text>
           <text class="pic">图片 {{groupInfo.photo_count}}</text>
         </view>
         <view class="btn"  wx:if="{{groupInfo.is_show_apply_btn}}" bindtap="toApply">申请加入</view>
