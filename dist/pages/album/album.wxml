@@ -134,14 +134,15 @@
     <!-- 预览照片 弹窗-->
     
 <!-- 预览图片 -->
-<view class="c-main-swiper-wrap" wx:if="{{previewPhotos && previewPhotos.length != 0}}">
+<view class="c-main-swiper-wrap" wx:if="{{isShowPreViewModal}}">
   <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" catchtap="clearSwiper"> -->
-  <swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="0" data-idx="0" catchtap="$previewPhoto$clearSwiper">
-    <swiper-item bindtap="$previewPhoto$closeSwiper"  wx:for="{{$previewPhoto$previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-      <view class="slide-image" style="background-image:url({{item.url}})"/>
+  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" catchtap="clearSwiper">
+    <swiper-item bindtap="closeSwiper" wx:for="{{previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+      <view class="slide-image" style="background-image:url({{item.url}})"></view>
     </swiper-item>
-</swiper>
-  <view class="swiper-index"  wx:if="{{$previewPhoto$previewPhotos.length >0}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$previewPhotos.length}}</view>
+</swiper> -->
+  <!-- <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view> -->
+  <view class="swiper-index">{{$previewPhoto$previewPhotos.length}}</view>
  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
 </view>
   

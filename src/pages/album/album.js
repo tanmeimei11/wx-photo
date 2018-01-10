@@ -23,6 +23,8 @@ var pageData = {
   galleryAuth: -1, // 相册权限 //0 隐私 1 能看不能上传 2 全部权限 3 不能修改名称
 
   photoList: [],
+
+  isShowPreViewModal: false,
   previewPhotos: [], // 预览照片
   previewPhotosIdx: 0, // 预览照片开始位置
 
@@ -65,14 +67,17 @@ export default class Index extends wepy.page {
   data = Object.assign({}, pageData)
   methods = {
     clearCurPhotos() {
+      this.isShowPreViewModal = false
       this.previewPhotos = []
       this.previewPhotosIdx = 0
     },
     changeCurPhotos(photos, idx) {
-      console.log('------preview-----')
-      console.log(photos, idx)
       this.previewPhotos = photos
+      this.isShowPreViewModal = true
+      console.log('------preview-----')
+      console.log(this.previewPhotos, idx)
       this.previewPhotosIdx = idx
+      this.$apply()
     },
     deletPhoto(idx) {
       this.photoList.splice(idx, 1)
