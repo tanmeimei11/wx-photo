@@ -135,12 +135,13 @@
     
 <!-- 预览图片 -->
 <view class="c-main-swiper-wrap" wx:if="{{previewPhotos && previewPhotos.length != 0}}">
-  <swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper">
-    <swiper-item bindtap="$previewPhoto$closeSwiper"  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" catchtap="clearSwiper"> -->
+  <swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="0" data-idx="0" catchtap="$previewPhoto$clearSwiper">
+    <swiper-item bindtap="$previewPhoto$closeSwiper"  wx:for="{{$previewPhoto$previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
       <view class="slide-image" style="background-image:url({{item.url}})"/>
     </swiper-item>
 </swiper>
-  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >0}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
+  <view class="swiper-index"  wx:if="{{$previewPhoto$previewPhotos.length >0}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$previewPhotos.length}}</view>
  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
 </view>
   
