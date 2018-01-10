@@ -70,7 +70,7 @@
   }
   .notice {
     position: absolute;
-    top: 76rpx;
+    top: 80rpx;
     right: 54rpx;
     width: 16rpx;
     height: 16rpx;
@@ -91,7 +91,7 @@ export default class GroupItem extends wepy.component {
   methods = {
     clickToGroup() {
       var groupId = this.groupItem.id;
-      console.log(groupId);
+      this.groupItem.notice_count = 0
       wx.navigateTo({
         url: `/pages/gallery/gallery?id=${groupId}`
       });

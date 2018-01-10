@@ -20,7 +20,8 @@ var pageData = {
   showApply: false,
   showNewAlbum: false,
   openGId: '',
-  groupName: ''
+  groupName: '',
+  currentCursor: 0
 }
 
 export default class gallery extends wepy.page {
@@ -138,13 +139,13 @@ export default class gallery extends wepy.page {
       url: '/gg/group/gallerylist',
       data: {
         group_id: this.groupID,
-        page: this.page
+        cursor: this.currentCursor
       }
     })
     if (res.succ && res.data) {
       console.log(res)
       this.galleryList = this.galleryList.concat(res.data.list)
-      this.page = this.page + 1
+      this.currentCursor = this.cursor
       this.$apply()
       if (!res.data.has_next) {
         this.noMoreNote = true

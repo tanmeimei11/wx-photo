@@ -10,6 +10,7 @@
           <block wx:for="{{members}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
             <view class="item">
               <view class="avatar" style="background-image:url({{item.avatar}})"></view>
+              <view class="master" wx:if="{{item.is_creator}}"></view>
               <view class="name">{{item.name}}</view>
             </view>
           </block>
