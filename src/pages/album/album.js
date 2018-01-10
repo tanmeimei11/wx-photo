@@ -2,6 +2,7 @@ import wepy from 'wepy'
 import PhotoItem from '@/components/album/photoItem'
 import PreviewPhoto from '@/components/album/previewPhoto'
 import PublishPhoto from '@/components/album/publishPhoto'
+import publishSucc from '@/components/album/publishSucc'
 import PrinterPhoto from '@/components/album/printerPhoto'
 import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
@@ -34,6 +35,7 @@ var pageData = {
   isRefreshIndex: false, // 从创建过来的
 
   publishAfterInfo: null, // 发布图片后的信息
+  showPublishSucc: true,
 
   isShowPrinterModal: false, // 是否展示跳转打印的弹窗
   printerPhotoModalInfo: null // 跳转打印的弹窗信息
@@ -51,6 +53,7 @@ export default class Index extends wepy.page {
     previewPhoto: PreviewPhoto,
     publishPhoto: PublishPhoto,
     printerPhoto: PrinterPhoto,
+    publishSucc: publishSucc,
     newAlbum: newAlbum
   }
   // 混合
@@ -71,8 +74,15 @@ export default class Index extends wepy.page {
       this.$apply()
     },
     publishPhoto(obj) {
+      console.log(obj)
       this.photoList.splice(0, 0, obj)
       this.$apply()
+    },
+    showpublishSucc() {
+      this.showPublishSucc = true
+    },
+    closePublishSucc() {
+      this.showPublishSucc = false
     },
     openNewAlbum() {
       this.isShowNewAlbum = true
@@ -131,9 +141,9 @@ export default class Index extends wepy.page {
     }
   }
   // 分享
-  onShareAppMessage() {
+  onShareAppMessage(res) {
     return {
-      title: this.galleryTitle,
+      title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`
     }
   }

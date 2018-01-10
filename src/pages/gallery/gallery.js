@@ -87,12 +87,13 @@ export default class gallery extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     this.groupID = options.id
+    console.log(this.groupID)
     this.init()
   }
   // 分享
   onShareAppMessage() {
     return {
-      title: this.groupInfo.name,
+      title: '邀请你查看本群相册',
       path: `/pages/gallery/gallery?id=${this.groupID}`
     }
   }
@@ -115,7 +116,6 @@ export default class gallery extends wepy.page {
     }
   }
   async onReachBottom(e) {
-    console.log('===========')
     if (this.noMoreNote) {
       return
     }
