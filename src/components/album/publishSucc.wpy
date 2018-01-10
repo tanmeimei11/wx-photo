@@ -70,7 +70,7 @@
       color: #fff;
       text-align: center;
       line-height: 80rpx;
-      background-image: linear-gradient(90deg, #fd823e 0%, #faa84b 100%);
+      background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
       border-radius: 6rpx;
     }
     .toprint {

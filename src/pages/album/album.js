@@ -180,6 +180,7 @@ export default class Index extends wepy.page {
         gallery_id: this.galleryId
       }
     })
+
     if (res && res.data) {
       this.galleryAuth = 10
       if (!res.data.can_modify_info) {

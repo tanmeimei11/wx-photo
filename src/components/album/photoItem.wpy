@@ -260,6 +260,7 @@ export default class PhotoItem extends wepy.component {
         itemColor: '#FF5E51'
       })
       if (res.tapIndex === 0) {
+        this.loadingIn('正在删除')
         request({
           url: '/gg/photo/del',
           data: {
@@ -268,6 +269,7 @@ export default class PhotoItem extends wepy.component {
         }).then(res => {
           this.$emit('deletPhoto', this.photoIndex)
           this.$apply()
+          this.loadingOut()
           this.toastSucc('删除成功')
         })
       }
