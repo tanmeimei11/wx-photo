@@ -288,7 +288,8 @@ export default class PhotoItem extends wepy.component {
         this.toastFail('下载失败')
       }
     },
-    async printerClick(pid, uid) {
+    async printerClick(e, pid, uid) {
+      console.log(pid)
       this.loadingIn('正在跳转')
       try {
         var res = await request({

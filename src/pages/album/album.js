@@ -69,6 +69,8 @@ export default class Index extends wepy.page {
       this.previewPhotosIdx = 0
     },
     changeCurPhotos(photos, idx) {
+      console.log('------preview-----')
+      console.log(photos, idx)
       this.previewPhotos = photos
       this.previewPhotosIdx = idx
     },
@@ -96,7 +98,7 @@ export default class Index extends wepy.page {
       this.isShowPrinterModal = false
     },
     publishPrintPhoto() {
-      this.$invoke('photoItem', 'printerClick', this.publishPhotoInfo.id, this.publishPhotoInfo.user_id)
+      this.$invoke('photoItem', 'printerClick', {}, this.publishPhotoInfo.id, this.publishPhotoInfo.user_id)
     },
     async submitTitle(title) {
       try {

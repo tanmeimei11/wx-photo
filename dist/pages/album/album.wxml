@@ -134,15 +134,15 @@
     <!-- 预览照片 弹窗-->
     
 <!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper" wx:if="{{previewPhotos.length != 0}}">
-  <block  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-    <swiper-item bindtap="$previewPhoto$closeSwiper">
+<view class="c-main-swiper-wrap" wx:if="{{previewPhotos && previewPhotos.length != 0}}">
+  <swiper class="c-main-swiper" bindchange="$previewPhoto$swiperChange" current="{{$previewPhoto$photoItemIdx}}" data-idx="{{$previewPhoto$photoItemIdx}}" catchtap="$previewPhoto$clearSwiper">
+    <swiper-item bindtap="$previewPhoto$closeSwiper"  wx:for="{{$previewPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
       <view class="slide-image" style="background-image:url({{item.url}})"/>
     </swiper-item>
-  </block>
-  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >1}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
-  <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
 </swiper>
+  <view class="swiper-index"  wx:if="{{$previewPhoto$photos.length >0}}">{{$previewPhoto$photoItemIdx + 1}}/{{$previewPhoto$photos.length}}</view>
+ <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
+</view>
   
 
      <!-- 修改名称 弹窗-->

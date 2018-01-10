@@ -1,54 +1,58 @@
 <template>
 <!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper">
-  <block wx:for="{{photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-    <swiper-item bindtap="closeSwiper">
+<view class="c-main-swiper-wrap">
+  <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper">
+    <swiper-item bindtap="closeSwiper" wx:for="{{photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
       <view class="slide-image" style="background-image:url({{item.url}})"></view>
     </swiper-item>
-  </block>
-  <view class="swiper-index" wx:if="{{photos.length >1}}">{{photoItemIdx + 1}}/{{photos.length}}</view>
-  <view class="swiper-down iconfont icon-xiazai" @tap.stop="downImage"></view>
 </swiper>
+  <view class="swiper-index" wx:if="{{photos.length >0}}">{{photoItemIdx + 1}}/{{photos.length}}</view>
+ <view class="swiper-down iconfont icon-xiazai" @tap.stop="downImage"></view>
+</view>
 </template>
 <style type="less">
-.c-main-swiper {
+.c-main-swiper-wrap {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: #000;
+  background-color: #666;
+}
+.swiper-index {
+  position: absolute;
+  top: 56rpx;
+  left: 0;
+  width: 100%;
+  font-size: 40rpx;
+  color: #fff;
+  text-align: center;
+}
+.swiper-down {
+  position: absolute;
+  bottom: 34rpx;
+  right: 34rpx;
+  font-size: 80rpx;
+  color: #1f1f1f;
+  background-color: #fff;
+  background-position: center;
+  background-size: 30rpx 30rpx;
+  background: -webkit-radial-gradient(
+    rgba(255, 255, 255, 1) 40%,
+    rgba(255, 255, 255, 0) 50%
+  );
+}
+.c-main-swiper {
+  width: 100%;
+  height: 100%;
+  /* background-color: #000; */
   swiper-item .slide-image {
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-  }
-
-  .swiper-index {
-    position: absolute;
-    top: 56rpx;
-    left: 0;
-    width: 100%;
-    font-size: 40rpx;
-    color: #fff;
-    text-align: center;
-  }
-  .swiper-down {
-    position: absolute;
-    bottom: 34rpx;
-    right: 34rpx;
-    font-size: 80rpx;
-    color: #1f1f1f;
-    background-color: #fff;
-    background-position: center;
-    background-size: 30rpx 30rpx;
-    background: -webkit-radial-gradient(
-      rgba(255, 255, 255, 1) 40%,
-      rgba(255, 255, 255, 0) 50%
-    );
   }
 }
 </style>
@@ -58,7 +62,11 @@ import { downInternetUrl } from '../../utils/api.js';
 import LoadingMixin from '@/mixins/loadingMixin';
 export default class PreviewPhoto extends wepy.component {
   props = {
-    photos: Array,
+    photos: {
+      type: Array,
+      default: [],
+      twoWay: true
+    },
     photoIdx: {
       type: Number,
       default: 0,
@@ -86,13 +94,20 @@ export default class PreviewPhoto extends wepy.component {
       }
     },
     clearSwiper() {
+      this.photoItemIdx = 0
       this.$emit('clearCurPhotos')
     }
   };
   watch = {
     photoIdx(newValue, oldValue) {
+      console.log('change photoIdx')
+      console.log(newValue)
       this.photoItemIdx = newValue
       this.$apply()
+    },
+    photos(newValue) {
+      console.log('change value')
+      console.log(newValue)
     }
   };
 }
