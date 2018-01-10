@@ -6,16 +6,18 @@ module.exports = {
     data: {
       province: '浙江',
       city: '',
-      can_modify: true,
+      can_modify: false,
       members: [{
         name: '郭富城',
         avatar: 'http://inimg02.jiuyan.info/in/2016/05/13/B7DD2540-019C-0ECF-1291-9B5D2CD6903B-1qZvb.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-        user_id: '1KVwY'
+        user_id: '1KVwY',
+        is_creator:true
       },
       {
         name: '刘德华',
         avatar: 'http://inimg02.jiuyan.info/in/2016/09/21/331FCF3A-6657-EB52-9C6A-DD2E5A14918A-1WjnJ.jpg?imageMogr2/format/jpg/thumbnail/50x%3E/quality/90!',
-        user_id: '1baKPx'
+        user_id: '1baKPx',
+        is_creator:false
       }
       ],
       type_mapping: [{

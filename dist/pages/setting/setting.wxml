@@ -17,7 +17,7 @@
         </view>
         <view class="area">
           <view class="section__title">地区</view>
-          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}" disabled="{{disabled}}" bindtap="alert">
             <view class="picker iconfont {{disabled ? '' : 'icon-arrow'}} {{region[1] === '未填写' ? '' : 'on'}}">
               {{region[1]}}
             </view>
@@ -25,7 +25,7 @@
         </view>
         <view class="type">
           <view class="section__title">类别</view>
-          <picker mode="selector" bindchange="bindTypeChange" range="{{typeList}}" disabled="{{disabled}}">
+          <picker mode="selector" bindchange="bindTypeChange" range="{{typeList}}" disabled="{{disabled}}" bindtap="alert">
             <view class="picker iconfont {{disabled ? '' : 'icon-arrow'}} {{type === '未填写' ? '' : 'on'}}">
               {{type}}
             </view>
