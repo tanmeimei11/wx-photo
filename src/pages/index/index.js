@@ -109,7 +109,7 @@ export default class Index extends wepy.page {
     return {
       title: '一起来加入本群相册吧！',
       path: '/pages/share/dispatcher?from=index',
-      imageUrl: 'https://mres.jiuyan.info/201712271701/tugoweb/3.0/images/in/20150313/in_logo.png?t=201712271701',
+      imageUrl: 'http://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
       success: this.ShareCallBack(res)
     }
   }

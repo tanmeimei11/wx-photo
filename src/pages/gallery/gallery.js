@@ -80,8 +80,7 @@ export default class gallery extends wepy.page {
       if (res.succ) {
         this.toastSucc('新建成功')
         this.showNewAlbum = false
-        this.loadInfo()
-        this.loadGallerylist()
+        this.init()
         this.$apply()
       }
     }
@@ -107,6 +106,10 @@ export default class gallery extends wepy.page {
     }
   }
   async init() {
+    this.currentCursor = 0
+    this.noMoreNote = false
+    this.galleryList = []
+    this.$apply()
     this.loadInfo()
     await this.loadGallerylist()
   }
@@ -131,10 +134,6 @@ export default class gallery extends wepy.page {
     await this.loadGallerylist()
   }
   async loadGallerylist() {
-    if (this.loading) {
-      return
-    }
-    this.loading = true
     var res = await request({
       url: '/gg/group/gallerylist',
       data: {
@@ -145,7 +144,7 @@ export default class gallery extends wepy.page {
     if (res.succ && res.data) {
       console.log(res)
       this.galleryList = this.galleryList.concat(res.data.list)
-      this.currentCursor = this.cursor
+      this.currentCursor = res.data.cursor
       this.$apply()
       if (!res.data.has_next) {
         this.noMoreNote = true
@@ -156,6 +155,5 @@ export default class gallery extends wepy.page {
       this.noMoreNote = true
       this.$apply()
     }
-    this.loading = false
   }
 }
