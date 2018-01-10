@@ -4,7 +4,7 @@ module.exports = {
     code: '200003',
     succ: true,
     data: {
-      has_next: false, // 是否还有下一页
+      has_next: true, // 是否还有下一页
       list: [{
         is_zan: false, // 是否点赞
         photo_id: '1123244', // 图片id

@@ -7,27 +7,32 @@ import newAlbum from '../../components/gallery/newAlbum'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import LoadingMixin from '@/mixins/loadingMixin'
 
+var pageData = {
+  pageName: 'gallery',
+  groupID: '',
+  title: '',
+  groupInfo: {},
+  galleryList: [],
+  loading: false,
+  noMoreNote: false,
+  page: 0,
+  showApply: false,
+  showNewAlbum: false,
+  openGId: '',
+  groupName: ''
+}
+
 export default class gallery extends wepy.page {
   config = {
-    navigationBarTitleText: '群活动相册'
+    navigationBarTitleText: this.groupName,
+    onReachBottomDistance: '100'
   }
   components = {
     joinUs: joinUs,
     newAlbum: newAlbum
   }
   mixins = [formSubmitMixin, LoadingMixin]
-  data = {
-    pageName: 'gallery',
-    groupID: '',
-    title: '',
-    groupInfo: {},
-    galleryList: [],
-    loading: false,
-    noMoreNote: false,
-    page: 0,
-    showApply: false,
-    showNewAlbum: false
-  }
+  data = Object.assign({}, pageData)
   methods = {
     // changeBg () {
     //     wx.chooseImage({
@@ -79,26 +84,21 @@ export default class gallery extends wepy.page {
       }
     }
   }
-  onLoad(options) {
+  async onLoad(options) {
+    Object.assign(this, pageData)
     this.groupID = options.id
-    this.loadInfo()
-    this.loadGallerylist()
+    this.init()
   }
   // 分享
   onShareAppMessage() {
     return {
       title: this.groupInfo.name,
-      path: `/page/gallery/gallery?id=${this.groupID}`
+      path: `/pages/gallery/gallery?id=${this.groupID}`
     }
   }
-  onReachBottom() {
-    if (this.data.noMoreNote) {
-      return
-    }
-    let that = this
-    setTimeout(function () {
-      that.loadGallerylist()
-    }, 300)
+  async init() {
+    this.loadInfo()
+    this.loadGallerylist()
   }
   async loadInfo() {
     var res = await request({
@@ -108,37 +108,45 @@ export default class gallery extends wepy.page {
       }
     })
     if (res.succ && res.data) {
+      this.openGId = res.data.open_gid
       this.groupInfo = res.data
       this.$apply()
       console.log(this.groupInfo)
     }
   }
-  async loadGallerylist() {
-    if (this.data.loading) {
+  async onReachBottom(e) {
+    console.log('===========')
+    if (this.noMoreNote) {
       return
     }
-    this.data.loading = true
+    await this.loadGallerylist()
+  }
+  async loadGallerylist() {
+    if (this.loading) {
+      return
+    }
+    this.loading = true
     var res = await request({
       url: '/gg/group/gallerylist',
       data: {
         group_id: this.groupID,
-        page: this.data.page
+        page: this.page
       }
     })
     if (res.succ && res.data) {
       console.log(res)
-      this.galleryList = res.data.list
-      this.data.page = this.data.page + 1
+      this.galleryList = this.galleryList.concat(res.data.list)
+      this.page = this.page + 1
       this.$apply()
       if (!res.data.has_next) {
-        this.data.noMoreNote = true
+        this.noMoreNote = true
         this.$apply()
         return
       }
     } else {
-      this.data.noMoreNote = true
+      this.noMoreNote = true
       this.$apply()
     }
-    this.data.loading = false
+    this.loading = false
   }
 }
