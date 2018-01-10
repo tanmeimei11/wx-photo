@@ -169,7 +169,7 @@ export default class PublishPhoto extends wepy.component {
       }
 
       try {
-        await this.readTips()
+        await this.readTipsFun()
         var chooseRes = await wepy.chooseImage({
           count: 9
         })
@@ -183,14 +183,9 @@ export default class PublishPhoto extends wepy.component {
       }
     },
     readTips: async function() {
-      await request({
-        url: '/gg/group/news_read',
-        data: {
-          gallery_id: this.galleryId
-        }
-      })
-      this.$emit('clearPublishAfterInfo')
+      await this.readTipsFun()
     },
+
     openNewAlbum() {
       if (this.galleryAuth < 3) {
         wepy.showModal({
@@ -214,6 +209,15 @@ export default class PublishPhoto extends wepy.component {
       }
     }
   };
+  async readTipsFun() {
+    await request({
+      url: '/gg/group/news_read',
+      data: {
+        gallery_id: this.galleryId
+      }
+    })
+    this.$emit('clearPublishAfterInfo')
+  }
 
   async pushlish() {
     this.loadingIn('正在发布')
