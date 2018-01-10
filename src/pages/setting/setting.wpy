@@ -31,9 +31,9 @@
             </view>
           </picker>
         </view>
-        <view class="open">
+        <view class="open" @tap="alert">
           <view class="section__title">允许推荐给别人</view>
-          <switch checked="{{checked}}" bindchange="bindOpenChange" />
+          <switch checked="{{checked}}" bindchange="bindOpenChange"/>
           <view class="block" wx:if="{{disabled}}"></view>
         </view>
         <view class="btn" wx:if="{{is_show_quit_btn}}" bindtap="exitQun">退出群空间</view>
