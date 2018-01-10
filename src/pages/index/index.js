@@ -55,7 +55,6 @@ export default class Index extends wepy.page {
       isCheck: true
     })
     if (res && res.data) {
-      console.log(this.groupList)
       this.groupList = [
         ...this.groupList,
         ...res.data.list
@@ -108,7 +107,7 @@ export default class Index extends wepy.page {
   }
   onShareAppMessage(res) {
     return {
-      title: '快来上传图片吧~',
+      title: '一起来加入本群相册吧！',
       path: '/pages/share/dispatcher?from=index',
       imageUrl: 'https://mres.jiuyan.info/201712271701/tugoweb/3.0/images/in/20150313/in_logo.png?t=201712271701',
       success: this.ShareCallBack(res)

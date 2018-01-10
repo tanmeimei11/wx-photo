@@ -5,7 +5,7 @@
     <view class="indexBg"/>
     
 <view class="c-publish-photo">
-  <text class="txt">转发到群创建你的活动相册</text>
+  <text class="txt">转发到群创建你的群活动相册</text>
   <button class="s-publish-btn" open-type="share">创建群活动相册</button>
 </view>
   

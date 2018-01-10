@@ -2,7 +2,7 @@
   <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
     <button formType="submit" class="submit-btn">
       <view class="container">
-        <view class="tips"  wx:if="{{groupInfo.type_name === '' && groupInfo.city === ''}}">
+        <view class="tips"  wx:if="{{groupInfo.type_name === '' || groupInfo.city === ''}}">
           <view/>
           <text>完善地区与类别，所有成员可得12张免费照片打印权益</text>
         </view>

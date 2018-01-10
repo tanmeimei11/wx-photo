@@ -101,7 +101,7 @@ export default class gallery extends wepy.page {
   // 分享
   onShareAppMessage() {
     return {
-      title: this.groupInfo.name,
+      title: '邀请你查看本群相册',
       path: `/pages/gallery/gallery?id=${this.groupID}`
     }
   }
@@ -124,7 +124,6 @@ export default class gallery extends wepy.page {
     }
   }
   async onReachBottom(e) {
-    console.log('===========')
     if (this.noMoreNote) {
       return
     }

@@ -72,13 +72,9 @@ export default class setting extends wepy.page {
                 icon: 'success',
                 mask: true
               })
-              var _page = getCurrentPages()
-              _page.filter(item => {
-                return item.data.pageName === 'gallery'
-              })[0].init()
               setTimeout(() => {
-                wepy.navigateBack({
-                  delta: 1
+                wepy.reLaunch({
+                  url: `../gallery/gallery?id=${that.groupID}`
                 })
               },2000)
             })
@@ -92,6 +88,7 @@ export default class setting extends wepy.page {
   onLoad(options) {
     Object.assign(this, pageData)
     this.groupID = options.id
+    console.log(this.groupID)
     this.loadInfo()
     wx.hideShareMenu()
   }

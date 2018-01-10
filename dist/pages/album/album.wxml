@@ -103,7 +103,19 @@
 </view>
   
 
-
+    <!-- 发布成功 弹窗 -->
+    
+<view class="p-succ" wx:if="{{showPublishSucc}}">
+    <view class="bg" bindtap="$publishSucc$close"/>
+    <view class="window">
+        <view class="close" bindtap="$publishSucc$close"/>
+        <view class="logo"/>
+        <view class="txt">照片发布成功</view>
+        <button class="share" open-type="share">通知群友围观</button>
+        <view class="toprint">立即打印照片</view>
+    </view>
+</view>
+  
 
      <!-- 打印照片  弹窗-->
     

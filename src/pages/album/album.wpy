@@ -19,8 +19,8 @@
     </block>
     <!-- 发布照片 -->
     <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" @changePublishInfo.user="changePublishInfo" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum" ></publishPhoto>
-
-
+    <!-- 发布成功 弹窗 -->
+    <publishSucc wx:if="{{showPublishSucc}}" @closePublishSucc.user="closePublishSucc"></publishSucc>
      <!-- 打印照片  弹窗-->
     <printerPhoto  wx:if="{{isShowPrinterModal}}" :groupId.sync="groupId" :printerPhotoModalInfo.sync="printerPhotoModalInfo" @closePrinterPhotoModal.user="closePrinterPhotoModal"></printerPhoto>  
 

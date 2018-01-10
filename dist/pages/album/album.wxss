@@ -1,4 +1,5 @@
 @import "./../../components/gallery/newAlbum.wxss";
+@import "./../../components/album/publishSucc.wxss";
 @import "./../../components/album/printerPhoto.wxss";
 @import "./../../components/album/publishPhoto.wxss";
 @import "./../../components/album/previewPhoto.wxss";
