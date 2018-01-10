@@ -50,15 +50,12 @@ export default class Index extends wepy.page {
     var _shareTickets = this.$parent.globalData.shareTicket
 
     if (_shareTickets) {
-      this.ShareCallBack({
-        'shareTickets': [_shareTickets]
-      }, 'share')({
+      this.ShareCallBack('share')({
         'shareTickets': [_shareTickets]
       })
     }
   }
   async getList() {
-    console.log('other refresh')
     var res = await request({
       url: '/gg/index/grouplist',
       data: {
