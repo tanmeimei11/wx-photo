@@ -30,6 +30,7 @@ export default class Index extends wepy.page {
     try {
       await wxLogin()
       this.loadingIn('加载中')
+      this.getShareFromOther()
       await this.getList()
     } catch (e) {
       this.loadingOut()
@@ -44,6 +45,15 @@ export default class Index extends wepy.page {
   initPage() {
     this.groupList = []
     this.getList()
+  }
+  getShareFromOther() {
+    var _shareTickets = this.$parent.globalData.shareTicket
+
+    if (_shareTickets) {
+      this.ShareCallBack()({
+        'shareTickets': [_shareTickets]
+      })
+    }
   }
   async getList() {
     console.log('other refresh')
@@ -73,7 +83,6 @@ export default class Index extends wepy.page {
       try {
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
-          console.log(ticket)
           var loginRes = await wepy.login({
             withCredentials: true
           })

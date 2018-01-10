@@ -87,11 +87,12 @@ export default class extends wepy.app {
     this.use('promisify')
   }
 
-  onLaunch() {
-    // this.testAsync()
-  }
-  onShow(res) {
+  onLaunch(res) {
     console.log(res)
+    this.globalData.shareTicket = '123';
+    if (res.shareTicket) {
+      this.globalData.shareTicket = '123';
+    }
   }
 
   sleep(s) {

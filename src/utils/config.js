@@ -1,8 +1,8 @@
 module.exports = {
   _v: '0.0.1',
-  DOMAIN: 'http://qaactivity.in66.com',
+  // DOMAIN: 'http://qaactivity.in66.com',
   // DOMAIN: 'http://10.10.106.127:30929',
-  // DOMAIN: 'https://activity.in66.com',
+  DOMAIN: 'https://activity.in66.com',
   isMock: false,
   isTrack: false,
   qnTokenUrl: 'https://www.in66.com/promo/commonapi/qiniutoken',
