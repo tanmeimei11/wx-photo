@@ -286,14 +286,14 @@ export default class PhotoItem extends wepy.component {
         this.toastFail('下载失败')
       }
     },
-    async printerClick() {
+    async printerClick(pid, uid) {
       this.loadingIn('正在跳转')
       try {
         var res = await request({
           url: '/gg/photo/fetchpayloadkey',
           data: {
-            photo_id: this.photoItem.photo_id,
-            user_id: this.photoItem.user.user_id
+            photo_id: pid || this.photoItem.photo_id,
+            user_id: uid || this.photoItem.user.user_id
           }
         })
       } catch (e) {

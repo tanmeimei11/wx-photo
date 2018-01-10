@@ -149,6 +149,7 @@ export default class PublishPhoto extends wepy.component {
     galleryAuth: Number,
     galleryId: String,
     groupId: String,
+    groupUserName: String,
     publishAfterInfo: Object
   };
   // 混合
@@ -192,7 +193,7 @@ export default class PublishPhoto extends wepy.component {
       if (this.galleryAuth < 3) {
         wepy.showModal({
           title: '权限提醒',
-          content: '只有群主才能修改群信息'
+          content: `只有群主${this.groupUserName}才能修改群信息`
         })
         return;
       }
@@ -225,23 +226,14 @@ export default class PublishPhoto extends wepy.component {
         gallery_id: this.galleryId
       }
     })
+    wx.hideLoading()
     if (res.succ && res.data) {
-      wx.hideLoading()
       this.$emit('publishPhoto', res.data)
-    }
-    await this.pushlishAfter()
-  }
-  async pushlishAfter() {
-    var newsRes = await request({
-      url: '/gg/group/news',
-      data: {
-        gallery_id: this.galleryId
-      }
-    })
-    if (newsRes.succ && newsRes.data) {
-      this.$emit('changePublishInfo', newsRes.data)
+    } else {
+      this.toastFail('发布失败')
     }
   }
+
   async loadImages(files) {
     try {
       var _len = files.length
