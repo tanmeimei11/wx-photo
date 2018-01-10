@@ -8,6 +8,7 @@ import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import refreshIndexMixin from '@/mixins/refreshIndexMixin'
 import newAlbum from '@/components/gallery/newAlbum'
+import shareConnectMixin from '@/mixins/shareConnectMixin'
 
 import {
   request,
@@ -62,7 +63,7 @@ export default class Index extends wepy.page {
     newAlbum: newAlbum
   }
   // 混合
-  mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin]
+  mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin, shareConnectMixin]
   // data
   data = Object.assign({}, pageData)
   methods = {
@@ -142,6 +143,7 @@ export default class Index extends wepy.page {
       this.initOptions(options)
       await wxLogin()
       this.loadingIn('加载中')
+      await this.getShareFromOther(true)
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
@@ -156,7 +158,8 @@ export default class Index extends wepy.page {
   onShareAppMessage(res) {
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
-      path: `/pages/album/album?id=${this.galleryId}`
+      path: `/pages/album/album?id=${this.galleryId}`,
+      success: this.shareCallBack(res)
     }
   }
   // 修改标题
