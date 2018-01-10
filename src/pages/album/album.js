@@ -9,6 +9,7 @@ import formSubmitMixin from '@/mixins/formSubmitMixin'
 import refreshIndexMixin from '@/mixins/refreshIndexMixin'
 import newAlbum from '@/components/gallery/newAlbum'
 import { downInternetUrl } from '../../utils/api.js';
+import shareConnectMixin from '@/mixins/shareConnectMixin'
 
 import {
   request,
@@ -47,7 +48,8 @@ var pageData = {
   publishPhotoInfo: null, // 发图之后的photo信息
 
   isShowPrinterModal: true, // 是否展示跳转打印的弹窗
-  printerPhotoModalInfo: null // 跳转打印的弹窗信息
+  printerPhotoModalInfo: null, // 跳转打印的弹窗信息
+  shareCallBackUrl: '/gg/gallery/join'
 }
 
 export default class Index extends wepy.page {
@@ -66,7 +68,7 @@ export default class Index extends wepy.page {
     newAlbum: newAlbum
   }
   // 混合
-  mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin]
+  mixins = [LoadingMixin, formSubmitMixin, refreshIndexMixin, shareConnectMixin]
   // data
   data = Object.assign({}, pageData)
   methods = {
@@ -109,13 +111,18 @@ export default class Index extends wepy.page {
     },
     deletPhoto(idx) {
       this.photoList.splice(idx, 1)
+      this.refreshGallery()
       this.$apply()
+    },
+    clearPublishAfterInfo() {
+      this.publishAfterInfo = null
     },
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
       this.isShowPublishSucc = true
       this.publishAfterInfo = null
       this.publishPhotoInfo = obj
+      this.refreshGallery()
       this.$apply()
     },
     closePublishSucc() {
@@ -170,6 +177,7 @@ export default class Index extends wepy.page {
       this.initOptions(options)
       await wxLogin()
       this.loadingIn('加载中')
+      await this.getShareFromOther(true, this.shareCallBackUrl)
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
@@ -180,11 +188,23 @@ export default class Index extends wepy.page {
       this.toastFail('加载失败')
     }
   }
+
   // 分享
   onShareAppMessage(res) {
+    var image = (this.publishPhotoInfo && this.publishPhotoInfo.photos.url) || ''
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
-      path: `/pages/album/album?id=${this.galleryId}`
+      path: `/pages/album/album?id=${this.galleryId}`,
+      image: image || 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
+      success: this.shareCallBack({ ...res,
+        shareCallBackUrl: this.shareCallBackUrl
+      })
+    }
+  }
+  refreshGallery() {
+    var pages = getCurrentPages()
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].data.pageName === 'gallery' && (pages[i].init())
     }
   }
   // 修改标题

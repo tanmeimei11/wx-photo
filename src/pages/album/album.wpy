@@ -1,25 +1,23 @@
 <template>
-  <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
-    <button formType="submit" class="submit-btn">
-      <view class="container" @tap="sunmit">
-        <!-- 照片列表 -->
-        <block wx:if="{{photoList.length != 0}}">
-          <repeat for="{{photoList}}" key="index" index="index" item="item">
-            <photoItem :photoItem.sync="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto"
-              @photoZanChange.user="photoZanChange"></photoItem>
-          </repeat>
-        </block>
-        <!-- 空态页 -->
-        <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
-          <view class="empty"></view>
-        </block>
-        <!-- 隐私 -->
-        <block wx:if="{{galleryAuth == 0}}">
-          <view class="empty private"></view>
-        </block>
-        <!-- 发布照片 -->
-        <publishPhoto :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" :groupUserName.sync="groupUserName"
-          :isShowTips.sync="isShowTips" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum"></publishPhoto>
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
+  <view class="container" @tap="sunmit">
+    <!-- 照片列表 -->
+    <block wx:if="{{photoList.length != 0}}">
+    <repeat for="{{photoList}}" key="index" index="index" item="item">
+       <photoItem :photoItem.sync="item" :photoIndex="index" @changeCurPhotos.user="changeCurPhotos" @deletPhoto.user="deletPhoto" @photoZanChange.user="photoZanChange"></photoItem>
+    </repeat>
+    </block>
+    <!-- 空态页 -->
+    <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}" >
+      <view class="empty"></view>
+    </block>
+    <!-- 隐私 -->
+    <block wx:if="{{galleryAuth == 0}}" >
+      <view class="empty private"></view>
+    </block>
+    <!-- 发布照片 -->
+    <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" :groupUserName.sync="groupUserName" :isShowTips.sync="isShowTips" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum" @clearPublishAfterInfo.user="clearPublishAfterInfo" ></publishPhoto>
 
         <!-- 发布成功 弹窗 -->
         <publishSucc wx:if="{{isShowPublishSucc}}" @closePublishSucc.user="closePublishSucc" @publishPrintPhoto.user="publishPrintPhoto"></publishSucc>

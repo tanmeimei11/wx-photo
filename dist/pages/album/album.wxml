@@ -1,11 +1,11 @@
 
-  <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
-    <button formType="submit" class="submit-btn">
-      <view class="container" bindtap="sunmit">
-        <!-- 照片列表 -->
-        <block  wx:if="{{photoList.length != 0}}">
-          <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-            
+<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+  <button formType="submit" class="submit-btn">
+  <view class="container" bindtap="sunmit">
+    <!-- 照片列表 -->
+    <block  wx:if="{{photoList.length != 0}}">
+    <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+       
   <view class="photo-item">
     <!-- avatar -->
     <view class="s-avatar-wrap">
@@ -58,18 +58,18 @@
     <view class="photo-line"/>
   </view>
 
-          </block>
-        </block>
-        <!-- 空态页 -->
-        <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
-          <view class="empty"/>
-        </block>
-        <!-- 隐私 -->
-        <block wx:if="{{galleryAuth == 0}}">
-          <view class="empty private"/>
-        </block>
-        <!-- 发布照片 -->
-        
+    </block>
+    </block>
+    <!-- 空态页 -->
+    <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
+      <view class="empty"/>
+    </block>
+    <!-- 隐私 -->
+    <block wx:if="{{galleryAuth == 0}}">
+      <view class="empty private"/>
+    </block>
+    <!-- 发布照片 -->
+    
 <view class="c-publish-photo">
   <view class="s-side-btn" catchtap="$publishPhoto$openNewAlbum">
     <view class="iconfont icon-xiugaimingcheng"/>

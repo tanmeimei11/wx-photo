@@ -7,6 +7,7 @@ import joinUs from '../../components/gallery/joinUs'
 import newAlbum from '../../components/gallery/newAlbum'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import LoadingMixin from '@/mixins/loadingMixin'
+import shareConnectMixin from '@/mixins/shareConnectMixin'
 
 var pageData = {
   pageName: 'gallery',
@@ -21,7 +22,8 @@ var pageData = {
   showNewAlbum: false,
   openGId: '',
   groupName: '',
-  currentCursor: 0
+  currentCursor: 0,
+  shareCallBackUrl: '/gg/gallery/join'
 }
 
 export default class gallery extends wepy.page {
@@ -33,7 +35,7 @@ export default class gallery extends wepy.page {
     joinUs: joinUs,
     newAlbum: newAlbum
   }
-  mixins = [formSubmitMixin, LoadingMixin]
+  mixins = [formSubmitMixin, LoadingMixin, shareConnectMixin]
   data = Object.assign({}, pageData)
   methods = {
     // changeBg () {
@@ -91,6 +93,7 @@ export default class gallery extends wepy.page {
     try {
       await wxLogin()
       this.loadingIn('加载中')
+      await this.getShareFromOther(true, this.shareCallBackUrl)
       await this.init()
       this.loadingOut()
     } catch (e) {
@@ -99,10 +102,13 @@ export default class gallery extends wepy.page {
     }
   }
   // 分享
-  onShareAppMessage() {
+  onShareAppMessage(res) {
     return {
       title: '邀请你查看本群相册',
-      path: `/pages/gallery/gallery?id=${this.groupID}`
+      path: `/pages/gallery/gallery?id=${this.groupID}`,
+      success: this.shareCallBack({ ...res,
+        shareCallBackUrl: this.shareCallBackUrl
+      })
     }
   }
   async init() {
@@ -149,7 +155,6 @@ export default class gallery extends wepy.page {
       if (!res.data.has_next) {
         this.noMoreNote = true
         this.$apply()
-        return
       }
     } else {
       this.noMoreNote = true

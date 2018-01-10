@@ -90,6 +90,8 @@ export default class extends wepy.app {
   onShow(res) {
     if (res.shareTicket) {
       this.globalData.shareTicket = res.shareTicket
+    } else {
+      this.globalData.shareTicket = '';
     }
   }
 
