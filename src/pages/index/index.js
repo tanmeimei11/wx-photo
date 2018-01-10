@@ -110,6 +110,7 @@ export default class Index extends wepy.page {
             }
           }
         }
+        this.loadingOut()
       } catch (e) {
         this.loadingOut()
       }
