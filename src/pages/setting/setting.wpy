@@ -4,7 +4,7 @@
       <view class="container">
         <view class="tips" wx:if="{{groupInfo.type_name === '' || groupInfo.city === ''}}">
           <view></view>
-          <text>完善地区与类别，所有成员可得12张免费照片打印权益</text>
+          <text>完善地区与类别，所有成员可得10张免费照片打印权益</text>
         </view>
         <view class="members">
           <block wx:for="{{members}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">

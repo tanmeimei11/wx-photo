@@ -74,7 +74,7 @@ export default class setting extends wepy.page {
               })
               setTimeout(() => {
                 wepy.reLaunch({
-                  url: `../gallery/gallery?id=${that.groupID}`
+                  url: `../index/index`
                 })
               },2000)
             })
