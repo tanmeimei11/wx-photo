@@ -103,8 +103,9 @@
 </view>
   
 
-        <!-- 发布成功 弹窗 -->
-        
+    
+    <!-- 发布成功 弹窗 -->
+    
 <view class="p-succ" wx:if="{{isShowPublishSucc}}">
     <view class="bg" bindtap="$publishSucc$close"/>
     <view class="window">
@@ -117,8 +118,8 @@
 </view>
   
 
-        <!-- 打印照片  弹窗-->
-        
+    <!-- 打印照片  弹窗-->
+    
   <view class="c-printer-photo-modal" wx:if="{{isShowPrinterModal}}">
     <view class="bg" bindtap="$printerPhoto$close"/>
     <view class="window">

@@ -150,7 +150,10 @@ export default class PublishPhoto extends wepy.component {
     galleryId: String,
     groupId: String,
     groupUserName: String,
-    publishAfterInfo: Object
+    publishAfterInfo: {
+      type: Object,
+      twoWay: true
+    }
   };
   // 混合
   mixins = [LoadingMixin];
@@ -184,8 +187,17 @@ export default class PublishPhoto extends wepy.component {
     },
     readTips: async function() {
       await this.readTipsFun()
+      // request({
+      //   url: '/gg/group/news_read',
+      //   data: {
+      //     gallery_id: this.galleryId
+      //   }
+      // }).then(res => {
+      //   if (res.succ) {
+      //     this.$emit('clearPublishAfterInfo')
+      //   }
+      // })
     },
-
     openNewAlbum() {
       if (this.galleryAuth < 3) {
         wepy.showModal({
@@ -217,7 +229,9 @@ export default class PublishPhoto extends wepy.component {
       }
     })
     if (m.succ) {
-      this.$emit('clearPublishAfterInfo')
+      this.publishAfterInfo = false
+      this.$apply()
+      // this.$emit("clearPublishAfterInfo");
     }
   }
 
