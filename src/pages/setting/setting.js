@@ -4,24 +4,26 @@ import {
 } from '../../utils/login'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 
+var pageData = {
+  groupID: '',
+  groupInfo: {},
+  region: ['', '未填写', ''],
+  type: '未填写',
+  checked: false,
+  typeList: [],
+  type_mapping: [],
+  newdata: {},
+  disabled: false,
+  is_show_quit_btn: false,
+  members: []
+}
+
 export default class setting extends wepy.page {
   config = {
     navigationBarTitleText: '设置'
   }
+  data = Object.assign({}, pageData)
 
-  data = {
-    groupID: '',
-    groupInfo: {},
-    region: ['', '未填写', ''],
-    type: '未填写',
-    checked: false,
-    typeList: [],
-    type_mapping: [],
-    newdata: {},
-    disabled: false,
-    is_show_quit_btn: false,
-    members: []
-  }
   mixins = [formSubmitMixin]
   methods = {
     bindRegionChange(e) {
@@ -54,7 +56,8 @@ export default class setting extends wepy.page {
     exitQun() {
       var that = this
       wx.showModal({
-        content: '确认退出群空间？',
+        title: '你确定退出吗',
+        content: '退出后将无法再查看相册中的照片',
         success: function(res) {
           if (res.confirm) {
             that.newdata = {
@@ -78,6 +81,7 @@ export default class setting extends wepy.page {
     }
   }
   onLoad(options) {
+    Object.assign(this, pageData)
     this.groupID = options.id
     this.loadInfo()
     wx.hideShareMenu()
