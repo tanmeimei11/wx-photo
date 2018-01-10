@@ -16,6 +16,7 @@ import {
 
 var pageData = {
   pageName: 'album',
+  groupUserName: '', // 群主名字
   groupId: '',
   galleryId: '1', // 相册id
   galleryTitle: '',
@@ -35,7 +36,9 @@ var pageData = {
   isRefreshIndex: false, // 从创建过来的
 
   publishAfterInfo: null, // 发布图片后的信息
-  showPublishSucc: true,
+  isShowPublishSucc: false,
+  isShowTips: false,
+  publishPhotoInfo: null, // 发图之后的photo信息
 
   isShowPrinterModal: true, // 是否展示跳转打印的弹窗
   printerPhotoModalInfo: null // 跳转打印的弹窗信息
@@ -74,15 +77,14 @@ export default class Index extends wepy.page {
       this.$apply()
     },
     publishPhoto(obj) {
-      console.log(obj)
       this.photoList.splice(0, 0, obj)
+      this.isShowPublishSucc = true
+      this.publishAfterInfo = null
+      this.publishPhotoInfo = obj
       this.$apply()
     },
-    showpublishSucc() {
-      this.showPublishSucc = true
-    },
     closePublishSucc() {
-      this.showPublishSucc = false
+      this.isShowPublishSucc = false
     },
     openNewAlbum() {
       this.isShowNewAlbum = true
@@ -90,12 +92,11 @@ export default class Index extends wepy.page {
     closeNewAlbum() {
       this.isShowNewAlbum = false
     },
-    changePublishInfo(data) {
-      this.publishAfterInfo = data
-      this.$apply()
-    },
     closePrinterPhotoModal() {
       this.isShowPrinterModal = false
+    },
+    publishPrintPhoto() {
+      this.$invoke('photoItem', 'printerClick', this.publishPhotoInfo.id, this.publishPhotoInfo.user_id)
     },
     async submitTitle(title) {
       try {
@@ -138,6 +139,7 @@ export default class Index extends wepy.page {
       if (this.galleryAuth !== 0) {
         this.getList()
       }
+      this.loadingOut()
     } catch (e) {
       this.loadingOut()
       this.toastFail('加载失败')
@@ -162,7 +164,15 @@ export default class Index extends wepy.page {
     this.galleryId = options.id || '1'
     this.isShowPrinterModal = options.isnew || false
   }
-  // 相册权限
+  // 设置相册信息
+  setAlbumInfo(data) {
+    this.changeGalleryTitle(data.gallery_name)
+    this.groupId = data.group_info.group_id || ''
+    this.groupUserName = data.group_info.group_master_name || ''
+    this.publishAfterInfo = data.toast_info
+    this.$apply()
+  }
+  // 相册信息
   async getGalleryAuth() {
     var res = await request({
       url: '/gg/gallery/info',
@@ -182,9 +192,7 @@ export default class Index extends wepy.page {
         this.galleryAuth = 0
       }
 
-      this.loadingOut()
-      this.$apply()
-
+      this.setAlbumInfo(res.data)
       return this.galleryAuth
     }
   }
@@ -203,8 +211,6 @@ export default class Index extends wepy.page {
       }
     })
     if (res && res.data) {
-      this.changeGalleryTitle(res.data.gallery_name)
-      this.groupId = res.data.group_id || ''
       this.photoList = [
         ...this.photoList,
         ...res.data.list
