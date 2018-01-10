@@ -160,7 +160,7 @@ export default class Index extends wepy.page {
   // 初始化配置
   initOptions(options) {
     this.galleryId = options.id || '1'
-    this.isShowPrinterModal = options.showprinter || false
+    this.isShowPrinterModal = options.isnew || false
   }
   // 相册权限
   async getGalleryAuth() {
