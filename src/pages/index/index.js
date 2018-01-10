@@ -44,7 +44,7 @@ export default class Index extends wepy.page {
     })
   }
   initPage() {
-    this.groupList = []
+    Object.assign(this, pageData)
     this.getList()
   }
   async getList() {
