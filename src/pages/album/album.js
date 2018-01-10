@@ -44,7 +44,8 @@ var pageData = {
   publishPhotoInfo: null, // 发图之后的photo信息
 
   isShowPrinterModal: true, // 是否展示跳转打印的弹窗
-  printerPhotoModalInfo: null // 跳转打印的弹窗信息
+  printerPhotoModalInfo: null, // 跳转打印的弹窗信息
+  shareCallBackUrl: '/gg/gallery/join'
 }
 
 export default class Index extends wepy.page {
@@ -143,7 +144,7 @@ export default class Index extends wepy.page {
       this.initOptions(options)
       await wxLogin()
       this.loadingIn('加载中')
-      await this.getShareFromOther(true)
+      await this.getShareFromOther(true, this.shareCallBackUrl)
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
@@ -159,7 +160,9 @@ export default class Index extends wepy.page {
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
-      success: this.shareCallBack(res)
+      success: this.shareCallBack({ ...res,
+        shareCallBackUrl: this.shareCallBackUrl
+      })
     }
   }
   // 修改标题

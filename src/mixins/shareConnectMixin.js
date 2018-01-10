@@ -4,20 +4,21 @@ import {
 } from '@/utils/login'
 
 export default class shareConnectMixin extends wepy.mixin {
-  async getShareFromOther(isLoading) {
+  async getShareFromOther(isLoading, url) {
     try {
       var _shareTickets = this.$parent.globalData.shareTicket
       if (_shareTickets) {
         var m = this.shareCallBack('share', 'share')
         await m({
-          'shareTickets': [_shareTickets]
+          'shareTickets': [_shareTickets],
+          'shareCallBackUrl': url
         }, isLoading)
       }
     } catch (e) {
       throw new Error()
     }
   }
-  shareCallBack(res, a) {
+  shareCallBack(res) {
     return async(res, isLoading) => {
       if (isLoading) {
         console.log('----on share----')
@@ -40,7 +41,7 @@ export default class shareConnectMixin extends wepy.mixin {
             }
 
             var dispatcherRes = await request({
-              url: '/gg/group/index/dispatcher',
+              url: res.shareCallBackUrl || '/gg/group/index/dispatcher',
               data: _data
             })
 

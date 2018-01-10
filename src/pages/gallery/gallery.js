@@ -22,7 +22,8 @@ var pageData = {
   showNewAlbum: false,
   openGId: '',
   groupName: '',
-  currentCursor: 0
+  currentCursor: 0,
+  shareCallBackUrl: '/gg/gallery/join'
 }
 
 export default class gallery extends wepy.page {
@@ -92,7 +93,7 @@ export default class gallery extends wepy.page {
     try {
       await wxLogin()
       this.loadingIn('加载中')
-      await this.getShareFromOther(true)
+      await this.getShareFromOther(true, this.shareCallBackUrl)
       await this.init()
       this.loadingOut()
     } catch (e) {
@@ -105,7 +106,9 @@ export default class gallery extends wepy.page {
     return {
       title: '邀请你查看本群相册',
       path: `/pages/gallery/gallery?id=${this.groupID}`,
-      success: this.shareCallBack(res)
+      success: this.shareCallBack({ ...res,
+        shareCallBackUrl: this.shareCallBackUrl
+      })
     }
   }
   async init() {
