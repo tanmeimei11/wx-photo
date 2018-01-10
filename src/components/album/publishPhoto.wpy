@@ -169,6 +169,7 @@ export default class PublishPhoto extends wepy.component {
       }
 
       try {
+        await this.readTips()
         var chooseRes = await wepy.chooseImage({
           count: 9
         })
@@ -188,6 +189,7 @@ export default class PublishPhoto extends wepy.component {
           gallery_id: this.galleryId
         }
       })
+      this.$emit('clearPublishAfterInfo')
     },
     openNewAlbum() {
       if (this.galleryAuth < 3) {

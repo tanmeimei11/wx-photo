@@ -83,13 +83,18 @@ export default class Index extends wepy.page {
     },
     deletPhoto(idx) {
       this.photoList.splice(idx, 1)
+      this.refreshGallery()
       this.$apply()
+    },
+    clearPublishAfterInfo() {
+      this.publishAfterInfo = null
     },
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)
       this.isShowPublishSucc = true
       this.publishAfterInfo = null
       this.publishPhotoInfo = obj
+      this.refreshGallery()
       this.$apply()
     },
     closePublishSucc() {
@@ -155,14 +160,23 @@ export default class Index extends wepy.page {
       this.toastFail('加载失败')
     }
   }
+
   // 分享
   onShareAppMessage(res) {
+    var image = (this.publishPhotoInfo && this.publishPhotoInfo.photos.url) || ''
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
+      image: image || 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
       success: this.shareCallBack({ ...res,
         shareCallBackUrl: this.shareCallBackUrl
       })
+    }
+  }
+  refreshGallery() {
+    var pages = getCurrentPages()
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].data.pageName === 'gallery' && (pages[i].init())
     }
   }
   // 修改标题
