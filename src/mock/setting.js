@@ -33,7 +33,8 @@ module.exports = {
       ],
       is_show_quit_btn: true,
       is_rec: true,
-      type: '0'
+      type: '0',
+      type_name:"户外时刻"
     },
     timestamp: '1515398931'
   }

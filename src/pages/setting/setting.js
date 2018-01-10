@@ -19,7 +19,7 @@ export default class setting extends wepy.page {
     type_mapping: [],
     newdata: {},
     disabled: false,
-    showbtn: true,
+    is_show_quit_btn: false,
     members: []
   }
   mixins = [formSubmitMixin]
@@ -57,13 +57,12 @@ export default class setting extends wepy.page {
         content: '确认退出群空间？',
         success: function(res) {
           if (res.confirm) {
-            console.log('用户点击确定')
             that.newdata = {
               quitGroup: 1,
               groupId: that.groupID
             }
             that.changeSetting(that.newdata, () => {
-              that.showbtn = false
+              that.is_show_quit_btn = false
               that.$apply()
               wx.showToast({
                 title: '退出成功',
@@ -81,6 +80,7 @@ export default class setting extends wepy.page {
   onLoad(options) {
     this.groupID = options.id
     this.loadInfo()
+    wx.hideShareMenu()
   }
 
   async changeSetting(cdata, fn) {
@@ -107,6 +107,7 @@ export default class setting extends wepy.page {
     })
     if (res.succ) {
       this.groupInfo = res.data
+      this.is_show_quit_btn = res.data.is_show_quit_btn
       this.members = res.data.members
       this.region = res.data.city ? [res.data.province, res.data.city] : this.region
 

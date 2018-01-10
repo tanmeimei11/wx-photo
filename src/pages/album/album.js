@@ -133,7 +133,7 @@ export default class Index extends wepy.page {
   onShareAppMessage() {
     return {
       title: this.galleryTitle,
-      path: `/page/album/album?id=${this.galleryId}`
+      path: `/pages/album/album?id=${this.galleryId}`
     }
   }
   // 修改标题

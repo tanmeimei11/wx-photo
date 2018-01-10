@@ -112,7 +112,7 @@ export default class Index extends wepy.page {
   onShareAppMessage(res) {
     return {
       title: '快来上传图片吧~',
-      path: '/page/share/dispatcher?from=index',
+      path: '/pages/share/dispatcher?from=index',
       success: this.ShareCallBack(res)
     }
   }
