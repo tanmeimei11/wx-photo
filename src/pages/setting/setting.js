@@ -27,10 +27,12 @@ export default class setting extends wepy.page {
   mixins = [formSubmitMixin]
   methods = {
     alert() {
-      wx.showModal({
-        content: `只有群主${this.master}可以修改群资料`,
-        showCancel: false
-      })
+      if (this.disabled) {
+        wx.showModal({
+          content: `只有群主${this.master}可以修改群资料`,
+          showCancel: false
+        })
+      }
     },
     bindRegionChange(e) {
       this.region = e.detail.value
