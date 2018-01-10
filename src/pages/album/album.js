@@ -118,6 +118,7 @@ export default class Index extends wepy.page {
     },
     clearPublishAfterInfo() {
       this.publishAfterInfo = null
+      this.$apply()
     },
     publishPhoto(obj) {
       this.photoList.splice(0, 0, obj)

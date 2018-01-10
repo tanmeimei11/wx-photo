@@ -46,6 +46,10 @@ export default class shareConnectMixin extends wepy.mixin {
             })
 
             if (dispatcherRes && dispatcherRes.succ) {
+              if (typeof this.initPage === 'function') {
+                await this.initPage()
+              }
+
               this.loadingOut()
               wx.navigateTo({
                 url: dispatcherRes.data.redirect_path
