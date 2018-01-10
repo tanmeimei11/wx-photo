@@ -144,7 +144,7 @@ import wepy from 'wepy';
 import { uploadImageToQiniu } from '../../utils/api.js';
 import { request } from '../../utils/login.js';
 import LoadingMixin from '@/mixins/loadingMixin';
-export default class PreviewPhoto extends wepy.component {
+export default class PublishPhoto extends wepy.component {
   props = {
     galleryAuth: Number,
     galleryId: String,
@@ -161,8 +161,8 @@ export default class PreviewPhoto extends wepy.component {
       this.images = []
       if (this.galleryAuth < 2) {
         wepy.showModal({
-          title: '没有权限',
-          content: '没有权限'
+          title: '权限提醒',
+          content: '只有本群成员才能上传照片'
         })
         return;
       }
@@ -191,8 +191,8 @@ export default class PreviewPhoto extends wepy.component {
     openNewAlbum() {
       if (this.galleryAuth < 3) {
         wepy.showModal({
-          title: '没有权限',
-          content: '没有权限'
+          title: '权限提醒',
+          content: '只有群主才能修改群信息'
         })
         return;
       }

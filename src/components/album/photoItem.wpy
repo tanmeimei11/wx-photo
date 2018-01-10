@@ -101,7 +101,7 @@
     overflow: scroll;
     image {
       border-radius: 6rpx;
-      margin-left: 20rpx;
+      margin-left: 24rpx;
       vertical-aligin: middle;
       width: 440rpx;
       height: 440rpx;
@@ -125,7 +125,7 @@
     align-items: center;
     justify-content: space-between;
     .iconfont {
-      color: #333;
+      color: #666;
       font-size: 40rpx;
     }
     .icons-wrap {
@@ -153,6 +153,9 @@
     .s-zan-wrap {
       .iconfont {
         font-size: 28rpx;
+      }
+      .zan-icon-num {
+        font-size: 20rpx;
       }
     }
 
