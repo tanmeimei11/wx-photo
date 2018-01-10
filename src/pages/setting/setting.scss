@@ -46,6 +46,7 @@
   .item{
     margin: 14rpx;
     display: inline-block;
+    position: relative;
     .avatar{
       width: 90rpx;
       height: 90rpx;
@@ -54,6 +55,16 @@
       background-repeat: no-repeat;
       background-position: center;
       margin-bottom: 12rpx;
+    }
+    .master{
+      position: absolute;
+      top: 64rpx;
+      left: 64rpx;
+      width: 26rpx;
+      height: 26rpx;
+      background: url(http://inimg05.jiuyan.info/in/2018/01/10/3D7A1390-C9CA-FCB2-1FB6-7ACAD500BBCE.png) no-repeat;
+      background-size: 100% auto;
+      background-position: center
     }
     .name{
       font-size: 20rpx;

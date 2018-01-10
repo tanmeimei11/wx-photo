@@ -1,25 +1,24 @@
 <template>
-<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
-  <button formType="submit" class="submit-btn">
-  <view class="container">
-    <view class="indexBg"></view>
-    <shareOrCreateGroup></shareOrCreateGroup>
+  <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+    <button formType="submit" class="submit-btn">
+      <view class="container">
+        <view class="indexBg"></view>
+        <shareOrCreateGroup></shareOrCreateGroup>
 
-    <block wx:if="{{groupList.length != 0}}">
-      <repeat for="{{groupList}}" key="index" index="index" item="item">
-        <groupItem :groupItem="item" :groupIndex="index"></groupItem>
-      </repeat>
-    </block>
-    <view class="empty" wx:if="{{groupList.length == 0}}">
-      <view></view>
-      <text>这里空空如也，快去创建群活动相册吧</text>
-    </view>
-  </view>
+        <block wx:if="{{groupList.length != 0}}">
+          <repeat for="{{groupList}}" key="index" index="index" item="item">
+            <groupItem :groupItem="item" :groupIndex="index"></groupItem>
+          </repeat>
+        </block>
+        <view class="empty" wx:if="{{groupList.length == 0}}">
+          <view></view>
+          <text>这里空空如也，快去创建群活动相册吧</text>
+        </view>
+      </view>
     </button>
-</form>
+  </form>
 </template>
 <style lang="less" src="index.scss">
-
 </style>
 
 <script src="./index.js">
