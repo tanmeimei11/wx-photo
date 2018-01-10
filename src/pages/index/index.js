@@ -30,6 +30,7 @@ export default class Index extends wepy.page {
     try {
       await wxLogin()
       this.loadingIn('加载中')
+      this.getShareFromOther()
       await this.getList()
     } catch (e) {
       this.loadingOut()
@@ -45,8 +46,16 @@ export default class Index extends wepy.page {
     this.groupList = []
     this.getList()
   }
+  getShareFromOther() {
+    var _shareTickets = this.$parent.globalData.shareTicket
+
+    if (_shareTickets) {
+      this.ShareCallBack('share')({
+        'shareTickets': [_shareTickets]
+      })
+    }
+  }
   async getList() {
-    console.log('other refresh')
     var res = await request({
       url: '/gg/index/grouplist',
       data: {
@@ -67,13 +76,15 @@ export default class Index extends wepy.page {
   loadingOut() {
     wx.hideLoading()
   }
-  ShareCallBack(res) {
-    return async(res) => {
+  ShareCallBack(res, a) {
+    return async(res, a) => {
+      if (a === 'share') {
+        console.log('----on share----')
+      }
       this.loadingIn('相册分享中')
       try {
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]
-          console.log(ticket)
           var loginRes = await wepy.login({
             withCredentials: true
           })
@@ -101,6 +112,7 @@ export default class Index extends wepy.page {
             }
           }
         }
+        this.loadingOut()
       } catch (e) {
         this.loadingOut()
       }
@@ -109,7 +121,7 @@ export default class Index extends wepy.page {
   onShareAppMessage(res) {
     return {
       title: '一起来加入本群相册吧！',
-      path: '/pages/share/dispatcher?from=index',
+      path: '/pages/index/index?from=index',
       imageUrl: 'http://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
       success: this.ShareCallBack(res)
     }
