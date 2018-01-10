@@ -26,7 +26,7 @@ var pageData = {
 
 export default class gallery extends wepy.page {
   config = {
-    navigationBarTitleText: '群活动相册',
+    navigationBarTitleText: '群友共享相册',
     onReachBottomDistance: '100'
   }
   components = {

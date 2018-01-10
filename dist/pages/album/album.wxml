@@ -1,11 +1,11 @@
 
-<form bindsubmit="formSubmit" report-submit="true" class="submit-from">
-  <button formType="submit" class="submit-btn">
-  <view class="container" bindtap="sunmit">
-    <!-- 照片列表 -->
-    <block  wx:if="{{photoList.length != 0}}">
-    <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-       
+  <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
+    <button formType="submit" class="submit-btn">
+      <view class="container" bindtap="sunmit">
+        <!-- 照片列表 -->
+        <block  wx:if="{{photoList.length != 0}}">
+          <block wx:for="{{photoList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+            
   <view class="photo-item">
     <!-- avatar -->
     <view class="s-avatar-wrap">
@@ -58,18 +58,18 @@
     <view class="photo-line"/>
   </view>
 
-    </block>
-    </block>
-    <!-- 空态页 -->
-    <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
-      <view class="empty"/>
-    </block>
-    <!-- 隐私 -->
-    <block wx:if="{{galleryAuth == 0}}">
-      <view class="empty private"/>
-    </block>
-    <!-- 发布照片 -->
-    
+          </block>
+        </block>
+        <!-- 空态页 -->
+        <block wx:if="{{photoList.length == 0 && galleryAuth > 0}}">
+          <view class="empty"/>
+        </block>
+        <!-- 隐私 -->
+        <block wx:if="{{galleryAuth == 0}}">
+          <view class="empty private"/>
+        </block>
+        <!-- 发布照片 -->
+        
 <view class="c-publish-photo">
   <view class="s-side-btn" catchtap="$publishPhoto$openNewAlbum">
     <view class="iconfont icon-xiugaimingcheng"/>
@@ -104,8 +104,8 @@
   
 
 
-    <!-- 发布成功 弹窗 -->
-    
+        <!-- 发布成功 弹窗 -->
+        
 <view class="p-succ" wx:if="{{isShowPublishSucc}}">
     <view class="bg" bindtap="$publishSucc$close"/>
     <view class="window">
@@ -118,8 +118,8 @@
 </view>
   
 
-     <!-- 打印照片  弹窗-->
-    
+        <!-- 打印照片  弹窗-->
+        
   <view class="c-printer-photo-modal" wx:if="{{isShowPrinterModal}}">
     <view class="bg" bindtap="$printerPhoto$close"/>
     <view class="window">
@@ -129,26 +129,24 @@
       <view class="btn on" bindtap="$printerPhoto$goEdit">去编辑</view>
     </view>
   </view>
-  
 
-    <!-- 预览照片 弹窗-->
-    
-<!-- 预览图片 -->
-<view class="c-main-swiper-wrap" wx:if="{{isShowPreViewModal}}">
-  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" catchtap="clearSwiper"> -->
-  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" catchtap="clearSwiper">
-    <swiper-item bindtap="closeSwiper" wx:for="{{previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-      <view class="slide-image" style="background-image:url({{item.url}})"></view>
-    </swiper-item>
-</swiper> -->
-  <!-- <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view> -->
-  <view class="swiper-index">{{$previewPhoto$previewPhotos.length}}</view>
- <view class="swiper-down iconfont icon-xiazai" catchtap="$previewPhoto$downImage"/>
-</view>
-  
 
-     <!-- 修改名称 弹窗-->
-    
+        <!-- 预览照片 弹窗-->
+        <!-- <previewPhoto  wx:if="{{isShowPreViewModal}}" v-bind:previewPhotos.sync="previewPhotos" v-on:clearCurPhotos="clearCurPhotos"></previewPhoto>   -->
+        <view class="c-main-swiper-wrap"  wx:if="{{isShowPreViewModal}}">
+          <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" catchtap="clearSwiper">
+          <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" catchtap="clearSwiper"> -->
+            <swiper-item bindtap="closeSwiper" wx:for="{{previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+              <view class="slide-image" style="background-image:url({{item.url}})"/>
+            </swiper-item>
+          </swiper>
+          <!-- <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view> -->
+          <!-- <view class="swiper-index">{{previewPhotos.length}}</view> -->
+          <view class="swiper-down iconfont icon-xiazai" catchtap="downImage"/>
+        </view>
+
+        <!-- 修改名称 弹窗-->
+        
   <view class="newAlbum" wx:if="{{isShowNewAlbum}}">
     <view class="bg" bindtap="$newAlbum$close"/>
     <view class="window">
@@ -160,6 +158,6 @@
     </view>
   </view>
 
-  </view>
-  </button>
-</form>
+      </view>
+    </button>
+  </form>

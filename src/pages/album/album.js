@@ -8,6 +8,7 @@ import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import refreshIndexMixin from '@/mixins/refreshIndexMixin'
 import newAlbum from '@/components/gallery/newAlbum'
+import { downInternetUrl } from '../../utils/api.js';
 
 import {
   request,
@@ -31,6 +32,9 @@ var pageData = {
   curCursor: 0,
   isGetList: false,
   isListHasNext: true,
+
+  photoIdx: 0,
+  photoItemIdx: 0,
 
   isShowNewAlbum: false, // 修改名称弹窗
   newAlbumTitle: '修改相册名称',
@@ -66,6 +70,29 @@ export default class Index extends wepy.page {
   // data
   data = Object.assign({}, pageData)
   methods = {
+    swiperChange(e) {
+      this.photoItemIdx = e.detail.current
+      console.log(this.photoItemIdx)
+      this.$apply()
+    },
+    async downImage() {
+      this.loadingIn('正在下载')
+      console.log(this.previewPhotos[this.photoItemIdx].url)
+      try {
+        await downInternetUrl(this.previewPhotos[this.photoItemIdx].url)
+        this.loadingOut()
+        this.toastSucc('下载成功')
+      } catch (e) {
+        this.loadingOut()
+        this.toastFail('下载失败')
+      }
+    },
+    clearSwiper() {
+      this.photoItemIdx = 0
+      this.isShowPreViewModal = false
+      this.previewPhotos = []
+      this.previewPhotosIdx = 0
+    },
     clearCurPhotos() {
       this.isShowPreViewModal = false
       this.previewPhotos = []
@@ -77,6 +104,7 @@ export default class Index extends wepy.page {
       console.log('------preview-----')
       console.log(this.previewPhotos, idx)
       this.previewPhotosIdx = idx
+      this.photoItemIdx = idx
       this.$apply()
     },
     deletPhoto(idx) {
