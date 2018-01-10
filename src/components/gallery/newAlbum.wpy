@@ -31,6 +31,7 @@
     top: 50%;
     left: 95rpx;
     transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
     border-radius: 8rpx;
     width: 560rpx;
     height: 432rpx;
@@ -82,7 +83,7 @@
       line-height: 80rpx;
       font-size: 28rpx;
       color: #fff;
-      background-image: linear-gradient(90deg, #fd823e 0%, #faa84b 100%);
+      background-image: linear-gradient(-90deg, #fd823e 0%, #faa84b 100%);
       border-radius: 6rpx;
       margin: 0 auto;
       opacity: 0.3;

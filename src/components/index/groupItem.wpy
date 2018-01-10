@@ -24,7 +24,7 @@
   box-sizing: border-box;
   margin: 0 34rpx;
   background-color: #fff;
-  border-bottom: 2rpx solid #e0e0e0;
+  border-bottom: 1rpx solid #e0e0e0;
   position: relative;
   .name {
     position: absolute;

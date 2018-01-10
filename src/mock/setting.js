@@ -5,7 +5,7 @@ module.exports = {
     succ: true,
     data: {
       province: '浙江',
-      city: '杭州',
+      city: '',
       can_modify: true,
       members: [{
         name: '郭富城',
@@ -34,7 +34,7 @@ module.exports = {
       is_show_quit_btn: true,
       is_rec: true,
       type: '0',
-      type_name:"户外时刻"
+      type_name:""
     },
     timestamp: '1515398931'
   }

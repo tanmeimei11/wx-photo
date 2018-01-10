@@ -14,6 +14,30 @@
   color: #aaa;
 }
 
+.tips{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #FFF;
+  box-shadow: 0 8rpx 20rpx 0 rgba(0,0,0,0.03);
+  font-size: 26rpx;
+  color: #333;
+  position: relative;
+  view{
+    position: absolute;
+    top: 0;
+    left: 30rpx;
+    width: 40rpx;
+    height: 100%;
+    background: url(http://inimg05.jiuyan.info/in/2018/01/10/C0C2FA38-293C-5A52-23B8-88077BA99400.png) no-repeat;
+    background-size: 100% auto;
+    background-position: center
+  }
+  text{
+    margin-left: 84rpx;
+  }
+}
+
 .members{
   margin: 50rpx 21rpx 0;
   padding-bottom: 50rpx;
@@ -51,7 +75,6 @@
   display: flex;
   align-content: center;
   font-size: 32rpx;
-  color: #333;
   align-items: center;
   position: relative;
   picker{
@@ -68,6 +91,14 @@
       height: 100%;
       text-align: right;
       line-height: 120rpx;
+      color: #b0b0b0;
+      &.icon-arrow:before{
+        float: right;
+        color: #b0b0b0;
+      }
+      &.on{
+        color: #333;
+      }
     }
   }
 }
@@ -89,7 +120,7 @@
   width: 682rpx;
   height: 100rpx;
   left: 34rpx;
-  background-image: linear-gradient(-90deg, #FF7869 0%, #FF4338 100%);
+  background-image: linear-gradient(90deg, #FF7869 0%, #FF4338 100%);
   border-radius: 6rpx;
   color: #fff;
   line-height: 100rpx;

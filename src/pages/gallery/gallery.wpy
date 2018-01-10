@@ -6,8 +6,7 @@
       <view class="background" style="background-image:url({{groupInfo.bg_img}})"></view>
       <view class="info">
         <view class="avatar" style="background-image:url({{groupInfo.icon_img}})"></view>
-        <open-data type="groupName" open-gid="{{openGId}}" />
-        <view class="name">{{groupInfo.name}}</view>
+        <view class="name"><open-data type="groupName" open-gid="{{openGId}}" /></view>
         <view class="infotxt">
           <text class="member">成员 {{groupInfo.member_count}} | </text>
           <text class="act">相册 {{groupInfo.gallery_count}} | </text>

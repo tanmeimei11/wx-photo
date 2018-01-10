@@ -2,6 +2,10 @@
   <form bindsubmit="formSubmit" report-submit="true" class="submit-from">
     <button formType="submit" class="submit-btn">
       <view class="container">
+        <view class="tips" wx:if="{{groupInfo.type_name === '' && groupInfo.city === ''}}">
+          <view></view>
+          <text>完善地区与类别，所有成员可得12张免费照片打印权益</text>
+        </view>
         <view class="members">
           <block wx:for="{{members}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
             <view class="item">
@@ -13,7 +17,7 @@
         <view class="area">
           <view class="section__title">地区</view>
           <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}" disabled="{{disabled}}">
-            <view class="picker">
+            <view class="picker iconfont {{disabled ? '' : 'icon-arrow'}} {{region[1] === '未填写' ? '' : 'on'}}">
               {{region[1]}}
             </view>
           </picker>
@@ -21,7 +25,7 @@
         <view class="type">
           <view class="section__title">类别</view>
           <picker mode="selector" bindchange="bindTypeChange" range="{{typeList}}" disabled="{{disabled}}">
-            <view class="picker">
+            <view class="picker iconfont {{disabled ? '' : 'icon-arrow'}} {{type === '未填写' ? '' : 'on'}}">
               {{type}}
             </view>
           </picker>

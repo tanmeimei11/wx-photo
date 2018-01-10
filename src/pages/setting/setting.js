@@ -88,7 +88,6 @@ export default class setting extends wepy.page {
   }
 
   async changeSetting(cdata, fn) {
-    this.disabled = true
     console.log(cdata)
     var res = await request({
       url: '/gg/group/updatesetting',
@@ -96,8 +95,6 @@ export default class setting extends wepy.page {
       data: cdata
     })
     if (res.succ) {
-      this.disabled = false
-      this.$apply()
       fn && fn()
     }
   }
@@ -123,7 +120,7 @@ export default class setting extends wepy.page {
       }
       this.$apply()
 
-      this.type = res.data.type_name
+      this.type = res.data.type_name ? res.data.type_name : '未填写'
       this.typeList = res.data.type_mapping.map(item => {
         return item.type_name
       })
