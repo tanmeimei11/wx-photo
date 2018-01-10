@@ -1,7 +1,7 @@
 import wepy from 'wepy'
 import {
   request,
-  wxCheckLogin
+  wxLogin
 } from '../../utils/login'
 import GroupItem from '../../components/index/groupItem'
 import shareOrCreateGroup from '../../components/index/shareOrCreateGroup'
@@ -26,18 +26,19 @@ export default class Index extends wepy.page {
   methods = {}
   async onLoad() {
     Object.assign(this, pageData)
-    wx.showShareMenu({
-      // 要求小程序返回分享目标信息
-      withShareTicket: true
-    })
-    var token = await wxCheckLogin()
-    if (token) {
+    this.setShare()
+    try {
+      await wxLogin()
+      this.loadingIn('加载中')
       await this.getList()
+    } catch (e) {
+      this.loadingOut()
+      this.toastFail('加载失败')
     }
   }
-  onShow(e) {
+  setShare() {
     wx.showShareMenu({
-      withShareTicket: true
+      withShareTicket: true // 要求小程序返回分享目标信息
     })
   }
   initPage() {
@@ -67,8 +68,6 @@ export default class Index extends wepy.page {
     wx.hideLoading()
   }
   ShareCallBack(res) {
-    console.log('111')
-    this.loadingIn('相册分享中')
     return async(res) => {
       this.loadingIn('相册分享中')
       try {

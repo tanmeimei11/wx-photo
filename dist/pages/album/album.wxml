@@ -119,16 +119,15 @@
 
      <!-- 打印照片  弹窗-->
     
-<!-- 预览图片 -->
-<swiper class="c-main-swiper" bindchange="$printerPhoto$swiperChange" current="{{$printerPhoto$photoItemIdx}}" data-idx="{{$printerPhoto$photoItemIdx}}" catchtap="$printerPhoto$clearSwiper" wx:if="{{isShowPrinterModal}}">
-  <block  wx:for="{{$printerPhoto$photos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-    <swiper-item bindtap="$printerPhoto$closeSwiper">
-      <view class="slide-image" style="background-image:url({{item.url}})"/>
-    </swiper-item>
-  </block>
-  <view class="swiper-index"  wx:if="{{$printerPhoto$photos.length >1}}">{{$printerPhoto$photoItemIdx + 1}}/{{$printerPhoto$photos.length}}</view>
-  <view class="swiper-down iconfont icon-xiazai" catchtap="$printerPhoto$downImage"/>
-</swiper>
+  <view class="c-printer-photo-modal" wx:if="{{isShowPrinterModal}}">
+    <view class="bg" bindtap="$printerPhoto$close"/>
+    <view class="window">
+      <view class="close" bindtap="$printerPhoto$close"/>
+      <view class="title">所有成员免费打印照片</view>
+      <image class="main-img" src="https://inimg02.jiuyan.info/in/2018/01/10/72E0DE82-AB2A-53FE-D58A-CF98D2CA40B2.png" mode="widthFix"/>
+      <view class="btn on" bindtap="$printerPhoto$goEdit">去编辑</view>
+    </view>
+  </view>
   
 
     <!-- 预览照片 弹窗-->

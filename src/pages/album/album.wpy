@@ -22,7 +22,7 @@
     <!-- 发布成功 弹窗 -->
     <publishSucc wx:if="{{showPublishSucc}}" @closePublishSucc.user="closePublishSucc"></publishSucc>
      <!-- 打印照片  弹窗-->
-    <printerPhoto  wx:if="{{isShowPrinterModal}}" :printerPhotoModalInfo.sync="printerPhotoModalInfo"></printerPhoto>  
+    <printerPhoto  wx:if="{{isShowPrinterModal}}" :groupId.sync="groupId" :printerPhotoModalInfo.sync="printerPhotoModalInfo" @closePrinterPhotoModal.user="closePrinterPhotoModal"></printerPhoto>  
 
     <!-- 预览照片 弹窗-->
     <previewPhoto  wx:if="{{previewPhotos.length != 0}}" :photos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  

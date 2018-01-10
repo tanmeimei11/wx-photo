@@ -11,7 +11,7 @@ import newAlbum from '@/components/gallery/newAlbum'
 
 import {
   request,
-  wxCheckLogin
+  wxLogin
 } from '@/utils/login'
 
 var pageData = {
@@ -37,7 +37,7 @@ var pageData = {
   publishAfterInfo: null, // 发布图片后的信息
   showPublishSucc: true,
 
-  isShowPrinterModal: false, // 是否展示跳转打印的弹窗
+  isShowPrinterModal: true, // 是否展示跳转打印的弹窗
   printerPhotoModalInfo: null // 跳转打印的弹窗信息
 }
 
@@ -94,6 +94,9 @@ export default class Index extends wepy.page {
       this.publishAfterInfo = data
       this.$apply()
     },
+    closePrinterPhotoModal() {
+      this.isShowPrinterModal = false
+    },
     async submitTitle(title) {
       try {
         var res = await request({
@@ -128,9 +131,9 @@ export default class Index extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     try {
-      this.loadingIn('加载中')
       this.initOptions(options)
-      await wxCheckLogin()
+      await wxLogin()
+      this.loadingIn('加载中')
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()
@@ -157,6 +160,7 @@ export default class Index extends wepy.page {
   // 初始化配置
   initOptions(options) {
     this.galleryId = options.id || '1'
+    this.isShowPrinterModal = options.showprinter || false
   }
   // 相册权限
   async getGalleryAuth() {
