@@ -50,7 +50,9 @@ export default class Index extends wepy.page {
     var _shareTickets = this.$parent.globalData.shareTicket
 
     if (_shareTickets) {
-      this.ShareCallBack()({
+      this.ShareCallBack({
+        'shareTickets': [_shareTickets]
+      }, 'share')({
         'shareTickets': [_shareTickets]
       })
     }
@@ -77,8 +79,11 @@ export default class Index extends wepy.page {
   loadingOut() {
     wx.hideLoading()
   }
-  ShareCallBack(res) {
-    return async(res) => {
+  ShareCallBack(res, a) {
+    return async(res, a) => {
+      if (a === 'share') {
+        console.log('----on share----')
+      }
       this.loadingIn('相册分享中')
       try {
         if (res.shareTickets) {
