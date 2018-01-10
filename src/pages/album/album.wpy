@@ -26,7 +26,7 @@
     <printerPhoto  wx:if="{{isShowPrinterModal}}" :groupId.sync="groupId" :printerPhotoModalInfo.sync="printerPhotoModalInfo" @closePrinterPhotoModal.user="closePrinterPhotoModal"></printerPhoto>  
 
     <!-- 预览照片 弹窗-->
-    <previewPhoto  wx:if="{{previewPhotos && previewPhotos.length != 0}}" :previewPhotos.sync="previewPhotos" :photoIdx.sync="previewPhotosIdx" @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
+    <previewPhoto  wx:if="{{isShowPreViewModal}}" :previewPhotos.sync="previewPhotos"  @clearCurPhotos.user="clearCurPhotos"></previewPhoto>  
 
      <!-- 修改名称 弹窗-->
     <newAlbum wx:if="{{isShowNewAlbum}}" :galleryTitle.sync="galleryTitle" :newAlbumTitle="newAlbumTitle" @closeNewAlbum.user="closeNewAlbum" @submitTitle.user="submitTitle"></newAlbum>
