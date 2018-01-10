@@ -210,13 +210,15 @@ export default class PublishPhoto extends wepy.component {
     }
   };
   async readTipsFun() {
-    await request({
+    var m = await request({
       url: '/gg/group/news_read',
       data: {
         gallery_id: this.galleryId
       }
     })
-    this.$emit('clearPublishAfterInfo')
+    if (m.succ) {
+      this.$emit('clearPublishAfterInfo')
+    }
   }
 
   async pushlish() {

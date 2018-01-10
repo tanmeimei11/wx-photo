@@ -103,7 +103,6 @@
 </view>
   
 
-
         <!-- 发布成功 弹窗 -->
         
 <view class="p-succ" wx:if="{{isShowPublishSucc}}">

@@ -18,7 +18,6 @@
     </block>
     <!-- 发布照片 -->
     <publishPhoto  :galleryAuth.sync="galleryAuth" :groupId.sync="groupId" :publishAfterInfo.sync="publishAfterInfo" :groupUserName.sync="groupUserName" :isShowTips.sync="isShowTips" @publishPhoto.user="publishPhoto" :galleryId.sync="galleryId" @openNewAlbum.user="openNewAlbum" @clearPublishAfterInfo.user="clearPublishAfterInfo" ></publishPhoto>
-
         <!-- 发布成功 弹窗 -->
         <publishSucc wx:if="{{isShowPublishSucc}}" @closePublishSucc.user="closePublishSucc" @publishPrintPhoto.user="publishPrintPhoto"></publishSucc>
         <!-- 打印照片  弹窗-->
@@ -47,6 +46,7 @@
   </form>
 </template>
 <style lang="less" src="./album.scss">
+
 </style>
 <script src="./album.js">
 </script>
