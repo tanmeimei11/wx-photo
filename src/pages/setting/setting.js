@@ -26,6 +26,12 @@ export default class setting extends wepy.page {
 
   mixins = [formSubmitMixin]
   methods = {
+    alert() {
+      wx.showModal({
+        content: `只有群主${this.master}可以修改群资料`,
+        showCancel: false
+      })
+    },
     bindRegionChange(e) {
       this.region = e.detail.value
       this.$apply()
@@ -116,6 +122,9 @@ export default class setting extends wepy.page {
       this.groupInfo = res.data
       this.is_show_quit_btn = res.data.is_show_quit_btn
       this.members = res.data.members
+      this.master = this.members.filter(item => {
+        return item.is_creator === true
+      })[0].name
       this.region = res.data.city ? [res.data.province, res.data.city] : this.region
 
       this.checked = res.data.is_rec
@@ -130,7 +139,7 @@ export default class setting extends wepy.page {
       this.typeList = res.data.type_mapping.map(item => {
         return item.type_name
       })
-      console.log(this.typelist)
+
       this.$apply()
     }
   }
