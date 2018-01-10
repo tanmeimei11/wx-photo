@@ -10,7 +10,7 @@ import newAlbum from '@/components/gallery/newAlbum'
 
 import {
   request,
-  wxCheckLogin
+  wxLogin
 } from '@/utils/login'
 
 var pageData = {
@@ -121,9 +121,9 @@ export default class Index extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     try {
-      this.loadingIn('加载中')
       this.initOptions(options)
-      await wxCheckLogin()
+      await wxLogin()
+      this.loadingIn('加载中')
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()

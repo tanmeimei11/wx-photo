@@ -112,7 +112,7 @@
     <view class="window">
       <view class="close" bindtap="$printerPhoto$close"/>
       <view class="title">所有成员免费打印照片</view>
-      <image class="main-img" src="https://inimg07.jiuyan.info/in/2018/01/10/2A474632-8D48-4FA8-86A9-74C53C85B894.png" mode="widthFix"/>
+      <image class="main-img" src="https://inimg02.jiuyan.info/in/2018/01/10/72E0DE82-AB2A-53FE-D58A-CF98D2CA40B2.png" mode="widthFix"/>
       <view class="btn on" bindtap="$printerPhoto$goEdit">去编辑</view>
     </view>
   </view>

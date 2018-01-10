@@ -1,6 +1,7 @@
 import wepy from 'wepy'
 import {
-  request
+  request,
+  wxLogin
 } from '../../utils/login'
 import joinUs from '../../components/gallery/joinUs'
 import newAlbum from '../../components/gallery/newAlbum'
@@ -87,7 +88,15 @@ export default class gallery extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     this.groupID = options.id
-    this.init()
+    try {
+      await wxLogin()
+      this.loadingIn('加载中')
+      await this.init()
+      this.loadingOut()
+    } catch (e) {
+      this.loadingOut()
+      this.toastFail('加载失败')
+    }
   }
   // 分享
   onShareAppMessage() {
@@ -98,7 +107,7 @@ export default class gallery extends wepy.page {
   }
   async init() {
     this.loadInfo()
-    this.loadGallerylist()
+    await this.loadGallerylist()
   }
   async loadInfo() {
     var res = await request({
