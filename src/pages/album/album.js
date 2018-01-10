@@ -8,7 +8,9 @@ import LoadingMixin from '@/mixins/loadingMixin'
 import formSubmitMixin from '@/mixins/formSubmitMixin'
 import refreshIndexMixin from '@/mixins/refreshIndexMixin'
 import newAlbum from '@/components/gallery/newAlbum'
-import { downInternetUrl } from '../../utils/api.js';
+import {
+  downInternetUrl
+} from '../../utils/api.js'
 import shareConnectMixin from '@/mixins/shareConnectMixin'
 
 import {
@@ -191,7 +193,7 @@ export default class Index extends wepy.page {
 
   // 分享
   onShareAppMessage(res) {
-    var image = (this.publishPhotoInfo && this.publishPhotoInfo.photos.url) || ''
+    var image = (this.publishPhotoInfo && this.publishPhotoInfo.photos[0].url) || ''
     return {
       title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
