@@ -177,6 +177,7 @@ export default class Index extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     try {
+      this.setShare()
       this.initOptions(options)
       await wxLogin()
       this.loadingIn('加载中')
@@ -192,6 +193,11 @@ export default class Index extends wepy.page {
     }
   }
 
+  setShare() {
+    wx.showShareMenu({
+      withShareTicket: true // 要求小程序返回分享目标信息
+    })
+  }
   // 分享
   onShareAppMessage(res) {
     this.isShowPublishSucc = false

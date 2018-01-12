@@ -89,6 +89,7 @@ export default class gallery extends wepy.page {
   }
   async onLoad(options) {
     Object.assign(this, pageData)
+    this.setShare()
     this.groupID = options.id
     try {
       await wxLogin()
@@ -100,6 +101,11 @@ export default class gallery extends wepy.page {
       this.loadingOut()
       this.toastFail('加载失败')
     }
+  }
+  setShare() {
+    wx.showShareMenu({
+      withShareTicket: true // 要求小程序返回分享目标信息
+    })
   }
   // 分享
   onShareAppMessage(res) {
