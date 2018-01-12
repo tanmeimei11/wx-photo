@@ -11,17 +11,23 @@
       <view class="s-operate iconfont icon-more-gray" wx:if="{{photoItem.has_auth}}" bindtap="delPhoto"></view>
     </view>
     <!-- photos -->
-    <scroll-view class="s-photos-wrap p-{{photoItem.photos.length}}" scroll-x>
+    <scroll-view class="s-photos-wrap p-{{photoItem.photos.length}}" scroll-x wx:if="{{photoItem.photo_type==0}}">
       <image mode="aspectFill" wx:for="{{photoItem.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx"
         bindtap="clickImage" data-index="{{idx}}"></image>
     </scroll-view>
+     <!-- video -->
+    <view class="s-photos-wrap p-1" wx:if="{{photoItem.photo_type==3}}">
+       <video wx:if="{{photoItem.isShowVideo}}" src="{{photoItem.video.play_url}}" poster="{{photoItem.video.cover_url}}" controls autoplay bindended="videoEnd" bindpause="videoEnd"></video>
+       <image wx:else mode="aspectFill" src="{{photoItem.video.cover_url}}" @tap.stop="playVideo"></image>
+    </view>
     <!-- bars -->
     <view class="s-bars-wrap">
+      <!-- down -->
       <view class="s-down iconfont icon-xiazai-sigel" bindtap="downUrl"></view>
-      <view class="icons-wrap">
+      <view class="icons-wrap icon-{{photoItem.photo_type==3 ? '1':'2'}}">
         <view class="s-like iconfont {{!photoItem.is_zan ? 'icon-dianzan':'icon-zan-color'}}" bindtap="clickZan"></view>
         <!-- <view class="s-comment iconfont icon-pinglun-miaobian"></view> -->
-        <view class="s-print iconfont icon-dayinji" @tap.stop="printerClick"></view>
+        <view class="s-print iconfont icon-dayinji" @tap.stop="printerClick" wx:if="{{photoItem.photo_type==0}}"></view>
       </view>
     </view>
     <view class="s-operate-wrap">
@@ -99,6 +105,14 @@
     box-sizing: border-box;
     white-space: nowrap;
     overflow: scroll;
+    video {
+      width: 682rpx;
+      height: 439rpx;
+    }
+    video.hidden {
+      width: 0rpx;
+      height: 0rpx;
+    }
     image {
       border-radius: 6rpx;
       margin-left: 24rpx;
@@ -134,6 +148,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+    .icons-wrap.icon-1 {
+      width: 50rpx;
     }
     .icon-zan-color {
       width: 40rpx;
@@ -274,10 +291,16 @@ export default class PhotoItem extends wepy.component {
         })
       }
     },
-    async downUrl(url) {
-      var _urls = this.photoItem.photos.map(photo => {
-        return photo.url
-      })
+    async downUrl() {
+      var _urls
+      if (this.photoItem.photo_type === '0') {
+        _urls = this.photoItem.photos.map(photo => {
+          return photo.url
+        })
+      } else {
+        _urls = this.photoItem.video.play_url
+      }
+
       this.loadingIn('正在下载')
       try {
         await downInternetUrl(_urls)
@@ -314,6 +337,13 @@ export default class PhotoItem extends wepy.component {
         path: `pages/transfer/transfer?payloadKey=${res.data}`,
         envVersion: 'develop'
       })
+    },
+    playVideo() {
+      console.log('123')
+      this.$emit('showVideo', this.photoIndex)
+    },
+    videoEnd() {
+      this.$emit('hiddenVideo', this.photoIndex)
     },
     tap() {},
     downImage() {}

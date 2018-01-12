@@ -23,7 +23,7 @@ var pageData = {
   openGId: '',
   groupName: '',
   currentCursor: 0,
-  shareCallBackUrl: '/gg/gallery/join'
+  shareCallBackUrl: '/gg/group/join'
 }
 
 export default class gallery extends wepy.page {
@@ -90,6 +90,7 @@ export default class gallery extends wepy.page {
   async onLoad(options) {
     Object.assign(this, pageData)
     this.groupID = options.id
+    this.setShare()
     try {
       await wxLogin()
       this.loadingIn('加载中')
@@ -100,6 +101,11 @@ export default class gallery extends wepy.page {
       this.loadingOut()
       this.toastFail('加载失败')
     }
+  }
+  setShare() {
+    wx.showShareMenu({
+      withShareTicket: true // 要求小程序返回分享目标信息
+    })
   }
   // 分享
   onShareAppMessage(res) {

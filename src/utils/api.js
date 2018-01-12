@@ -3,18 +3,22 @@ import {
 } from './common.js'
 import {
   qnTokenUrl,
-  qnUploadUrl
-  // qnResUrl
+  qnUploadUrl,
+  qnResUrl
 } from './config'
 import wepy from 'wepy'
 /**
  * 上传文件到七牛
  * @param {*} file
  */
-const uploadImageToQiniu = async file => {
+const uploadImageToQiniu = async(file, type) => {
   try {
+    var _data = type === 'mp4' ? {
+      imgType: 'mp4'
+    } : {}
     var tokenRes = await wepy.request({
-      url: qnTokenUrl
+      url: qnTokenUrl,
+      data: _data
     })
 
     var uploadData = {
@@ -26,11 +30,12 @@ const uploadImageToQiniu = async file => {
         token: tokenRes.data.data.token
       }
     }
+    console.log(uploadData)
     var uploadRes = await wxPromisify(wx.uploadFile)(uploadData)
     var _res = JSON.parse(uploadRes)
     console.log(_res)
     return {
-      // url: `${qnResUrl}${res.key}`,
+      url: `${qnResUrl}${_res.key}`,
       hash: _res.hash,
       key: _res.key
     }

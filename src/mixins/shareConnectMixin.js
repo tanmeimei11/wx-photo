@@ -20,10 +20,8 @@ export default class shareConnectMixin extends wepy.mixin {
   }
   shareCallBack(res) {
     return async(res, isLoading) => {
-      if (isLoading) {
-        console.log('----on share----')
-        console.log(res)
-      }!isLoading && this.loadingIn('请稍后')
+      console.log('shareCallBack');
+      (!isLoading) && this.loadingIn('请稍后')
       try {
         if (res.shareTickets) {
           var ticket = res.shareTickets[0]

@@ -51,7 +51,7 @@ var pageData = {
 
   isShowPrinterModal: true, // 是否展示跳转打印的弹窗
   printerPhotoModalInfo: null, // 跳转打印的弹窗信息
-  shareCallBackUrl: '/gg/gallery/join'
+  shareCallBackUrl: '/gg/group/join'
 }
 
 export default class Index extends wepy.page {
@@ -120,7 +120,7 @@ export default class Index extends wepy.page {
       this.publishAfterInfo = null
       this.$apply()
     },
-    publishPhoto(obj) {
+    publishPhotoAndVideo(obj) {
       this.photoList.splice(0, 0, obj)
       this.isShowPublishSucc = true
       this.publishAfterInfo = null
@@ -172,10 +172,21 @@ export default class Index extends wepy.page {
       this.photoList[idx].zan_list = zanList
       this.$apply()
     }
+
   }
-  events = {}
+  events = {
+    showVideo(idx) {
+      console.log(idx)
+      this.photoList[idx].isShowVideo = true
+    },
+    hiddenVideo(idx) {
+      console.log(idx)
+      this.photoList[idx].isShowVideo = false
+    }
+  }
   async onLoad(options) {
     Object.assign(this, pageData)
+    this.setShare()
     try {
       this.initOptions(options)
       await wxLogin()
@@ -190,6 +201,11 @@ export default class Index extends wepy.page {
       this.loadingOut()
       this.toastFail('加载失败')
     }
+  }
+  setShare() {
+    wx.showShareMenu({
+      withShareTicket: true // 要求小程序返回分享目标信息
+    })
   }
 
   // 分享
@@ -272,6 +288,14 @@ export default class Index extends wepy.page {
       }
     })
     if (res && res.data) {
+      if (res.data.list) {
+        res.data.list = res.data.list.map((item) => {
+          if (item.photo_type === '3') {
+            item.isShowVideo = false
+          }
+          return item
+        })
+      }
       this.photoList = [
         ...this.photoList,
         ...res.data.list

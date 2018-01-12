@@ -4,8 +4,9 @@
     <view class="iconfont icon-xiugaimingcheng"></view>
     修改名称
   </view>
-  <view class="s-publish-btn" @tap.stop="chooseImage">
-    上传照片
+  <!-- <view class="s-publish-btn" @tap.stop="chooseImage"> -->
+  <view class="s-publish-btn" @tap.stop="chooseType">
+    上传照片/视频
   </view>
   <view class="s-side-btn" @tap.stop="backToIndex">
      <view class="iconfont icon-quanbuxiangce"></view>
@@ -37,6 +38,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 10;
   width: 750rpx;
   height: 128rpx;
   box-sizing: border-box;
@@ -158,31 +160,26 @@ export default class PublishPhoto extends wepy.component {
   // 混合
   mixins = [LoadingMixin];
   data = {
-    images: []
+    images: [],
+    video: {}
   };
   methods = {
-    chooseImage: async function() {
-      this.images = []
+    chooseType: async function() {
       if (this.galleryAuth < 2) {
         wepy.showModal({
           title: '权限提醒',
-          content: '只有本群成员才能上传照片'
+          content: '只有本群成员才能上传视频'
         })
         return;
       }
-
-      try {
-        await this.readTipsFun()
-        var chooseRes = await wepy.chooseImage({
-          count: 9
-        })
-        var tempFilePaths = chooseRes.tempFilePaths
-        this.loadingIn('正在上传')
-        await this.loadImages(tempFilePaths)
-      } catch (e) {
-        this.loadingOut()
-        this.toastFail('上传失败')
-        console.log(e)
+      await this.readTipsFun()
+      var res = await wepy.showActionSheet({
+        itemList: ['照片', '视频']
+      })
+      if (res.tapIndex === 0) {
+        await this.chooseImage()
+      } else if (res.tapIndex === 1) {
+        await this.chooseVideo()
       }
     },
     readTips: async function() {
@@ -221,6 +218,43 @@ export default class PublishPhoto extends wepy.component {
       }
     }
   };
+  async chooseVideo() {
+    this.video = null
+    this.video = await wepy.chooseVideo({
+      sourceType: ['album', 'camera'],
+      compressed: true,
+      maxDuration: 60
+    })
+
+    try {
+      this.loadingIn('正在上传')
+      console.log('正在上传')
+      var upRes = await uploadImageToQiniu(this.video.tempFilePath, 'mp4')
+      this.video = {
+        ...this.video,
+        ...upRes
+      }
+      await this.publish('video')
+    } catch (e) {
+      this.loadingOut()
+      this.toastFail('上传失败')
+      console.log(e)
+    }
+  }
+  async chooseImage() {
+    this.images = []
+    var chooseRes = await wepy.chooseImage({
+      count: 9
+    })
+    var tempFilePaths = chooseRes.tempFilePaths
+    try {
+      this.loadingIn('正在上传')
+      await this.loadImages(tempFilePaths)
+    } catch (e) {
+      this.loadingOut()
+      this.toastFail('上传失败')
+    }
+  }
   async readTipsFun() {
     var m = await request({
       url: '/gg/group/news_read',
@@ -234,23 +268,58 @@ export default class PublishPhoto extends wepy.component {
       // this.$emit("clearPublishAfterInfo");
     }
   }
-
-  async pushlish() {
-    this.loadingIn('正在发布')
-    var res = await request({
-      url: '/gg/publish/photo',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        param: JSON.stringify(this.images),
-        gallery_id: this.galleryId
+  async publishVideoFun() {
+    try {
+      var _data = {
+        gallery_id: this.galleryId,
+        video_url: this.video.key,
+        video_duration: this.video.duration,
+        video_hash: this.video.hash,
+        video_width: this.video.width,
+        video_height: this.video.height
       }
-    })
+      var res = await request({
+        url: '/gg/publish/video',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: _data
+      })
+      return res
+    } catch (e) {
+      throw new Error()
+    }
+  }
+  async publishImagesFun() {
+    try {
+      var res = await request({
+        url: '/gg/publish/photo',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          param: JSON.stringify(this.images),
+          gallery_id: this.galleryId
+        }
+      })
+      return res
+    } catch (e) {
+      throw new Error()
+    }
+  }
+  async publish(type) {
+    this.loadingIn('正在发布')
+    var res
+    if (type === 'image') {
+      res = await this.publishImagesFun()
+    } else {
+      res = await this.publishVideoFun()
+    }
     wx.hideLoading()
     if (res.succ && res.data) {
-      this.$emit('publishPhoto', res.data)
+      this.$emit('publishPhotoAndVideo', res.data)
     } else {
       this.toastFail('发布失败')
     }
@@ -264,7 +333,7 @@ export default class PublishPhoto extends wepy.component {
         this.images.push(res)
       }
       this.$apply()
-      this.pushlish()
+      this.publish('image')
     } catch (e) {
       throw new Error()
     }

@@ -27,12 +27,16 @@ export default class Index extends wepy.page {
   methods = {}
   async onLoad() {
     Object.assign(this, pageData)
-    this.setShare()
+
     try {
       await wxLogin()
       this.loadingIn('加载中')
-      await this.getShareFromOther(true)
-      await this.getList()
+      if (this.$parent.globalData.shareTicket) {
+        await this.getShareFromOther(true)
+      } else {
+        await this.getList()
+      }
+      this.setShare()
     } catch (e) {
       this.loadingOut()
       this.toastFail('加载失败')
