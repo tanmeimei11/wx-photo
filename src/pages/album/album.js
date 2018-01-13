@@ -45,7 +45,7 @@ var pageData = {
 
   isRefreshIndex: false, // 从创建过来的
 
-  publishAfterInfo: null, // 发布图片后的信息
+  publishToastInfo: null, // 发布图片后的信息
   isShowPublishSucc: false,
   isShowTips: false,
   publishPhotoInfo: null, // 发图之后的photo信息
@@ -117,14 +117,14 @@ export default class Index extends wepy.page {
       this.refreshGallery()
       this.$apply()
     },
-    clearPublishAfterInfo() {
-      this.publishAfterInfo = null
+    clearpublishToastInfo() {
+      this.publishToastInfo = null
       this.$apply()
     },
     publishPhotoAndVideo(obj) {
       this.photoList.splice(0, 0, obj)
       this.isShowPublishSucc = true
-      this.publishAfterInfo = null
+      this.publishToastInfo = null
       this.publishPhotoInfo = obj
       this.refreshGallery()
       this.$apply()
@@ -188,6 +188,28 @@ export default class Index extends wepy.page {
       var _activeVideo = this.photoList[idx]
       _activeVideo.videoContext.exitFullScreen()
       _activeVideo.isShowVideo = false
+    },
+    delalbum() {
+      if (this.photoList.length) {
+        this.toastFail('相册还有图片 不能删除')
+        return
+      }
+      request({
+        url: '/gg/gallery/del',
+        data: {
+          gallery_id: this.galleryId
+        },
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        if (res.succ) {
+          wepy.redirectTo({
+            url: `/pages/gallery/gallery?id=${this.groupId}`
+          })
+        }
+      })
     }
   }
   async onLoad(options) {
@@ -217,15 +239,20 @@ export default class Index extends wepy.page {
   // 分享
   onShareAppMessage(res) {
     this.isShowPublishSucc = false
-    var image = this.publishPhotoInfo && this.publishPhotoInfo.photos[0].url
+    var image = ''
+    var type = '照片'
+    if (this.publishPhotoInfo) {
+      image = this.publishPhotoInfo.photo_type === '0' ? this.publishPhotoInfo.photos[0].url : this.publishPhotoInfo.video.cover_url
+      this.publishPhotoInfo.photo_type === '3' && (type = '视频')
+    }
     console.log(image)
     return {
-      title: res.from === 'button' ? `我发布了新的照片，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
+      title: res.from === 'button' ? `我发布了新的${type}，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
-      imageUrl: image || 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
-      success: this.shareCallBack({ ...res,
-        shareCallBackUrl: this.shareCallBackUrl
-      })
+      imageUrl: image || 'https://inimg02.jiuyan.info/in/2018/01/13/156D8D56-6C5B-AD0D-F6E6-4FD1A272AA13.jpg'
+      // success: this.shareCallBack({ ...res,
+      //   shareCallBackUrl: this.shareCallBackUrl
+      // })
     }
   }
   refreshGallery() {
@@ -251,7 +278,7 @@ export default class Index extends wepy.page {
     this.changeGalleryTitle(data.gallery_name)
     this.groupId = data.group_info.group_id || ''
     this.groupUserName = data.group_info.group_master_name || ''
-    this.publishAfterInfo = data.toast_info
+    this.publishToastInfo = data.toast_info
     this.$apply()
   }
   // 相册信息

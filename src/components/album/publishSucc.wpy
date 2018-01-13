@@ -4,9 +4,9 @@
     <view class="window">
         <view class="close" @tap="close"></view>
         <view class="logo"></view>
-        <view class="txt">{{publishAfterInfo.photo_type=='0' ? '图片':'视频'}}发布成功</view>
+        <view class="txt">{{publishPhotoInfo.photo_type=='0' ? '图片':'视频'}}发布成功</view>
         <button class="share" open-type="share">通知群友围观</button>
-        <view class="toprint" @tap="print" wx:if="{{publishAfterInfo && publishAfterInfo.photo_type=='0'}}">立即打印照片</view>
+        <view class="toprint" @tap="print" wx:if="{{publishPhotoInfo && publishPhotoInfo.photo_type=='0'}}">立即打印照片</view>
     </view>
 </view>
   
@@ -90,16 +90,10 @@
 </style>
 <script>
 import wepy from 'wepy';
-import { request } from '../../utils/login.js';
 export default class PublishSucc extends wepy.component {
   props = {
     galleryAuth: Number,
-    publishAfterInfo: Object
-  };
-  // 混合
-  mixins = [];
-  data = {
-    images: []
+    publishPhotoInfo: Object
   };
   methods = {
     close() {

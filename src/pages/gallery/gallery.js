@@ -111,10 +111,10 @@ export default class gallery extends wepy.page {
   onShareAppMessage(res) {
     return {
       title: '邀请你查看本群相册',
-      path: `/pages/gallery/gallery?id=${this.groupID}`,
-      success: this.shareCallBack({ ...res,
-        shareCallBackUrl: this.shareCallBackUrl
-      })
+      path: `/pages/gallery/gallery?id=${this.groupID}`
+      // success: this.shareCallBack({ ...res,
+      //   shareCallBackUrl: this.shareCallBackUrl
+      // })
     }
   }
   async init() {

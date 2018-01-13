@@ -77,7 +77,7 @@ export default class Index extends wepy.page {
     return {
       title: '一起来加入本群相册吧！',
       path: '/pages/index/index?from=index',
-      imageUrl: 'https://inimg07.jiuyan.info/in/2018/01/10/BB52C836-77CE-373A-D484-BEC9405749FB.jpg',
+      imageUrl: 'https://inimg02.jiuyan.info/in/2018/01/13/156D8D56-6C5B-AD0D-F6E6-4FD1A272AA13.jpg',
       success: this.shareCallBack(res)
     }
   }

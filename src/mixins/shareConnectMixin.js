@@ -11,7 +11,8 @@ export default class shareConnectMixin extends wepy.mixin {
         var m = this.shareCallBack('share', 'share')
         await m({
           'shareTickets': [_shareTickets],
-          'shareCallBackUrl': url
+          'shareCallBackUrl': url,
+          'from': 'onload'
         }, isLoading)
       }
     } catch (e) {
@@ -56,6 +57,9 @@ export default class shareConnectMixin extends wepy.mixin {
           } else {
             throw new Error()
           }
+        } else if (!isLoading) {
+          this.loadingOut()
+          this.toastFail('请分享到群聊天', 3000)
         }
       } catch (e) {
         throw new Error()

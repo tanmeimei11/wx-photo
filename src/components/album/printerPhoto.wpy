@@ -94,24 +94,24 @@
 }
 </style>
 <script>
-import wepy from 'wepy';
+import wepy from "wepy";
 export default class newAlbum extends wepy.component {
   props = {
     groupId: String
   };
   data = {
-    wx: '',
+    wx: "",
     full: false
   };
   methods = {
     close() {
-      this.$emit('closePrinterPhotoModal')
+      this.$emit("closePrinterPhotoModal");
     },
     async goEdit() {
       await wepy.navigateTo({
         url: `/pages/setting/setting?id=${this.groupId}`
-      })
-      this.$emit('closePrinterPhotoModal')
+      });
+      this.$emit("closePrinterPhotoModal");
     }
   };
 }

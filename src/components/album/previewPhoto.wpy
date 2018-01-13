@@ -1,13 +1,13 @@
 <template>
 <!-- 预览图片 -->
 <view class="c-main-swiper-wrap">
-  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper"> -->
-  <!-- <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" @tap.stop="clearSwiper">
+  <swiper class="c-main-swiper" bindchange="swiperChange" current="{{photoItemIdx}}" data-idx="{{photoItemIdx}}" @tap.stop="clearSwiper">
+  <swiper class="c-main-swiper" bindchange="swiperChange" current="0" data-idx="0" @tap.stop="clearSwiper">
     <swiper-item bindtap="closeSwiper" wx:for="{{previewPhotos}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
       <view class="slide-image" style="background-image:url({{item.url}})"></view>
     </swiper-item>
-</swiper> -->
-  <!-- <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view> -->
+</swiper>
+  <view class="swiper-index" wx:if="{{previewPhotos.length >0}}">{{photoItemIdx + 1}}/{{previewPhotos.length}}</view>
   <view class="swiper-index">{{previewPhotos.length}}</view>
  <view class="swiper-down iconfont icon-xiazai" @tap.stop="downImage"></view>
 </view>
@@ -44,18 +44,6 @@
     rgba(255, 255, 255, 1) 40%,
     rgba(255, 255, 255, 0) 50%
   );
-}
-.c-main-swiper {
-  width: 100%;
-  height: 100%;
-  /* background-color: #000; */
-  swiper-item .slide-image {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
 }
 </style>
 <script>
