@@ -219,7 +219,9 @@ export default class Index extends wepy.page {
       this.initOptions(options)
       await wxLogin()
       this.loadingIn('加载中')
-      await this.getShareFromOther(true, this.shareCallBackUrl)
+      await this.getShareFromOther(true, this.shareCallBackUrl, {
+        galleryID: options.id
+      })
       await this.getGalleryAuth()
       if (this.galleryAuth !== 0) {
         this.getList()

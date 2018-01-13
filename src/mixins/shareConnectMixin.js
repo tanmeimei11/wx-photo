@@ -4,15 +4,20 @@ import {
 } from '@/utils/login'
 
 export default class shareConnectMixin extends wepy.mixin {
-  async getShareFromOther(isLoading, url) {
+  async getShareFromOther(isLoading, url, ids) {
     try {
       var _shareTickets = this.$parent.globalData.shareTicket
       if (_shareTickets) {
         var m = this.shareCallBack('share', 'share')
+        if (!ids) {
+          ids = {}
+        }
         await m({
           'shareTickets': [_shareTickets],
           'shareCallBackUrl': url,
-          'from': 'onload'
+          'from': 'onload',
+          'groupID': ids.groupID || '',
+          'galleryID': ids.galleryID || ''
         }, isLoading)
       }
     } catch (e) {
@@ -36,7 +41,9 @@ export default class shareConnectMixin extends wepy.mixin {
             var _data = {
               encryptedData: shareInfoRes.encryptedData, //  解密后为一个 JSON 结构（openGId    群对当前小程序的唯一 ID）
               iv: shareInfoRes.iv, // 加密算法的初始向量
-              code: loginRes.code
+              code: loginRes.code,
+              groupID: res.groupID || '',
+              galleryID: res.galleryID || ''
             }
 
             var dispatcherRes = await request({

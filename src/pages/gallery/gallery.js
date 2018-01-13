@@ -94,7 +94,9 @@ export default class gallery extends wepy.page {
     try {
       await wxLogin()
       this.loadingIn('加载中')
-      await this.getShareFromOther(true, this.shareCallBackUrl)
+      await this.getShareFromOther(true, this.shareCallBackUrl, {
+        groupID: options.id
+      })
       await this.init()
       this.loadingOut()
     } catch (e) {
