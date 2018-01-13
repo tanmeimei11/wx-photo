@@ -38,6 +38,7 @@ var pageData = {
 
   photoIdx: 0,
   photoItemIdx: 0,
+  photoItemActiveIdx: -1, // 主要是给视频用一次只能播放一个视频
 
   isShowNewAlbum: false, // 修改名称弹窗
   newAlbumTitle: '修改相册名称',
@@ -177,11 +178,16 @@ export default class Index extends wepy.page {
   events = {
     showVideo(idx) {
       console.log(idx)
-      this.photoList[idx].isShowVideo = true
+      var _activeVideo = this.photoList[idx]
+      _activeVideo.isShowVideo = true
+      // 进入全屏播放
+      _activeVideo.videoContext = wepy.createVideoContext(`video${idx}`)
+      _activeVideo.videoContext.requestFullScreen()
     },
     hiddenVideo(idx) {
-      console.log(idx)
-      this.photoList[idx].isShowVideo = false
+      var _activeVideo = this.photoList[idx]
+      _activeVideo.videoContext.exitFullScreen()
+      _activeVideo.isShowVideo = false
     }
   }
   async onLoad(options) {
@@ -292,6 +298,7 @@ export default class Index extends wepy.page {
         res.data.list = res.data.list.map((item) => {
           if (item.photo_type === '3') {
             item.isShowVideo = false
+            item.videoContext = null
           }
           return item
         })

@@ -16,9 +16,13 @@
         bindtap="clickImage" data-index="{{idx}}"></image>
     </scroll-view>
      <!-- video -->
-    <view class="s-photos-wrap p-1" wx:if="{{photoItem.photo_type==3}}">
-       <video wx:if="{{photoItem.isShowVideo}}" src="{{photoItem.video.play_url}}" poster="{{photoItem.video.cover_url}}" controls autoplay bindended="videoEnd" bindpause="videoEnd"></video>
-       <image wx:else mode="aspectFill" src="{{photoItem.video.cover_url}}" @tap.stop="playVideo"></image>
+    <view class="s-video-wrap p-1" wx:if="{{photoItem.photo_type==3}}">
+       <video id="video{{photoIndex}}" wx:if="{{photoItem.isShowVideo}}" src="{{photoItem.video.play_url}}" poster="{{photoItem.video.cover_url}}" controls autoplay direction=0 bindended="videoEnd"  bindfullscreenchange="videoScreenchange">
+       </video>
+       <view wx:else  class="play-module">
+           <image mode="aspectFill"  class="play-btn" src="https://inimg05.jiuyan.info/in/2018/01/13/7DF3C7B9-5635-0D34-5721-FB0C8A0501AB.png" @tap.stop="playVideo"></image>
+           <image class="play-bg" mode="aspectFill" src="{{photoItem.video.cover_url}}"></image>
+        </view>
     </view>
     <!-- bars -->
     <view class="s-bars-wrap">
@@ -105,14 +109,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     overflow: scroll;
-    video {
-      width: 682rpx;
-      height: 439rpx;
-    }
-    video.hidden {
-      width: 0rpx;
-      height: 0rpx;
-    }
+
     image {
       border-radius: 6rpx;
       margin-left: 24rpx;
@@ -123,12 +120,46 @@
     image:first-child {
       margin-left: 0;
     }
+
     &.p-1 {
       padding: 0 35rpx;
       image {
         width: 682rpx;
         height: 439rpx;
       }
+    }
+  }
+  .s-video-wrap {
+    padding: 34rpx;
+    width: 750rpx;
+    height: 439rpx;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: scroll;
+    video {
+      width: 100%;
+      height: 100%;
+    }
+    video.hidden {
+      width: 0rpx;
+      height: 0rpx;
+    }
+    .play-module {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .play-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 106rpx;
+      height: 106rpx;
     }
   }
   .s-bars-wrap {
@@ -243,7 +274,8 @@ import LoadingMixin from '@/mixins/loadingMixin';
 export default class PhotoItem extends wepy.component {
   props = {
     photoItem: [],
-    photoIndex: Number
+    photoIndex: Number,
+    photoItemActiveIdx: Number
   };
   data = {
     isZanAjax: false
@@ -339,11 +371,18 @@ export default class PhotoItem extends wepy.component {
       })
     },
     playVideo() {
-      console.log('123')
+      if (this.photoItemActiveIdx !== this.photoIndex) {
+        this.$emit('hideVideo', this.photoItemActiveIdx)
+      }
       this.$emit('showVideo', this.photoIndex)
     },
     videoEnd() {
       this.$emit('hiddenVideo', this.photoIndex)
+    },
+    videoScreenchange(e) {
+      if (!e.detail.fullScreen) {
+        this.$emit('hiddenVideo', this.photoIndex)
+      }
     },
     tap() {},
     downImage() {}

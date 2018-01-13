@@ -22,9 +22,13 @@
       <image mode="aspectFill" wx:for="{{item.photos}}" wx:for-index="idx" wx:for-item="item" src="{{item.url}}" wx:key="idx" bindtap="$photoItem$clickImage" data-index="{{idx}}" data-com-index="{{index}}"/>
     </scroll-view>
      <!-- video -->
-    <view class="s-photos-wrap p-1" wx:if="{{item.photo_type==3}}">
-       <video wx:if="{{item.isShowVideo}}" src="{{item.video.play_url}}" poster="{{item.video.cover_url}}" controls autoplay bindended="$photoItem$videoEnd" bindpause="$photoItem$videoEnd" data-com-index="{{index}}"/>
-       <image wx:else mode="aspectFill" src="{{item.video.cover_url}}" catchtap="$photoItem$playVideo" data-com-index="{{index}}"/>
+    <view class="s-video-wrap p-1" wx:if="{{item.photo_type==3}}">
+       <video id="video{{index}}" wx:if="{{item.isShowVideo}}" src="{{item.video.play_url}}" poster="{{item.video.cover_url}}" controls autoplay direction="0" bindended="$photoItem$videoEnd" bindfullscreenchange="$photoItem$videoScreenchange" data-com-index="{{index}}">
+       </video>
+       <view wx:else class="play-module">
+           <image mode="aspectFill" class="play-btn" src="https://inimg05.jiuyan.info/in/2018/01/13/7DF3C7B9-5635-0D34-5721-FB0C8A0501AB.png" catchtap="$photoItem$playVideo" data-com-index="{{index}}"/>
+           <image class="play-bg" mode="aspectFill" src="{{item.video.cover_url}}"/>
+        </view>
     </view>
     <!-- bars -->
     <view class="s-bars-wrap">

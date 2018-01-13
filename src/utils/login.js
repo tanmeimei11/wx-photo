@@ -167,7 +167,7 @@ var wxLogin = async option => {
     // check code
     LOG('check token')
     let _token = wx.getStorageSync('token')
-    if (_token) {
+    if (_token || isMock) {
       return
     }
     // get code
