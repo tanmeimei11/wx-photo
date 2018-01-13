@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -19,28 +19,28 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var newAlbum = function (_wepy$component) {
-  _inherits(newAlbum, _wepy$component);
+var printerPhoto = function (_wepy$component) {
+  _inherits(printerPhoto, _wepy$component);
 
-  function newAlbum() {
+  function printerPhoto() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, newAlbum);
+    _classCallCheck(this, printerPhoto);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = newAlbum.__proto__ || Object.getPrototypeOf(newAlbum)).call.apply(_ref, [this].concat(args))), _this), _this.props = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = printerPhoto.__proto__ || Object.getPrototypeOf(printerPhoto)).call.apply(_ref, [this].concat(args))), _this), _this.props = {
       groupId: String
     }, _this.data = {
-      wx: "",
+      wx: '',
       full: false
     }, _this.methods = {
       close: function close() {
-        this.$emit("closePrinterPhotoModal");
+        this.$emit('closePrinterPhotoModal');
       },
       goEdit: function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -50,14 +50,14 @@ var newAlbum = function (_wepy$component) {
                 case 0:
                   _context.next = 2;
                   return _wepy2.default.navigateTo({
-                    url: "/pages/setting/setting?id=" + this.groupId
+                    url: '/pages/setting/setting?id=' + this.groupId
                   });
 
                 case 2:
-                  this.$emit("closePrinterPhotoModal");
+                  this.$emit('closePrinterPhotoModal');
 
                 case 3:
-                case "end":
+                case 'end':
                   return _context.stop();
               }
             }
@@ -73,8 +73,8 @@ var newAlbum = function (_wepy$component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  return newAlbum;
+  return printerPhoto;
 }(_wepy2.default.component);
 
-exports.default = newAlbum;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByaW50ZXJQaG90by5qcyJdLCJuYW1lcyI6WyJuZXdBbGJ1bSIsInByb3BzIiwiZ3JvdXBJZCIsIlN0cmluZyIsImRhdGEiLCJ3eCIsImZ1bGwiLCJtZXRob2RzIiwiY2xvc2UiLCIkZW1pdCIsImdvRWRpdCIsIm5hdmlnYXRlVG8iLCJ1cmwiLCJjb21wb25lbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFDQTs7Ozs7Ozs7Ozs7Ozs7SUFDcUJBLFE7Ozs7Ozs7Ozs7Ozs7OzBMQUNuQkMsSyxHQUFRO0FBQ05DLGVBQVNDO0FBREgsSyxRQUdSQyxJLEdBQU87QUFDTEMsVUFBSSxFQURDO0FBRUxDLFlBQU07QUFGRCxLLFFBSVBDLE8sR0FBVTtBQUNSQyxXQURRLG1CQUNBO0FBQ04sYUFBS0MsS0FBTCxDQUFXLHdCQUFYO0FBQ0QsT0FITztBQUlGQyxZQUpFO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBS0EsZUFBS0MsVUFBTCxDQUFnQjtBQUNwQkMsd0RBQWtDLEtBQUtWO0FBRG5CLG1CQUFoQixDQUxBOztBQUFBO0FBUU4sdUJBQUtPLEtBQUwsQ0FBVyx3QkFBWDs7QUFSTTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTs7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBLEs7Ozs7RUFSMEIsZUFBS0ksUzs7a0JBQXRCYixRIiwiZmlsZSI6InByaW50ZXJQaG90by5qcyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHdlcHkgZnJvbSBcIndlcHlcIjtcbmV4cG9ydCBkZWZhdWx0IGNsYXNzIG5ld0FsYnVtIGV4dGVuZHMgd2VweS5jb21wb25lbnQge1xuICBwcm9wcyA9IHtcbiAgICBncm91cElkOiBTdHJpbmdcbiAgfTtcbiAgZGF0YSA9IHtcbiAgICB3eDogXCJcIixcbiAgICBmdWxsOiBmYWxzZVxuICB9O1xuICBtZXRob2RzID0ge1xuICAgIGNsb3NlKCkge1xuICAgICAgdGhpcy4kZW1pdChcImNsb3NlUHJpbnRlclBob3RvTW9kYWxcIik7XG4gICAgfSxcbiAgICBhc3luYyBnb0VkaXQoKSB7XG4gICAgICBhd2FpdCB3ZXB5Lm5hdmlnYXRlVG8oe1xuICAgICAgICB1cmw6IGAvcGFnZXMvc2V0dGluZy9zZXR0aW5nP2lkPSR7dGhpcy5ncm91cElkfWBcbiAgICAgIH0pO1xuICAgICAgdGhpcy4kZW1pdChcImNsb3NlUHJpbnRlclBob3RvTW9kYWxcIik7XG4gICAgfVxuICB9O1xufVxuIl19
+exports.default = printerPhoto;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByaW50ZXJQaG90by5qcyJdLCJuYW1lcyI6WyJwcmludGVyUGhvdG8iLCJwcm9wcyIsImdyb3VwSWQiLCJTdHJpbmciLCJkYXRhIiwid3giLCJmdWxsIiwibWV0aG9kcyIsImNsb3NlIiwiJGVtaXQiLCJnb0VkaXQiLCJuYXZpZ2F0ZVRvIiwidXJsIiwiY29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQ0E7Ozs7Ozs7Ozs7Ozs7O0lBQ3FCQSxZOzs7Ozs7Ozs7Ozs7OztrTUFDbkJDLEssR0FBUTtBQUNOQyxlQUFTQztBQURILEssUUFHUkMsSSxHQUFPO0FBQ0xDLFVBQUksRUFEQztBQUVMQyxZQUFNO0FBRkQsSyxRQUlQQyxPLEdBQVU7QUFDUkMsV0FEUSxtQkFDQTtBQUNOLGFBQUtDLEtBQUwsQ0FBVyx3QkFBWDtBQUNELE9BSE87QUFJRkMsWUFKRTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLHlCQUtBLGVBQUtDLFVBQUwsQ0FBZ0I7QUFDcEJDLHdEQUFrQyxLQUFLVjtBQURuQixtQkFBaEIsQ0FMQTs7QUFBQTtBQVFOLHVCQUFLTyxLQUFMLENBQVcsd0JBQVg7O0FBUk07QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7O0FBQUE7QUFBQTtBQUFBOztBQUFBO0FBQUE7QUFBQSxLOzs7O0VBUjhCLGVBQUtJLFM7O2tCQUExQmIsWSIsImZpbGUiOiJwcmludGVyUGhvdG8uanMiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCB3ZXB5IGZyb20gJ3dlcHknO1xuZXhwb3J0IGRlZmF1bHQgY2xhc3MgcHJpbnRlclBob3RvIGV4dGVuZHMgd2VweS5jb21wb25lbnQge1xuICBwcm9wcyA9IHtcbiAgICBncm91cElkOiBTdHJpbmdcbiAgfTtcbiAgZGF0YSA9IHtcbiAgICB3eDogJycsXG4gICAgZnVsbDogZmFsc2VcbiAgfTtcbiAgbWV0aG9kcyA9IHtcbiAgICBjbG9zZSgpIHtcbiAgICAgIHRoaXMuJGVtaXQoJ2Nsb3NlUHJpbnRlclBob3RvTW9kYWwnKVxuICAgIH0sXG4gICAgYXN5bmMgZ29FZGl0KCkge1xuICAgICAgYXdhaXQgd2VweS5uYXZpZ2F0ZVRvKHtcbiAgICAgICAgdXJsOiBgL3BhZ2VzL3NldHRpbmcvc2V0dGluZz9pZD0ke3RoaXMuZ3JvdXBJZH1gXG4gICAgICB9KVxuICAgICAgdGhpcy4kZW1pdCgnY2xvc2VQcmludGVyUGhvdG9Nb2RhbCcpXG4gICAgfVxuICB9O1xufVxuIl19

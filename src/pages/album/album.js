@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 import PhotoItem from '@/components/album/photoItem'
-import PreviewPhoto from '@/components/album/previewPhoto'
+// import PreviewPhoto from '@/components/album/previewPhoto'
 import PublishPhoto from '@/components/album/publishPhoto'
 import publishSucc from '@/components/album/publishSucc'
 import PrinterPhoto from '@/components/album/printerPhoto'
@@ -64,7 +64,7 @@ export default class Index extends wepy.page {
   // 组件
   components = {
     photoItem: PhotoItem,
-    previewPhoto: PreviewPhoto,
+    // previewPhoto: PreviewPhoto,
     publishPhoto: PublishPhoto,
     printerPhoto: PrinterPhoto,
     publishSucc: publishSucc,
