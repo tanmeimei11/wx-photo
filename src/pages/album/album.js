@@ -251,7 +251,7 @@ export default class Index extends wepy.page {
     return {
       title: res.from === 'button' ? `我发布了新的${type}，快来看看吧` : `邀请你查看本群相册《${this.galleryTitle}》`,
       path: `/pages/album/album?id=${this.galleryId}`,
-      imageUrl: image || 'https://inimg01.jiuyan.info/in/2018/01/23/D34DFD27-39AE-D435-E794-37B2F01009A1.jpg'
+      imageUrl: image || 'https://inimg01.jiuyan.info/in/2018/01/24/217D1276-B7F6-5A2A-CDD8-8EB120904EA2.jpg'
       // success: this.shareCallBack({ ...res,
       //   shareCallBackUrl: this.shareCallBackUrl
       // })
